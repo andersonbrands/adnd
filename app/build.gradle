@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def sensitivePropertiesFile = rootProject.file("sensitive.properties")
+def sensitiveProperties = new Properties()
+sensitiveProperties.load(new FileInputStream(sensitivePropertiesFile))
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -9,6 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "TMDb_API_KEY", '"' + sensitiveProperties['TMDb_API_KEY'] + '"')
+        resValue("string", "TMDb_API_KEY", sensitiveProperties['TMDb_API_KEY'])
     }
     buildTypes {
         release {
