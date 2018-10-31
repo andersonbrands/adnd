@@ -3,8 +3,11 @@ package com.adnd.popularmovies;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.models.Movie;
 import com.adnd.popularmovies.utils.NetworkUtils;
 
@@ -21,13 +24,27 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private RecyclerView mRecyclerView;
+    private PosterAdapter mPosterAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mRecyclerView = findViewById(R.id.rv_posters);
+
+        URL queryUrl = NetworkUtils.buildPopularMoviesUrl();
+        new TMDbQueryTask().execute(queryUrl);
     }
 
-    public static class TMDbQueryTask extends AsyncTask<URL, Void, String> {
+    private void setRecyclerView(List<Movie> movies) {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mPosterAdapter = new PosterAdapter(movies);
+        mRecyclerView.setAdapter(mPosterAdapter);
+    }
+
+    // TODO: handle "This AsyncTask should be static or leaks might occur" warning?
+    public class TMDbQueryTask extends AsyncTask<URL, Void, String> {
 
         @Override
         protected String doInBackground(URL... params) {
@@ -44,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null && !result.equals("")) {
-                Log.d(TAG, "Result from query:\n" + result);
                 List<Movie> movies = getListOfMovies(result);
-                // TODO: use acquired list of movies
+                setRecyclerView(movies);
             }
         }
 
