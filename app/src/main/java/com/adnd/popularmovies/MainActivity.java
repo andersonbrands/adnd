@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.models.Movie;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private PosterAdapter mPosterAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +39,39 @@ public class MainActivity extends AppCompatActivity {
         new TMDbQueryTask().execute(queryUrl);
     }
 
+    private void loadPopularMovies() {
+        URL queryUrl = NetworkUtils.buildPopularMoviesUrl();
+        new TMDbQueryTask().execute(queryUrl);
+    }
+
+    private void loadTopRatedMovies() {
+        URL queryUrl = NetworkUtils.buildTopRatedMoviesUrl();
+        new TMDbQueryTask().execute(queryUrl);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_order_popular:
+                loadPopularMovies();
+                break;
+            case R.id.action_order_top_rated:
+                loadTopRatedMovies();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setRecyclerView(List<Movie> movies) {
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         mPosterAdapter = new PosterAdapter(movies);
         mRecyclerView.setAdapter(mPosterAdapter);
     }
