@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView(List<Movie> movies) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mPosterAdapter = new PosterAdapter(movies);
         mRecyclerView.setAdapter(mPosterAdapter);
     }
