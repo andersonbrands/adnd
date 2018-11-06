@@ -3,10 +3,8 @@ package com.adnd.popularmovies;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.models.Movie;
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView(List<Movie> movies) {
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mPosterAdapter = new PosterAdapter(movies);
         mRecyclerView.setAdapter(mPosterAdapter);
     }
