@@ -39,8 +39,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
     @Override
     public void onBindViewHolder(@NonNull PosterViewHolder posterViewHolder, int position) {
         Movie movie = movies.get(position);
-        // TODO: replace poster path with poster url
-        posterViewHolder.bind(movie.getPoster_path());
+        posterViewHolder.bind(movie.getPosterUrl());
     }
 
     @Override

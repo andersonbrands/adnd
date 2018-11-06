@@ -15,6 +15,14 @@ public class Movie {
         return poster_path;
     }
 
+    public String getPosterUrl() {
+        final String BASE_URL = "https://image.tmdb.org/t/p/";
+        // size is one of "w92", "w154", "w185", "w342", "w500", "w780", or "original"
+        final String SIZE_PATH = "w185"; // "w185" is recommended for most phones
+
+        return BASE_URL + SIZE_PATH + getPoster_path();
+    }
+
     public String getOriginal_title() {
         return original_title;
     }
