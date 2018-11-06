@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +51,18 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
 
     public static class PosterViewHolder extends RecyclerView.ViewHolder {
 
-        // TODO: replace with ImageView
-        private TextView posterTextView;
+        private ImageView posterImageView;
 
         public PosterViewHolder(@NonNull View itemView) {
             super(itemView);
-            posterTextView = itemView.findViewById(R.id.tv_poster_url);
+            posterImageView = itemView.findViewById(R.id.iv_poster_image);
         }
 
         void bind(String posterUrl) {
-            posterTextView.setText(posterUrl);
+            Picasso.get()
+                    .load(posterUrl)
+                    .fit()
+                    .into(posterImageView);
         }
     }
 }
