@@ -19,12 +19,19 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
 
     private List<Movie> movies;
 
-    public PosterAdapter(List<Movie> movies) {
+    final private ListItemClickListener mListItemClickListener;
+
+    public interface ListItemClickListener {
+        void onListItemClick(Movie clickedItem);
+    }
+
+    public PosterAdapter(List<Movie> movies, ListItemClickListener listItemClickListener) {
         if (movies == null) {
             this.movies = new ArrayList<>();
         } else {
             this.movies = movies;
         }
+        mListItemClickListener = listItemClickListener;
     }
 
     @NonNull
@@ -49,13 +56,15 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
         return movies.size();
     }
 
-    public static class PosterViewHolder extends RecyclerView.ViewHolder {
+    public class PosterViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
         private ImageView posterImageView;
 
         public PosterViewHolder(@NonNull View itemView) {
             super(itemView);
             posterImageView = itemView.findViewById(R.id.iv_poster_image);
+            posterImageView.setOnClickListener(this);
         }
 
         void bind(String posterUrl) {
@@ -63,6 +72,12 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
                     .load(posterUrl)
                     .fit()
                     .into(posterImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            final int clickedPosition = getAdapterPosition();
+            mListItemClickListener.onListItemClick(movies.get(clickedPosition));
         }
     }
 }

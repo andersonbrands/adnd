@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.models.Movie;
@@ -21,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PosterAdapter.ListItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -70,9 +71,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListItemClick(Movie clickedItem) {
+        Toast.makeText(this, "Clicked movie title: " + clickedItem.getOriginal_title(), Toast.LENGTH_SHORT).show();
+    }
+
     private void setRecyclerView(List<Movie> movies) {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        mPosterAdapter = new PosterAdapter(movies);
+        mPosterAdapter = new PosterAdapter(movies, this);
         mRecyclerView.setAdapter(mPosterAdapter);
     }
 
