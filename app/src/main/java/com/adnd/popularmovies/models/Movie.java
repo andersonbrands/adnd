@@ -48,6 +48,11 @@ public class Movie {
             return null;
         }
     }
+
+    public String toJSONString() {
+        return toJSONObject().toString();
+    }
+
     public static Movie fromJSONObject(JSONObject jsonObject) {
         Movie movie = new Movie();
 
@@ -66,5 +71,19 @@ public class Movie {
         }
 
         return movie;
+    }
+    public JSONObject toJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("poster_path", this.poster_path);
+            jsonObject.put("original_title", this.original_title);
+            jsonObject.put("overview", this.overview);
+            jsonObject.put("vote_average", this.vote_average);
+            jsonObject.put("release_date", this.release_date);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

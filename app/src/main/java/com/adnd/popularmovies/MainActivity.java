@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
 
     @Override
     public void onListItemClick(Movie clickedItem) {
-        Toast.makeText(this, "Clicked movie title: " + clickedItem.getOriginal_title(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MovieDetailsActivity.class);
+        intent.putExtra(MovieDetailsActivity.MOVIE_JSON_STRING_EXTRA_KEY, clickedItem.toJSONString());
         startActivity(intent);
     }
 
