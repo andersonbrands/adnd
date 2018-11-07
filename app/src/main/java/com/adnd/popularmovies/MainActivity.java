@@ -1,5 +1,6 @@
 package com.adnd.popularmovies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
     @Override
     public void onListItemClick(Movie clickedItem) {
         Toast.makeText(this, "Clicked movie title: " + clickedItem.getOriginal_title(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MovieDetailsActivity.class);
+        startActivity(intent);
     }
 
     private void setRecyclerView(List<Movie> movies) {

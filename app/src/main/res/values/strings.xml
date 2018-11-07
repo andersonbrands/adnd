@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="movie_details_activity_label">Movie details</string>
 
     <string name="order_top_rated">Order by top rated</string>
     <string name="order_popular">Order by most popular</string>
+    <string name="vote_average_detail">Vote average: %.1f</string>
+    <string name="release_date_detail">Release date: %s</string>
 
 </resources>
