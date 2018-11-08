@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -45,6 +46,9 @@ public class NetworkUtils {
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(5000);
+        urlConnection.setReadTimeout(10000);
+
         try {
             InputStream in = urlConnection.getInputStream();
 
@@ -54,12 +58,13 @@ public class NetworkUtils {
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
                 return scanner.next();
-            } else {
-                return null;
             }
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
         } finally {
             urlConnection.disconnect();
         }
+        return null;
     }
 
 }
