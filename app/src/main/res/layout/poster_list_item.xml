@@ -7,6 +7,7 @@
     <ImageView
         android:id="@+id/iv_poster_image"
         android:layout_gravity="center_horizontal"
+        android:background="@color/colorAccent"
         android:layout_margin="@dimen/space_one_dp"
         android:layout_width="@dimen/poster_image_width"
         android:layout_height="@dimen/poster_image_height" />

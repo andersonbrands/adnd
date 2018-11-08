@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.models.Movie;
@@ -70,6 +69,8 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
         void bind(String posterUrl) {
             Picasso.get()
                     .load(posterUrl)
+                    .placeholder(R.drawable.ic_image_white_24dp)
+                    .error(R.drawable.ic_error_outline_white_24dp)
                     .fit()
                     .into(posterImageView);
         }

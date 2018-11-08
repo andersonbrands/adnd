@@ -45,6 +45,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 ImageView imageView = findViewById(R.id.iv_poster_image);
                 Picasso.get()
                         .load(movie.getPosterUrl())
+                        .placeholder(R.drawable.ic_image_white_24dp)
+                        .error(R.drawable.ic_error_outline_white_24dp)
                         .fit()
                         .into(imageView);
             }
