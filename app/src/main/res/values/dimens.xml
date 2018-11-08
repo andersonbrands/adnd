@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size_tiny">8sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_extra_large">25sp</dimen>
+
+    <dimen name="space_one_dp">1dp</dimen>
+    <dimen name="space_two_dp">2dp</dimen>
+    <dimen name="space_small">6dp</dimen>
+    <dimen name="space_medium">10dp</dimen>
+    <dimen name="space_large">16dp</dimen>
+    <dimen name="space_extra_large">22dp</dimen>
+
+    <dimen name="poster_image_width">150dp</dimen>
+    <dimen name="poster_image_height">200dp</dimen>
+
+</resources>
