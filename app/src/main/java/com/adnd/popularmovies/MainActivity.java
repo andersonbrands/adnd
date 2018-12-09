@@ -8,24 +8,25 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
+import com.adnd.popularmovies.api.MovieListConverterFactory;
+import com.adnd.popularmovies.api.TMDbApi;
 import com.adnd.popularmovies.models.Movie;
-import com.adnd.popularmovies.utils.NetworkUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements PosterAdapter.ListItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final String POPULAR_MOVIES_KEY = "popular";
+    private static final String TOP_RATED_MOVIES_KEY = "top_rated";
 
     private RecyclerView mRecyclerView;
     private PosterAdapter mPosterAdapter;
@@ -37,18 +38,15 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
 
         mRecyclerView = findViewById(R.id.rv_posters);
 
-        URL queryUrl = NetworkUtils.buildPopularMoviesUrl();
-        new TMDbQueryTask().execute(queryUrl);
+        loadPopularMovies();
     }
 
     private void loadPopularMovies() {
-        URL queryUrl = NetworkUtils.buildPopularMoviesUrl();
-        new TMDbQueryTask().execute(queryUrl);
+        new TMDbQueryTask().execute(POPULAR_MOVIES_KEY);
     }
 
     private void loadTopRatedMovies() {
-        URL queryUrl = NetworkUtils.buildTopRatedMoviesUrl();
-        new TMDbQueryTask().execute(queryUrl);
+        new TMDbQueryTask().execute(TOP_RATED_MOVIES_KEY);
     }
 
     @Override
@@ -86,44 +84,39 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
     }
 
     // TODO: handle "This AsyncTask should be static or leaks might occur" warning?
-    public class TMDbQueryTask extends AsyncTask<URL, Void, String> {
+    public class TMDbQueryTask extends AsyncTask<String, Void, List<Movie>> {
 
         @Override
-        protected String doInBackground(URL... params) {
-            URL queryUrl = params[0];
-            String result = null;
+        protected List<Movie> doInBackground(String... params) {
+            String key = params[0];
+            List<Movie> result = null;
+
+            Retrofit fit = new Retrofit.Builder()
+                    .baseUrl(TMDbApi.BASE_URL)
+                    .addConverterFactory(new MovieListConverterFactory())
+                    .build();
+
+            TMDbApi api = fit.create(TMDbApi.class);
+
+            Call<List<Movie>> moviesCall = (key.equals(POPULAR_MOVIES_KEY)) ? api.getPopularMovies() : api.getTopRatedMovies();
+
             try {
-                result = NetworkUtils.getResponseFromHttpUrl(queryUrl);
+                Response<List<Movie>> rrr = moviesCall.execute();
+                result = rrr.body();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             return result;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if (result != null && !result.equals("")) {
-                List<Movie> movies = getListOfMovies(result);
-                setRecyclerView(movies);
+        protected void onPostExecute(List<Movie> result) {
+            if (result != null) {
+                setRecyclerView(result);
             }
         }
 
-        private List<Movie> getListOfMovies(String result) {
-            List<Movie> movies = new ArrayList<>();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("results");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    Movie movie = Movie.fromJSONObject(jsonArray.getJSONObject(i));
-                    if (movie != null) {
-                        movies.add(movie);
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return movies;
-        }
     }
 
 }
