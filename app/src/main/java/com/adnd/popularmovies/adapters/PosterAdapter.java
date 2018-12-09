@@ -71,7 +71,6 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
                     .load(posterUrl)
                     .placeholder(R.drawable.ic_image_white_24dp)
                     .error(R.drawable.ic_error_outline_white_24dp)
-                    .fit()
                     .into(posterImageView);
         }
 
