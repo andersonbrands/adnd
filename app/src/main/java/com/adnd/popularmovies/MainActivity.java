@@ -1,27 +1,28 @@
 package com.adnd.popularmovies;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.api.MovieListConverterFactory;
 import com.adnd.popularmovies.api.TMDbApi;
 import com.adnd.popularmovies.models.Movie;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity implements PosterAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements PosterAdapter.ListItemClickListener, Callback<List<Movie>> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -42,11 +43,24 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
     }
 
     private void loadPopularMovies() {
-        new TMDbQueryTask().execute(POPULAR_MOVIES_KEY);
+        loadMovies(POPULAR_MOVIES_KEY);
     }
 
     private void loadTopRatedMovies() {
-        new TMDbQueryTask().execute(TOP_RATED_MOVIES_KEY);
+        loadMovies(TOP_RATED_MOVIES_KEY);
+    }
+
+    private void loadMovies(String key) {
+        Retrofit fit = new Retrofit.Builder()
+                .baseUrl(TMDbApi.BASE_URL)
+                .addConverterFactory(new MovieListConverterFactory())
+                .build();
+
+        TMDbApi api = fit.create(TMDbApi.class);
+
+        Call<List<Movie>> moviesCall = (key.equals(POPULAR_MOVIES_KEY)) ? api.getPopularMovies() : api.getTopRatedMovies();
+
+        moviesCall.enqueue(this);
     }
 
     @Override
@@ -83,40 +97,24 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
         mRecyclerView.setAdapter(mPosterAdapter);
     }
 
-    // TODO: handle "This AsyncTask should be static or leaks might occur" warning?
-    public class TMDbQueryTask extends AsyncTask<String, Void, List<Movie>> {
-
-        @Override
-        protected List<Movie> doInBackground(String... params) {
-            String key = params[0];
-            List<Movie> result = null;
-
-            Retrofit fit = new Retrofit.Builder()
-                    .baseUrl(TMDbApi.BASE_URL)
-                    .addConverterFactory(new MovieListConverterFactory())
-                    .build();
-
-            TMDbApi api = fit.create(TMDbApi.class);
-
-            Call<List<Movie>> moviesCall = (key.equals(POPULAR_MOVIES_KEY)) ? api.getPopularMovies() : api.getTopRatedMovies();
-
-            try {
-                Response<List<Movie>> callResponse = moviesCall.execute();
-                result = callResponse.body();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return result;
+    @Override
+    public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+        if (response.isSuccessful() && response.body() != null) {
+            setRecyclerView(response.body());
+        } else {
+            onMovieListCallError();
         }
-
-        @Override
-        protected void onPostExecute(List<Movie> result) {
-            if (result != null) {
-                setRecyclerView(result);
-            }
-        }
-
     }
+
+    @Override
+    public void onFailure(Call<List<Movie>> call, Throwable t) {
+        onMovieListCallError();
+        Log.d(TAG, t.getMessage());
+    }
+
+    private void onMovieListCallError() {
+        Toast.makeText(this, getString(R.string.err_something_wrong_try_again), Toast.LENGTH_LONG).show();
+    }
+
 
 }
