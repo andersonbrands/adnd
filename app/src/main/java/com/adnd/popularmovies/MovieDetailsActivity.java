@@ -1,11 +1,11 @@
 package com.adnd.popularmovies;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.adnd.popularmovies.databinding.ActivityMovieDetailsBinding;
 import com.adnd.popularmovies.models.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -16,7 +16,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+
+        ActivityMovieDetailsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -26,29 +27,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     intentThatStartedThisActivity.getStringExtra(MOVIE_JSON_STRING_EXTRA_KEY);
             Movie movie = Movie.fromJSONString(jsonString);
 
-            if (movie != null){
-                TextView textView = findViewById(R.id.tv_original_title);
-                textView.setText(movie.getOriginal_title());
+            if (movie != null) {
+                binding.setMovie(movie);
 
-                textView = findViewById(R.id.tv_release_date);
-                textView.setText(getString(R.string.release_date_detail, movie.getRelease_date()));
-
-                textView = findViewById(R.id.tv_vote_average);
-                textView.setText(getString(R.string.vote_average_detail, movie.getVote_average()));
-
-                textView = findViewById(R.id.tv_original_title);
-                textView.setText(movie.getOriginal_title());
-
-                textView = findViewById(R.id.tv_overview);
-                textView.setText(movie.getOverview());
-
-                ImageView imageView = findViewById(R.id.iv_poster_image);
                 Picasso.get()
                         .load(movie.getPosterUrl())
                         .placeholder(R.drawable.ic_image_white_24dp)
                         .error(R.drawable.ic_error_outline_white_24dp)
                         .fit()
-                        .into(imageView);
+                        .into(binding.ivPosterImage);
             }
         } else {
             finish();
