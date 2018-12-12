@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
             case R.id.action_order_top_rated:
                 loadTopRatedMovies();
                 break;
+            case R.id.action_favorites:
+                // TODO implement favorites option
+                Toast.makeText(this, getString(R.string.msg_to_be_implemented), Toast.LENGTH_SHORT).show();
+                break;
             default:
                 break;
         }
