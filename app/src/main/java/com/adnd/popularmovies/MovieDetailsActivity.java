@@ -3,7 +3,9 @@ package com.adnd.popularmovies;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.adnd.popularmovies.databinding.ActivityMovieDetailsBinding;
 import com.adnd.popularmovies.models.Movie;
@@ -22,7 +24,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity.hasExtra(MOVIE_JSON_STRING_EXTRA_KEY)) {
-
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
             String jsonString =
                     intentThatStartedThisActivity.getStringExtra(MOVIE_JSON_STRING_EXTRA_KEY);
             Movie movie = Movie.fromJSONString(jsonString);
@@ -40,5 +45,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
