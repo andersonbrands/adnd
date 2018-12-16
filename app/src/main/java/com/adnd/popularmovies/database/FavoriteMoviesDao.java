@@ -26,4 +26,6 @@ public interface FavoriteMoviesDao {
     @Delete
     void deleteFavoriteMovie(FavoriteMovie favoriteMovie);
 
+    @Query("SELECT CAST(COUNT(*) AS BIT) FROM movies WHERE id = :movieId")
+    boolean isFavorite(int movieId);
 }

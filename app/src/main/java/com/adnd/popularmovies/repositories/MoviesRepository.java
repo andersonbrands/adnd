@@ -47,4 +47,7 @@ public class MoviesRepository {
         moviesDao.deleteMovieById(movieId);
     }
 
+    public boolean isFavorite(int movieId) {
+        return favoriteMoviesDao.isFavorite(movieId);
+    }
 }
