@@ -1,8 +1,12 @@
 package com.adnd.popularmovies.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@Entity(tableName = "movies")
 public class Movie {
 
     private String poster_path;
@@ -11,8 +15,15 @@ public class Movie {
     private float vote_average;
     private String release_date;
 
+    @PrimaryKey
+    private int id;
+
     public String getPoster_path() {
         return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
     public String getPosterUrl() {
@@ -27,8 +38,20 @@ public class Movie {
         return original_title;
     }
 
+    public void setOriginal_title(String original_title) {
+        this.original_title = original_title;
+    }
+
+    public void setVote_average(float vote_average) {
+        this.vote_average = vote_average;
+    }
+
     public String getOverview() {
         return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public float getVote_average() {
@@ -37,6 +60,18 @@ public class Movie {
 
     public String getRelease_date() {
         return release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public static Movie fromJSONString(String jsonString) {
@@ -62,6 +97,7 @@ public class Movie {
             movie.overview = jsonObject.getString("overview");
             movie.vote_average = Float.parseFloat(jsonObject.getString("vote_average"));
             movie.release_date = jsonObject.getString("release_date");
+            movie.id = Integer.parseInt(jsonObject.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
             movie = null;
@@ -80,6 +116,7 @@ public class Movie {
             jsonObject.put("overview", this.overview);
             jsonObject.put("vote_average", this.vote_average);
             jsonObject.put("release_date", this.release_date);
+            jsonObject.put("id", this.id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
