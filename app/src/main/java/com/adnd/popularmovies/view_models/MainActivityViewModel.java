@@ -39,31 +39,52 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void loadPopularMovies() {
-        if (favoriteMoviesLiveData != null) {
-            favoriteMoviesLiveData.removeObserver(favoriteMoviesObserver);
-        }
-
-        final LiveData<List<Movie>> ld = moviesRepository.loadPopularMovies();
-        ld.observeForever(new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(@Nullable List<Movie> movies) {
-                moviesListLiveData.setValue(movies);
-                ld.removeObserver(this);
-            }
-        });
+        loadPopularOrTopRatedMovies(MoviesRepository.POPULAR_MOVIES_KEY);
+//        if (favoriteMoviesLiveData != null) {
+//            favoriteMoviesLiveData.removeObserver(favoriteMoviesObserver);
+//        }
+//
+//        final LiveData<List<Movie>> ld = moviesRepository.loadPopularMovies();
+//        ld.observeForever(new Observer<List<Movie>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Movie> movies) {
+//                moviesListLiveData.setValue(movies);
+//                ld.removeObserver(this);
+//            }
+//        });
     }
 
     public void loadTopRatedMovies() {
+        loadPopularOrTopRatedMovies(MoviesRepository.TOP_RATED_MOVIES_KEY);
+//        if (favoriteMoviesLiveData != null) {
+//            favoriteMoviesLiveData.removeObserver(favoriteMoviesObserver);
+//        }
+//
+//        final LiveData<List<Movie>> ld = moviesRepository.loadTopRatedMovies();
+//        ld.observeForever(new Observer<List<Movie>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Movie> movies) {
+//                moviesListLiveData.setValue(movies);
+//                ld.removeObserver(this);
+//            }
+//        });
+    }
+
+    private void loadPopularOrTopRatedMovies(String key) {
         if (favoriteMoviesLiveData != null) {
             favoriteMoviesLiveData.removeObserver(favoriteMoviesObserver);
         }
 
-        final LiveData<List<Movie>> ld = moviesRepository.loadTopRatedMovies();
-        ld.observeForever(new Observer<List<Movie>>() {
+        final LiveData<List<Movie>> popularOrTopRatedMoviesLiveData =
+                (key.equals(MoviesRepository.POPULAR_MOVIES_KEY)) ?
+                        moviesRepository.loadPopularMovies() :
+                        moviesRepository.loadTopRatedMovies();
+
+        popularOrTopRatedMoviesLiveData.observeForever(new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
                 moviesListLiveData.setValue(movies);
-                ld.removeObserver(this);
+                popularOrTopRatedMoviesLiveData.removeObserver(this);
             }
         });
     }

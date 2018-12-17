@@ -22,8 +22,8 @@ import retrofit2.Retrofit;
 public class MoviesRepository {
     private static final String TAG = MoviesRepository.class.getSimpleName();
 
-    private static final String POPULAR_MOVIES_KEY = "popular";
-    private static final String TOP_RATED_MOVIES_KEY = "top_rated";
+    public static final String POPULAR_MOVIES_KEY = "popular";
+    public static final String TOP_RATED_MOVIES_KEY = "top_rated";
 
     private MoviesDao moviesDao;
     private FavoriteMoviesDao favoriteMoviesDao;
