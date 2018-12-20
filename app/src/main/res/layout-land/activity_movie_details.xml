@@ -7,6 +7,12 @@
         <variable
             name="movie"
             type="com.adnd.popularmovies.models.Movie" />
+        <variable
+            name="movieIsFavorite"
+            type="Boolean" />
+        <variable
+            name="viewModel"
+            type="com.adnd.popularmovies.view_models.MovieDetailActivityViewModel" />
     </data>
 
     <ScrollView
@@ -76,6 +82,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
                 android:text="@{@string/release_date_detail(movie.release_date)}"
                 tools:text="@string/release_date_detail" />
+
+            <CheckBox
+                android:id="@+id/cb_movie_is_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{movieIsFavorite}"
+                android:onClick="@{()-> viewModel.toggleMovieIsFavorite(movie, movieIsFavorite)}"
+                android:layout_marginTop="@dimen/space_medium"
+                android:layout_marginEnd="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
