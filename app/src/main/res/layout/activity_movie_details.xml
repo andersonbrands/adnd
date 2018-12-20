@@ -28,10 +28,12 @@
 
             <TextView
                 android:id="@+id/tv_original_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_extra_large"
                 android:text="@{movie.original_title}"
+                android:textSize="@dimen/text_size_extra_large"
+                app:layout_constraintEnd_toStartOf="@+id/cb_movie_is_favorite"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="Original title" />
 
             <ImageView
@@ -83,9 +85,6 @@
                 android:button="@drawable/favorite_checkbox_selector"
                 android:checked="@{movieIsFavorite}"
                 android:onClick="@{()-> viewModel.toggleMovieIsFavorite(movie, movieIsFavorite)}"
-                android:layout_marginTop="@dimen/space_medium"
-                android:layout_marginEnd="@dimen/space_medium"
-                android:layout_marginRight="@dimen/space_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
