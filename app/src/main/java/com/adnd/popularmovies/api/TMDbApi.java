@@ -2,11 +2,13 @@ package com.adnd.popularmovies.api;
 
 import com.adnd.popularmovies.BuildConfig;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieVideo;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface TMDbApi {
 
@@ -17,5 +19,8 @@ public interface TMDbApi {
 
     @GET("movie/top_rated?api_key=" + BuildConfig.TMDb_API_KEY)
     Call<List<Movie>> getTopRatedMovies();
+
+    @GET("movie/{movieId}/videos?api_key=" + BuildConfig.TMDb_API_KEY)
+    Call<List<MovieVideo>> getMovieVideos(@Path("movieId") int movieId);
 
 }

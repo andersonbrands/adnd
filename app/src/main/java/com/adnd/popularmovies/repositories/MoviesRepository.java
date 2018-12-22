@@ -5,12 +5,14 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.adnd.popularmovies.api.MovieListConverterFactory;
+import com.adnd.popularmovies.api.MovieVideosListConverterFactory;
 import com.adnd.popularmovies.api.TMDbApi;
 import com.adnd.popularmovies.database.AppDatabase;
 import com.adnd.popularmovies.database.FavoriteMoviesDao;
 import com.adnd.popularmovies.database.MoviesDao;
 import com.adnd.popularmovies.models.FavoriteMovie;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieVideo;
 
 import java.util.List;
 
@@ -108,6 +110,45 @@ public class MoviesRepository {
     }
 
     private void onMovieListCallError() {
+        // TODO how to notify activity that an error occurred?
+    }
+
+    public LiveData<List<MovieVideo>> loadMovieVideos(int movieId) {
+        MutableLiveData<List<MovieVideo>> movieVideosLiveData = new MutableLiveData<>();
+
+        loadMovieVideosFromWebService(movieId, movieVideosLiveData);
+
+        return movieVideosLiveData;
+    }
+
+    public void loadMovieVideosFromWebService(int movieId, final MutableLiveData<List<MovieVideo>> movieVideosLiveData) {
+        Retrofit fit = new Retrofit.Builder()
+                .baseUrl(TMDbApi.BASE_URL)
+                .addConverterFactory(new MovieVideosListConverterFactory())
+                .build();
+
+        TMDbApi api = fit.create(TMDbApi.class);
+
+        Call<List<MovieVideo>> movieVideosCall = api.getMovieVideos(movieId);
+
+        movieVideosCall.enqueue(new Callback<List<MovieVideo>>() {
+            @Override
+            public void onResponse(Call<List<MovieVideo>> call, Response<List<MovieVideo>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    movieVideosLiveData.setValue(response.body());
+                } else {
+                    onMovieVideosListCallError();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MovieVideo>> call, Throwable t) {
+                onMovieVideosListCallError();
+            }
+        });
+    }
+
+    private void onMovieVideosListCallError() {
         // TODO how to notify activity that an error occurred?
     }
 }
