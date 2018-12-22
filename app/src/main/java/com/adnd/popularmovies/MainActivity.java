@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Lis
     }
 
     private void setRecyclerView(List<Movie> movies) {
-        binding.rvPosters.setLayoutManager(new GridLayoutManager(this, 2));
+        binding.rvPosters.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.poster_grid_cols)));
         mPosterAdapter = new PosterAdapter(movies, this);
         binding.rvPosters.setAdapter(mPosterAdapter);
     }
