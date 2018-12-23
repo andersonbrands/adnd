@@ -18,13 +18,9 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
 
     private List<Movie> movies;
 
-    final private ListItemClickListener mListItemClickListener;
+    final private ListItemClickListener<Movie> mListItemClickListener;
 
-    public interface ListItemClickListener {
-        void onListItemClick(Movie clickedItem);
-    }
-
-    public PosterAdapter(List<Movie> movies, ListItemClickListener listItemClickListener) {
+    public PosterAdapter(List<Movie> movies, ListItemClickListener<Movie> listItemClickListener) {
         if (movies == null) {
             this.movies = new ArrayList<>();
         } else {

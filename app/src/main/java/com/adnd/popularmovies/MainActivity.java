@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.adnd.popularmovies.adapters.ListItemClickListener;
 import com.adnd.popularmovies.adapters.PosterAdapter;
 import com.adnd.popularmovies.databinding.ActivityMainBinding;
 import com.adnd.popularmovies.models.Movie;
@@ -18,7 +19,7 @@ import com.adnd.popularmovies.view_models.MainActivityViewModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PosterAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements ListItemClickListener<Movie> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
