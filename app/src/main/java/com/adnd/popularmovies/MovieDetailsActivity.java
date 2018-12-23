@@ -2,8 +2,10 @@ package com.adnd.popularmovies;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -101,6 +103,18 @@ public class MovieDetailsActivity extends AppCompatActivity implements ListItemC
 
     @Override
     public void onListItemClick(MovieVideo clickedItem) {
-        Toast.makeText(this, "clicked item: " + clickedItem.getName(), Toast.LENGTH_LONG).show();
+        // assuming only youtube videos will be loaded
+        if (!clickedItem.getSite().equals("YouTube")) {
+            Toast.makeText(this, getString(R.string.err_only_youtube_videos_supported), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Uri uri;
+        try {
+            uri = Uri.parse("vnd.youtube:" + clickedItem.getKey());
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        } catch (ActivityNotFoundException ex) {
+            uri = Uri.parse("http://www.youtube.com/watch?v=" + clickedItem.getKey());
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        }
     }
 }
