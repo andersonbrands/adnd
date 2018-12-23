@@ -92,7 +92,7 @@
                 android:id="@+id/rv_movie_videos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_height="500dp"
+                tools:listitem="@layout/movie_video_list_item"
                 app:layout_constraintTop_toBottomOf="@id/tv_overview">
 
             </android.support.v7.widget.RecyclerView>
