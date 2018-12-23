@@ -19,6 +19,8 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
 
     private static final String TAG = MovieDetailActivityViewModel.class.getSimpleName();
 
+    private int movieId = -1;
+
     private MoviesRepository moviesRepository;
 
     private MediatorLiveData<Boolean> movieIsFavorite = new MediatorLiveData<>();
@@ -32,6 +34,12 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
     }
 
     public void init(Movie movie) {
+        if (movieId != -1) {
+            return; // should only initialize once
+        } else {
+            movieId = movie.getId();
+        }
+
         movieIsFavorite.addSource(moviesRepository.isFavorite(movieId), new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
