@@ -8,24 +8,32 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.adnd.popularmovies.adapters.ListItemClickListener;
+import com.adnd.popularmovies.adapters.MovieVideoAdapter;
 import com.adnd.popularmovies.databinding.ActivityMovieDetailsBinding;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieVideo;
 import com.adnd.popularmovies.view_models.MovieDetailActivityViewModel;
 import com.squareup.picasso.Picasso;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MovieDetailsActivity extends AppCompatActivity implements ListItemClickListener<MovieVideo> {
 
     public static final String MOVIE_JSON_STRING_EXTRA_KEY = "movie_json_string";
 
     MovieDetailActivityViewModel model;
 
+    private ActivityMovieDetailsBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActivityMovieDetailsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -37,6 +45,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(@Nullable Boolean aBoolean) {
                     binding.setMovieIsFavorite(aBoolean);
+                }
+            });
+
+            model.getMovieVideosLiveData().observe(this, new Observer<List<MovieVideo>>() {
+                @Override
+                public void onChanged(@Nullable List<MovieVideo> movieVideos) {
+                    setMovieVideosRecyclerView(movieVideos);
                 }
             });
 
@@ -65,6 +80,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void setMovieVideosRecyclerView(List<MovieVideo> movieVideos) {
+        final int gridCols = getResources().getInteger(R.integer.movie_video_cols);
+        binding.rvMovieVideos.setLayoutManager(new GridLayoutManager(this, gridCols));
+        MovieVideoAdapter adapter = new MovieVideoAdapter(movieVideos, this);
+        binding.rvMovieVideos.setAdapter(adapter);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -75,5 +97,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListItemClick(MovieVideo clickedItem) {
+        Toast.makeText(this, "clicked item: " + clickedItem.getName(), Toast.LENGTH_LONG).show();
     }
 }

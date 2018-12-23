@@ -2,5 +2,6 @@
 <resources>
 
     <integer name="poster_grid_cols">2</integer>
+    <integer name="movie_video_cols">1</integer>
 
 </resources>

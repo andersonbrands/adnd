@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 
 import com.adnd.popularmovies.models.FavoriteMovie;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieVideo;
 import com.adnd.popularmovies.repositories.MoviesRepository;
+
+import java.util.List;
 
 public class MovieDetailActivityViewModel extends AndroidViewModel {
 
@@ -20,6 +23,8 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
 
     private MediatorLiveData<Boolean> movieIsFavorite = new MediatorLiveData<>();
 
+    private MediatorLiveData<List<MovieVideo>> movieVideosLiveData = new MediatorLiveData<>();
+
     public MovieDetailActivityViewModel(@NonNull Application application) {
         super(application);
 
@@ -27,12 +32,24 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
     }
 
     public void init(Movie movie) {
-        movieIsFavorite.addSource(moviesRepository.isFavorite(movie.getId()), new Observer<Boolean>() {
+        movieIsFavorite.addSource(moviesRepository.isFavorite(movieId), new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 movieIsFavorite.setValue(aBoolean);
             }
         });
+
+        movieVideosLiveData.addSource(moviesRepository.loadMovieVideos(movieId), new Observer<List<MovieVideo>>() {
+            @Override
+            public void onChanged(@Nullable List<MovieVideo> movieVideos) {
+                movieVideosLiveData.setValue(movieVideos);
+            }
+        });
+
+    }
+
+    public MediatorLiveData<List<MovieVideo>> getMovieVideosLiveData() {
+        return movieVideosLiveData;
     }
 
     public LiveData<Boolean> getMovieIsFavorite() {
