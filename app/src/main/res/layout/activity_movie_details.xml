@@ -88,14 +88,34 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_movie_videos"
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nsc_videos"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_movie_videos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/movie_video_list_item" />
+
+            </android.support.v4.widget.NestedScrollView>
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nsc_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/movie_video_list_item"
-                app:layout_constraintTop_toBottomOf="@id/tv_overview">
+                app:layout_constraintTop_toBottomOf="@id/nsc_videos">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_movie_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/movie_review_list_item" />
+
+            </android.support.v4.widget.NestedScrollView>
+
         </android.support.constraint.ConstraintLayout>
 
     </ScrollView>

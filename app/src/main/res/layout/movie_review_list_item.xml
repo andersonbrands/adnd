@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieReview"
+            type="com.adnd.popularmovies.models.MovieReview" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:paddingBottom="@dimen/space_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:textStyle="bold"
+            android:id="@+id/tv_author"
+            android:text="@{movieReview.author}"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="John Public" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@+id/tv_author"
+            android:text="@{movieReview.content}"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra vestibulum diam, nec sodales purus commodo nec. Phasellus non pretium massa. Sed nisl quam, blandit sed ligula in, pharetra suscipit ipsum. Sed ultrices sapien purus, eu placerat orci laoreet non. Praesent enim tortor, consectetur non augue vitae, hendrerit bibendum orci. Proin vitae justo est." />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

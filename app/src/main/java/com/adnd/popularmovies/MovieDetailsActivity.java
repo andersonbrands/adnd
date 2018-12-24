@@ -11,13 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.adnd.popularmovies.adapters.ListItemClickListener;
+import com.adnd.popularmovies.adapters.MovieReviewAdapter;
 import com.adnd.popularmovies.adapters.MovieVideoAdapter;
 import com.adnd.popularmovies.databinding.ActivityMovieDetailsBinding;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieReview;
 import com.adnd.popularmovies.models.MovieVideo;
 import com.adnd.popularmovies.view_models.MovieDetailActivityViewModel;
 import com.squareup.picasso.Picasso;
@@ -31,6 +34,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements ListItemC
     MovieDetailActivityViewModel model;
 
     private ActivityMovieDetailsBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements ListItemC
                 @Override
                 public void onChanged(@Nullable List<MovieVideo> movieVideos) {
                     setMovieVideosRecyclerView(movieVideos);
+                }
+            });
+
+            model.getMovieReviewsLiveData().observe(this, new Observer<List<MovieReview>>() {
+                @Override
+                public void onChanged(@Nullable List<MovieReview> movieReviews) {
+                    setMovieReviewsRecyclerView(movieReviews);
                 }
             });
 
@@ -87,6 +98,12 @@ public class MovieDetailsActivity extends AppCompatActivity implements ListItemC
         binding.rvMovieVideos.setLayoutManager(new GridLayoutManager(this, gridCols));
         MovieVideoAdapter adapter = new MovieVideoAdapter(movieVideos, this);
         binding.rvMovieVideos.setAdapter(adapter);
+    }
+
+    private void setMovieReviewsRecyclerView(List<MovieReview> movieReviews) {
+        binding.rvMovieReviews.setLayoutManager(new LinearLayoutManager(this));
+        MovieReviewAdapter adapter = new MovieReviewAdapter(movieReviews);
+        binding.rvMovieReviews.setAdapter(adapter);
     }
 
     @Override
