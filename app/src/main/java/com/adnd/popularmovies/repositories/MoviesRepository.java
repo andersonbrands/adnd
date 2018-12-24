@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.adnd.popularmovies.api.MovieListConverterFactory;
+import com.adnd.popularmovies.api.MovieReviewsListConverterFactory;
 import com.adnd.popularmovies.api.MovieVideosListConverterFactory;
 import com.adnd.popularmovies.api.TMDbApi;
 import com.adnd.popularmovies.database.AppDatabase;
@@ -12,6 +13,7 @@ import com.adnd.popularmovies.database.FavoriteMoviesDao;
 import com.adnd.popularmovies.database.MoviesDao;
 import com.adnd.popularmovies.models.FavoriteMovie;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieReview;
 import com.adnd.popularmovies.models.MovieVideo;
 
 import java.util.List;
@@ -121,6 +123,15 @@ public class MoviesRepository {
         return movieVideosLiveData;
     }
 
+    public LiveData<List<MovieReview>> loadMovieReviews(int movieId) {
+        MutableLiveData<List<MovieReview>> movieReviewsLiveData = new MutableLiveData<>();
+
+        loadMovieReviewsFromWebService(movieId, movieReviewsLiveData);
+
+        return movieReviewsLiveData;
+    }
+
+
     public void loadMovieVideosFromWebService(int movieId, final MutableLiveData<List<MovieVideo>> movieVideosLiveData) {
         Retrofit fit = new Retrofit.Builder()
                 .baseUrl(TMDbApi.BASE_URL)
@@ -148,7 +159,40 @@ public class MoviesRepository {
         });
     }
 
+    public void loadMovieReviewsFromWebService(int movieId, final MutableLiveData<List<MovieReview>> movieReviewsLiveData) {
+        Retrofit fit = new Retrofit.Builder()
+                .baseUrl(TMDbApi.BASE_URL)
+                .addConverterFactory(new MovieReviewsListConverterFactory())
+                .build();
+
+        TMDbApi api = fit.create(TMDbApi.class);
+
+        Call<List<MovieReview>> movieVideosCall = api.getMovieReviews(movieId);
+
+        movieVideosCall.enqueue(new Callback<List<MovieReview>>() {
+            @Override
+            public void onResponse(Call<List<MovieReview>> call, Response<List<MovieReview>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    movieReviewsLiveData.setValue(response.body());
+                } else {
+                    onMovieReviewsListCallError();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MovieReview>> call, Throwable t) {
+                onMovieReviewsListCallError();
+            }
+        });
+    }
+
+
     private void onMovieVideosListCallError() {
         // TODO how to notify activity that an error occurred?
     }
+
+    private void onMovieReviewsListCallError() {
+        // TODO how to notify activity that an error occurred?
+    }
+
 }

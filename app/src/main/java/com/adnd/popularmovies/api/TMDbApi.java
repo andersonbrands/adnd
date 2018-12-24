@@ -2,6 +2,7 @@ package com.adnd.popularmovies.api;
 
 import com.adnd.popularmovies.BuildConfig;
 import com.adnd.popularmovies.models.Movie;
+import com.adnd.popularmovies.models.MovieReview;
 import com.adnd.popularmovies.models.MovieVideo;
 
 import java.util.List;
@@ -22,5 +23,8 @@ public interface TMDbApi {
 
     @GET("movie/{movieId}/videos?api_key=" + BuildConfig.TMDb_API_KEY)
     Call<List<MovieVideo>> getMovieVideos(@Path("movieId") int movieId);
+
+    @GET("movie/{movieId}/reviews?api_key=" + BuildConfig.TMDb_API_KEY)
+    Call<List<MovieReview>> getMovieReviews(@Path("movieId") int movieId);
 
 }
