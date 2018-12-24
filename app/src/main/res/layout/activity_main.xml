@@ -3,6 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="adapter"
+            type="com.adnd.popularmovies.adapters.PosterAdapter" />
+
+        <variable
+            name="model"
+            type="com.adnd.popularmovies.view_models.MainActivityViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,6 +26,21 @@
             android:id="@+id/rv_posters"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.emptyListTestResId}"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            android:visibility="@{adapter.listIsEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_posters"
+            app:layout_constraintEnd_toEndOf="@+id/rv_posters"
+            app:layout_constraintStart_toStartOf="@+id/rv_posters"
+            app:layout_constraintTop_toTopOf="@+id/rv_posters"
+            tools:text="@string/empty_list"
+            tools:visibility="gone" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -8,7 +8,9 @@
     <string name="vote_average_detail">Vote average: %.1f</string>
     <string name="release_date_detail">Release date: %s</string>
 
+    <string name="empty_list">Empty list!</string>
     <string name="err_something_wrong_try_again">Oops, something went wrong, try again!</string>
+    <string name="you_have_no_favorite_movie">You still don\'t have any favorite movie!</string>
     <string name="err_only_youtube_videos_supported">Oops, this trailer is not from YouTube! Can\'t be played!</string>
     <string name="msg_to_be_implemented">To be implemented!</string>
 

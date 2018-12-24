@@ -1,5 +1,6 @@
 package com.adnd.popularmovies.adapters;
 
+import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
 
     final private ListItemClickListener<Movie> mListItemClickListener;
 
+    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
+
     public PosterAdapter(List<Movie> movies, ListItemClickListener<Movie> listItemClickListener) {
         if (movies == null) {
             this.movies = new ArrayList<>();
@@ -27,6 +30,11 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
             this.movies = movies;
         }
         mListItemClickListener = listItemClickListener;
+        listIsEmpty.set(getItemCount() == 0);
+    }
+
+    public ObservableBoolean getListIsEmpty() {
+        return listIsEmpty;
     }
 
     @NonNull

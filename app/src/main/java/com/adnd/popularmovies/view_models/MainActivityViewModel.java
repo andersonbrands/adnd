@@ -5,9 +5,11 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.models.Movie;
 import com.adnd.popularmovies.repositories.MoviesRepository;
 
@@ -19,10 +21,15 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Movie>> moviesListLiveData = new MutableLiveData<>();
 
+    private final ObservableInt emptyListTestResId = new ObservableInt();
+
     private LiveData<List<Movie>> favoriteMoviesLiveData = null;
     private Observer<List<Movie>> favoriteMoviesObserver = new Observer<List<Movie>>() {
         @Override
         public void onChanged(@Nullable List<Movie> movies) {
+            if (movies == null || movies.size() == 0) {
+                emptyListTestResId.set(R.string.you_have_no_favorite_movie);
+            }
             moviesListLiveData.setValue(movies);
         }
     };
@@ -31,7 +38,13 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
         moviesRepository = new MoviesRepository(application);
 
+        emptyListTestResId.set(R.string.empty_list);
+
         loadPopularMovies();
+    }
+
+    public ObservableInt getEmptyListTestResId() {
+        return emptyListTestResId;
     }
 
     public LiveData<List<Movie>> getMoviesListLiveData() {
@@ -59,6 +72,9 @@ public class MainActivityViewModel extends AndroidViewModel {
         popularOrTopRatedMoviesLiveData.observeForever(new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
+                if (movies == null) {
+                    emptyListTestResId.set(R.string.err_something_wrong_try_again);
+                }
                 moviesListLiveData.setValue(movies);
                 popularOrTopRatedMoviesLiveData.removeObserver(this);
             }

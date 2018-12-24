@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
         model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
+        binding.setModel(model);
+
         model.getMoviesListLiveData().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
         binding.rvPosters.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.poster_grid_cols)));
         mPosterAdapter = new PosterAdapter(movies, this);
         binding.rvPosters.setAdapter(mPosterAdapter);
+        binding.setAdapter(mPosterAdapter);
     }
 
 }

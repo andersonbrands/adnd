@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.adnd.popularmovies.AppExecutors;
 import com.adnd.popularmovies.api.MovieListConverterFactory;
 import com.adnd.popularmovies.api.MovieReviewsListConverterFactory;
 import com.adnd.popularmovies.api.MovieVideosListConverterFactory;
@@ -38,26 +39,38 @@ public class MoviesRepository {
         moviesDao = db.MoviesDao();
     }
 
+    public void addToFavorites(final Movie movie) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+            // when inserting favorite movie we also need to inserting the movie itself
+                moviesDao.insert(movie);
+                favoriteMoviesDao.insert(new FavoriteMovie(movie.getId()));
+            }
+        });
 
-    public void addToFavorites(Movie movie) {
-        // when inserting favorite movie we also need to inserting the movie itself
-        moviesDao.insert(movie);
-        favoriteMoviesDao.insert(new FavoriteMovie(movie.getId()));
     }
 
-    public void deleteFavoriteMovie(FavoriteMovie favoriteMovie) {
-        favoriteMoviesDao.deleteFavoriteMovie(favoriteMovie);
+    public void deleteFavoriteMovie(final FavoriteMovie favoriteMovie) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favoriteMoviesDao.deleteFavoriteMovie(favoriteMovie);
 
-        // for now when deleting a favorite movie we also delete the movie itself
-        deleteMovie(favoriteMovie.getMovie_id());
+                // for now when deleting a favorite movie we also delete the movie itself
+                moviesDao.deleteMovieById(favoriteMovie.getMovie_id());
+            }
+        });
     }
 
-    public void deleteMovie(Movie movie) {
-        moviesDao.deleteMovie(movie);
-    }
+    public void deleteMovie(final Movie movie) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                moviesDao.deleteMovie(movie);
+            }
+        });
 
-    public void deleteMovie(int movieId) {
-        moviesDao.deleteMovieById(movieId);
     }
 
     public LiveData<Boolean> isFavorite(int movieId) {
@@ -108,12 +121,13 @@ public class MoviesRepository {
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 onMovieListCallError();
             }
+
+            private void onMovieListCallError() {
+                moviesListLiveData.setValue(null);
+            }
         });
     }
 
-    private void onMovieListCallError() {
-        // TODO how to notify activity that an error occurred?
-    }
 
     public LiveData<List<MovieVideo>> loadMovieVideos(int movieId) {
         MutableLiveData<List<MovieVideo>> movieVideosLiveData = new MutableLiveData<>();
@@ -185,7 +199,6 @@ public class MoviesRepository {
             }
         });
     }
-
 
     private void onMovieVideosListCallError() {
         // TODO how to notify activity that an error occurred?
