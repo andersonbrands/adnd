@@ -8,6 +8,8 @@
     <string name="vote_average_detail">Vote average: %.1f</string>
     <string name="release_date_detail">Release date: %s</string>
 
+    <string name="trailers_label">Trailers: </string>
+    <string name="reviews_label">Reviews: </string>
     <string name="empty_list">Empty list!</string>
     <string name="err_something_wrong_try_again">Oops, something went wrong, try again!</string>
     <string name="you_have_no_favorite_movie">You still don\'t have any favorite movie!</string>

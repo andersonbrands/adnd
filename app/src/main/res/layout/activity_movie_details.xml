@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="com.adnd.popularmovies.models.Movie" />
+
         <variable
             name="movieIsFavorite"
             type="Boolean" />
+
         <variable
             name="viewModel"
             type="com.adnd.popularmovies.view_models.MovieDetailActivityViewModel" />
@@ -49,9 +52,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_medium"
+                android:text="@{movie.overview}"
                 android:textSize="@dimen/text_size_medium"
                 app:layout_constraintTop_toBottomOf="@+id/iv_poster_image"
-                android:text="@{movie.overview}"
                 tools:text="Movie overview should go here" />
 
             <TextView
@@ -60,10 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
+                android:text="@{@string/vote_average_detail(movie.vote_average)}"
                 android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
-                android:text="@{@string/vote_average_detail(movie.vote_average)}"
                 tools:text="@string/vote_average_detail" />
 
             <TextView
@@ -72,10 +75,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
+                android:text="@{@string/release_date_detail(movie.release_date)}"
                 android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_poster_image"
-                android:text="@{@string/release_date_detail(movie.release_date)}"
                 tools:text="@string/release_date_detail" />
 
             <CheckBox
@@ -88,11 +91,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tv_trailers_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_medium"
+                android:layout_marginBottom="@dimen/space_medium"
+                android:text="@string/trailers_label"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview" />
+
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/nsc_videos"
-                app:layout_constraintTop_toBottomOf="@id/tv_overview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_trailers_label">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_movie_videos"
@@ -102,11 +116,22 @@
 
             </android.support.v4.widget.NestedScrollView>
 
+            <TextView
+                android:id="@+id/tv_reviews_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_medium"
+                android:layout_marginBottom="@dimen/space_medium"
+                android:text="@string/reviews_label"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@id/nsc_videos" />
+
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/nsc_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/nsc_videos">
+                app:layout_constraintTop_toBottomOf="@id/tv_reviews_label">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_movie_reviews"
