@@ -1,6 +1,5 @@
 package com.adnd.popularmovies.adapters;
 
-import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,29 +11,15 @@ import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.models.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterViewHolder> {
-
-    private List<Movie> movies;
+public class PosterAdapter extends BaseAdapter<Movie, PosterAdapter.PosterViewHolder> {
 
     final private ListItemClickListener<Movie> mListItemClickListener;
 
-    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
-
     public PosterAdapter(List<Movie> movies, ListItemClickListener<Movie> listItemClickListener) {
-        if (movies == null) {
-            this.movies = new ArrayList<>();
-        } else {
-            this.movies = movies;
-        }
+        super(movies);
         mListItemClickListener = listItemClickListener;
-        listIsEmpty.set(getItemCount() == 0);
-    }
-
-    public ObservableBoolean getListIsEmpty() {
-        return listIsEmpty;
     }
 
     @NonNull
@@ -50,21 +35,16 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
 
     @Override
     public void onBindViewHolder(@NonNull PosterViewHolder posterViewHolder, int position) {
-        Movie movie = movies.get(position);
+        Movie movie = getObjects().get(position);
         posterViewHolder.bind(movie.getPosterUrl());
     }
 
-    @Override
-    public int getItemCount() {
-        return movies.size();
-    }
-
-    public class PosterViewHolder extends RecyclerView.ViewHolder
+    class PosterViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private ImageView posterImageView;
 
-        public PosterViewHolder(@NonNull View itemView) {
+        PosterViewHolder(@NonNull View itemView) {
             super(itemView);
             posterImageView = itemView.findViewById(R.id.iv_poster_image);
             posterImageView.setOnClickListener(this);
@@ -81,7 +61,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
         @Override
         public void onClick(View v) {
             final int clickedPosition = getAdapterPosition();
-            mListItemClickListener.onListItemClick(movies.get(clickedPosition));
+            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition));
         }
     }
 }

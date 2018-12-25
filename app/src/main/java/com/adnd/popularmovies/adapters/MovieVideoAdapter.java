@@ -1,7 +1,6 @@
 package com.adnd.popularmovies.adapters;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,35 +11,15 @@ import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.databinding.MovieVideoListItemBinding;
 import com.adnd.popularmovies.models.MovieVideo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.MovieVideoViewHolder> {
-
-    private List<MovieVideo> movieVideos;
+public class MovieVideoAdapter extends BaseAdapter<MovieVideo, MovieVideoAdapter.MovieVideoViewHolder> {
 
     final private ListItemClickListener<MovieVideo> mListItemClickListener;
 
-    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
-
     public MovieVideoAdapter(List<MovieVideo> movieVideos, ListItemClickListener<MovieVideo> listItemClickListener) {
-        if (movieVideos == null) {
-            this.movieVideos = new ArrayList<>();
-        } else {
-            this.movieVideos = movieVideos;
-        }
+        super(movieVideos);
         mListItemClickListener = listItemClickListener;
-
-        listIsEmpty.set(getItemCount() == 0);
-    }
-
-    public ObservableBoolean getListIsEmpty() {
-        return listIsEmpty;
-    }
-
-    @Override
-    public int getItemCount() {
-        return movieVideos.size();
     }
 
     @NonNull
@@ -53,15 +32,15 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Mo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieVideoAdapter.MovieVideoViewHolder movieVideViewHolder, int position) {
-        final MovieVideo movieVideo = movieVideos.get(position);
-        movieVideViewHolder.bind(movieVideo);
+    public void onBindViewHolder(@NonNull MovieVideoAdapter.MovieVideoViewHolder movieVideoViewHolder, int position) {
+        final MovieVideo movieVideo = getObjects().get(position);
+        movieVideoViewHolder.bind(movieVideo);
     }
 
-    public class MovieVideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MovieVideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         MovieVideoListItemBinding binding;
 
-        public MovieVideoViewHolder(MovieVideoListItemBinding binding) {
+        MovieVideoViewHolder(MovieVideoListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);
@@ -74,7 +53,7 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Mo
         @Override
         public void onClick(View v) {
             final int clickedPosition = getAdapterPosition();
-            mListItemClickListener.onListItemClick(movieVideos.get(clickedPosition));
+            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition));
         }
     }
 }

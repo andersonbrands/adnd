@@ -1,7 +1,6 @@
 package com.adnd.popularmovies.adapters;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,32 +10,12 @@ import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.databinding.MovieReviewListItemBinding;
 import com.adnd.popularmovies.models.MovieReview;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.MovieReviewViewHolder> {
-
-    private List<MovieReview> movieReviews;
-
-    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
+public class MovieReviewAdapter extends BaseAdapter<MovieReview, MovieReviewAdapter.MovieReviewViewHolder> {
 
     public MovieReviewAdapter(List<MovieReview> movieReviews) {
-        if (movieReviews == null) {
-            this.movieReviews = new ArrayList<>();
-        } else {
-            this.movieReviews = movieReviews;
-        }
-
-        listIsEmpty.set(getItemCount() == 0);
-    }
-
-    public ObservableBoolean getListIsEmpty() {
-        return listIsEmpty;
-    }
-
-    @Override
-    public int getItemCount() {
-        return movieReviews.size();
+        super(movieReviews);
     }
 
     @NonNull
@@ -50,14 +29,14 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MovieReviewAdapter.MovieReviewViewHolder movieReviewViewHolder, int position) {
-        final MovieReview MovieReview = movieReviews.get(position);
+        final MovieReview MovieReview = getObjects().get(position);
         movieReviewViewHolder.bind(MovieReview);
     }
 
-    public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
+    class MovieReviewViewHolder extends RecyclerView.ViewHolder {
         MovieReviewListItemBinding binding;
 
-        public MovieReviewViewHolder(MovieReviewListItemBinding binding) {
+        MovieReviewViewHolder(MovieReviewListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
