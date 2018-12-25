@@ -21,14 +21,14 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Movie>> moviesListLiveData = new MutableLiveData<>();
 
-    private final ObservableInt emptyListTestResId = new ObservableInt();
+    private final ObservableInt emptyListTextResId = new ObservableInt();
 
     private LiveData<List<Movie>> favoriteMoviesLiveData = null;
     private Observer<List<Movie>> favoriteMoviesObserver = new Observer<List<Movie>>() {
         @Override
         public void onChanged(@Nullable List<Movie> movies) {
             if (movies == null || movies.size() == 0) {
-                emptyListTestResId.set(R.string.you_have_no_favorite_movie);
+                emptyListTextResId.set(R.string.you_have_no_favorite_movie);
             }
             moviesListLiveData.setValue(movies);
         }
@@ -38,13 +38,13 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
         moviesRepository = new MoviesRepository(application);
 
-        emptyListTestResId.set(R.string.empty_list);
+        emptyListTextResId.set(R.string.empty_list);
 
         loadPopularMovies();
     }
 
-    public ObservableInt getEmptyListTestResId() {
-        return emptyListTestResId;
+    public ObservableInt getEmptyListTextResId() {
+        return emptyListTextResId;
     }
 
     public LiveData<List<Movie>> getMoviesListLiveData() {
@@ -73,7 +73,7 @@ public class MainActivityViewModel extends AndroidViewModel {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
                 if (movies == null) {
-                    emptyListTestResId.set(R.string.err_something_wrong_try_again);
+                    emptyListTextResId.set(R.string.err_something_wrong_try_again);
                 }
                 moviesListLiveData.setValue(movies);
                 popularOrTopRatedMoviesLiveData.removeObserver(this);

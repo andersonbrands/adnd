@@ -31,7 +31,7 @@
             android:id="@+id/tv_empty_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.emptyListTestResId}"
+            android:text="@{model.emptyListTextResId}"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold"
             android:visibility="@{adapter.listIsEmpty ? View.VISIBLE : View.GONE}"
