@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private PosterAdapter mPosterAdapter;
-
     private ActivityMainBinding binding;
 
     private MainActivityViewModel model;
@@ -80,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     private void setRecyclerView(List<Movie> movies) {
         binding.rvPosters.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.poster_grid_cols)));
-        mPosterAdapter = new PosterAdapter(movies, this);
-        binding.rvPosters.setAdapter(mPosterAdapter);
-        binding.setAdapter(mPosterAdapter);
+        PosterAdapter posterAdapter = new PosterAdapter(movies, this);
+        binding.rvPosters.setAdapter(posterAdapter);
+        binding.setAdapter(posterAdapter);
     }
 
 }
