@@ -29,10 +29,7 @@
     </data>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="@dimen/space_medium"
+        style="@style/DetailsScrollView"
         tools:context=".MovieDetailsActivity">
 
         <android.support.constraint.ConstraintLayout
@@ -41,32 +38,28 @@
 
             <TextView
                 android:id="@+id/tv_original_title"
+                style="@style/Text.ExtraLarge"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
                 android:text="@{movie.original_title}"
-                android:textSize="@dimen/text_size_extra_large"
                 app:layout_constraintEnd_toStartOf="@+id/cb_movie_is_favorite"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 tools:text="Original title" />
 
             <ImageView
                 android:id="@+id/iv_poster_image"
-                android:layout_width="@dimen/poster_image_width"
-                android:layout_height="@dimen/poster_image_height"
-                android:layout_margin="@dimen/space_medium"
+                style="@style/DetailPosterImage"
                 tools:background="#accc" />
 
             <TextView
                 android:id="@+id/tv_overview"
+                style="@style/Text.Medium"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
                 android:layout_marginTop="@dimen/space_extra_large"
                 android:text="@{movie.overview}"
-                android:textSize="@dimen/text_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_vote_average"
@@ -74,34 +67,28 @@
 
             <TextView
                 android:id="@+id/tv_vote_average"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Text.Medium"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
                 android:text="@{@string/vote_average_detail(movie.vote_average)}"
-                android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
                 tools:text="@string/vote_average_detail" />
 
             <TextView
                 android:id="@+id/tv_release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Text.Medium"
                 android:layout_marginStart="@dimen/space_small"
                 android:layout_marginLeft="@dimen/space_small"
                 android:layout_marginTop="@dimen/space_small"
                 android:text="@{@string/release_date_detail(movie.release_date)}"
-                android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
                 tools:text="@string/release_date_detail" />
 
             <CheckBox
                 android:id="@+id/cb_movie_is_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/favorite_checkbox_selector"
+                style="@style/MovieIsFavoriteCheckBox"
                 android:checked="@{movieIsFavorite}"
                 android:onClick="@{()-> viewModel.toggleMovieIsFavorite(movie, movieIsFavorite)}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,13 +96,8 @@
 
             <TextView
                 android:id="@+id/tv_trailers_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_medium"
-                android:layout_marginBottom="@dimen/space_medium"
+                style="@style/DetailSectionLabel"
                 android:text="@string/trailers_label"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold|italic"
                 app:layout_constraintTop_toBottomOf="@id/barrier" />
 
             <android.support.v4.widget.NestedScrollView
@@ -135,13 +117,11 @@
                         tools:listitem="@layout/movie_video_list_item" />
 
                     <TextView
+                        style="@style/Text.Medium"
                         android:layout_gravity="center"
-                        android:textSize="@dimen/text_size_medium"
                         android:text="@{viewModel.emptyVideosListTextResId}"
                         android:visibility="@{videosAdapter.listIsEmpty ? View.VISIBLE : View.GONE}"
-                        tools:text="@string/err_load_trailers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        tools:text="@string/err_load_trailers" />
 
                 </FrameLayout>
 
@@ -149,13 +129,8 @@
 
             <TextView
                 android:id="@+id/tv_reviews_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_medium"
-                android:layout_marginBottom="@dimen/space_medium"
+                style="@style/DetailSectionLabel"
                 android:text="@string/reviews_label"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold|italic"
                 app:layout_constraintTop_toBottomOf="@id/nsc_videos" />
 
             <android.support.v4.widget.NestedScrollView
@@ -175,13 +150,11 @@
                         tools:listitem="@layout/movie_review_list_item" />
 
                     <TextView
+                        style="@style/Text.Medium"
                         android:layout_gravity="center"
-                        android:textSize="@dimen/text_size_medium"
                         android:text="@{viewModel.emptyReviewsListTextResId}"
                         android:visibility="@{reviewsAdapter.listIsEmpty ? View.VISIBLE : View.GONE}"
-                        tools:text="@string/err_load_reviews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        tools:text="@string/err_load_reviews" />
 
                 </FrameLayout>
 

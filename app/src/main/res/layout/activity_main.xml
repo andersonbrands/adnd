@@ -29,18 +29,15 @@
 
         <TextView
             android:id="@+id/tv_empty_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@{model.emptyListTextResId}"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
             android:visibility="@{adapter.listIsEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/rv_posters"
             app:layout_constraintEnd_toEndOf="@+id/rv_posters"
             app:layout_constraintStart_toStartOf="@+id/rv_posters"
             app:layout_constraintTop_toTopOf="@+id/rv_posters"
             tools:text="@string/empty_list"
-            tools:visibility="gone" />
+            tools:visibility="visible"
+            style="@style/Text.Large.Bold" />
 
     </android.support.constraint.ConstraintLayout>
 
