@@ -5,9 +5,11 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
+import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.adnd.popularmovies.R;
 import com.adnd.popularmovies.models.FavoriteMovie;
 import com.adnd.popularmovies.models.Movie;
 import com.adnd.popularmovies.models.MovieReview;
@@ -22,6 +24,9 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
 
     private int movieId = -1;
 
+    private final ObservableInt emptyVideosListTextResId = new ObservableInt();
+    private final ObservableInt emptyReviewsListTextResId = new ObservableInt();
+
     private MoviesRepository moviesRepository;
 
     private MediatorLiveData<Boolean> movieIsFavorite = new MediatorLiveData<>();
@@ -34,6 +39,16 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
         super(application);
 
         moviesRepository = new MoviesRepository(application);
+        emptyVideosListTextResId.set(R.string.empty_list);
+        emptyReviewsListTextResId.set(R.string.empty_list);
+    }
+
+    public ObservableInt getEmptyVideosListTextResId() {
+        return emptyVideosListTextResId;
+    }
+
+    public ObservableInt getEmptyReviewsListTextResId() {
+        return emptyReviewsListTextResId;
     }
 
     public void init(Movie movie) {
@@ -53,6 +68,11 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
         movieVideosLiveData.addSource(moviesRepository.loadMovieVideos(movieId), new Observer<List<MovieVideo>>() {
             @Override
             public void onChanged(@Nullable List<MovieVideo> movieVideos) {
+                if (movieVideos == null) {
+                    emptyVideosListTextResId.set(R.string.err_load_trailers);
+                } else if (movieVideos.size() == 0) {
+                    emptyVideosListTextResId.set(R.string.no_trailers_for_movie);
+                }
                 movieVideosLiveData.setValue(movieVideos);
             }
         });
@@ -60,6 +80,11 @@ public class MovieDetailActivityViewModel extends AndroidViewModel {
         movieReviewsLiveData.addSource(moviesRepository.loadMovieReviews(movieId), new Observer<List<MovieReview>>() {
             @Override
             public void onChanged(@Nullable List<MovieReview> movieReviews) {
+                if (movieReviews == null) {
+                    emptyReviewsListTextResId.set(R.string.err_load_reviews);
+                } else if (movieReviews.size() == 0) {
+                    emptyReviewsListTextResId.set(R.string.no_reviews_for_movie);
+                }
                 movieReviewsLiveData.setValue(movieReviews);
             }
         });

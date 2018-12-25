@@ -170,6 +170,10 @@ public class MoviesRepository {
             public void onFailure(Call<List<MovieVideo>> call, Throwable t) {
                 onMovieVideosListCallError();
             }
+
+            private void onMovieVideosListCallError() {
+                movieVideosLiveData.setValue(null);
+            }
         });
     }
 
@@ -197,15 +201,11 @@ public class MoviesRepository {
             public void onFailure(Call<List<MovieReview>> call, Throwable t) {
                 onMovieReviewsListCallError();
             }
+
+            private void onMovieReviewsListCallError() {
+                movieReviewsLiveData.setValue(null);
+            }
         });
-    }
-
-    private void onMovieVideosListCallError() {
-        // TODO how to notify activity that an error occurred?
-    }
-
-    private void onMovieReviewsListCallError() {
-        // TODO how to notify activity that an error occurred?
     }
 
 }

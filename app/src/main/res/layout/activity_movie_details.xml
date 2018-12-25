@@ -16,6 +16,17 @@
         <variable
             name="viewModel"
             type="com.adnd.popularmovies.view_models.MovieDetailActivityViewModel" />
+
+        <variable
+            name="videosAdapter"
+            type="com.adnd.popularmovies.adapters.MovieVideoAdapter" />
+
+        <variable
+            name="reviewsAdapter"
+            type="com.adnd.popularmovies.adapters.MovieReviewAdapter" />
+
+        <import type="android.view.View" />
+
     </data>
 
     <ScrollView
@@ -108,11 +119,26 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_trailers_label">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_movie_videos"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/movie_video_list_item" />
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_movie_videos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/movie_video_list_item" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_size_medium"
+                        android:text="@{viewModel.emptyVideosListTextResId}"
+                        android:visibility="@{videosAdapter.listIsEmpty ? View.VISIBLE : View.GONE}"
+                        tools:text="@string/err_load_trailers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
 
             </android.support.v4.widget.NestedScrollView>
 
@@ -133,11 +159,26 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_reviews_label">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_movie_reviews"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/movie_review_list_item" />
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_movie_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/movie_review_list_item" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_size_medium"
+                        android:text="@{viewModel.emptyReviewsListTextResId}"
+                        android:visibility="@{reviewsAdapter.listIsEmpty ? View.VISIBLE : View.GONE}"
+                        tools:text="@string/err_load_reviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
 
             </android.support.v4.widget.NestedScrollView>
 

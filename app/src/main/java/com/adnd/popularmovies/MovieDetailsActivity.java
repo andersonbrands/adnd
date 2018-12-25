@@ -98,12 +98,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements ListItemC
         binding.rvMovieVideos.setLayoutManager(new GridLayoutManager(this, gridCols));
         MovieVideoAdapter adapter = new MovieVideoAdapter(movieVideos, this);
         binding.rvMovieVideos.setAdapter(adapter);
+        binding.setVideosAdapter(adapter);
     }
 
     private void setMovieReviewsRecyclerView(List<MovieReview> movieReviews) {
         binding.rvMovieReviews.setLayoutManager(new LinearLayoutManager(this));
         MovieReviewAdapter adapter = new MovieReviewAdapter(movieReviews);
         binding.rvMovieReviews.setAdapter(adapter);
+        binding.setReviewsAdapter(adapter);
     }
 
     @Override

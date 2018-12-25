@@ -1,6 +1,7 @@
 package com.adnd.popularmovies.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,12 +18,20 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
 
     private List<MovieReview> movieReviews;
 
+    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
+
     public MovieReviewAdapter(List<MovieReview> movieReviews) {
         if (movieReviews == null) {
             this.movieReviews = new ArrayList<>();
         } else {
             this.movieReviews = movieReviews;
         }
+
+        listIsEmpty.set(getItemCount() == 0);
+    }
+
+    public ObservableBoolean getListIsEmpty() {
+        return listIsEmpty;
     }
 
     @Override

@@ -11,6 +11,10 @@
     <string name="trailers_label">Trailers: </string>
     <string name="reviews_label">Reviews: </string>
     <string name="empty_list">Empty list!</string>
+    <string name="err_load_trailers">Unable to load trailers!</string>
+    <string name="no_trailers_for_movie">No trailers for this movie!</string>
+    <string name="err_load_reviews">Unable to load reviews!</string>
+    <string name="no_reviews_for_movie">No reviews for this movie!</string>
     <string name="err_something_wrong_try_again">Oops, something went wrong, try again!</string>
     <string name="you_have_no_favorite_movie">You still don\'t have any favorite movie!</string>
     <string name="err_only_youtube_videos_supported">Oops, this trailer is not from YouTube! Can\'t be played!</string>

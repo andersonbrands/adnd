@@ -1,6 +1,7 @@
 package com.adnd.popularmovies.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Mo
 
     final private ListItemClickListener<MovieVideo> mListItemClickListener;
 
+    private final ObservableBoolean listIsEmpty = new ObservableBoolean();
+
     public MovieVideoAdapter(List<MovieVideo> movieVideos, ListItemClickListener<MovieVideo> listItemClickListener) {
         if (movieVideos == null) {
             this.movieVideos = new ArrayList<>();
@@ -27,6 +30,12 @@ public class MovieVideoAdapter extends RecyclerView.Adapter<MovieVideoAdapter.Mo
             this.movieVideos = movieVideos;
         }
         mListItemClickListener = listItemClickListener;
+
+        listIsEmpty.set(getItemCount() == 0);
+    }
+
+    public ObservableBoolean getListIsEmpty() {
+        return listIsEmpty;
     }
 
     @Override
