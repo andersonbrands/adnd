@@ -1,5 +1,10 @@
 package com.adnd.bakingapp.models;
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,14 +12,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity(tableName = "recipes")
 public class Recipe {
 
+    @PrimaryKey
     private int id;
     private String name;
     private int servings;
     private String image;
 
+    @Ignore
     private List<Ingredient> ingredients;
+    @Ignore
     private List<Step> steps;
 
 

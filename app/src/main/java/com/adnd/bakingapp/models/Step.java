@@ -1,15 +1,45 @@
 package com.adnd.bakingapp.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(
+        tableName = "steps",
+        foreignKeys = @ForeignKey(
+                entity = Recipe.class,
+                parentColumns = "id",
+                childColumns = "recipe_id",
+                onDelete = CASCADE,
+                onUpdate = CASCADE
+        ),
+        primaryKeys = {"id", "recipe_id"},
+        indices = {@Index("recipe_id")}
+)
 public class Step {
 
+    private int recipe_id;
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String shortDescription;
     private String description;
     private String videoURL;
     private String thumbnailURL;
+
+    public int getRecipe_id() {
+        return recipe_id;
+    }
+
+    public void setRecipe_id(int recipe_id) {
+        this.recipe_id = recipe_id;
+    }
 
     public int getId() {
         return id;
