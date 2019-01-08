@@ -26,7 +26,6 @@ public class Step {
 
     private int recipe_id;
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String shortDescription;
     private String description;
