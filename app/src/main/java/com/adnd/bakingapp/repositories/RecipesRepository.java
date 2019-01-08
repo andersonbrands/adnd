@@ -1,6 +1,8 @@
 package com.adnd.bakingapp.repositories;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.adnd.bakingapp.api.RecipesApi;
 import com.adnd.bakingapp.api.RecipesListConverterFactory;
@@ -47,16 +49,23 @@ public class RecipesRepository {
         }
     }
 
-    public List<Recipe> loadRecipesFromDatabase() {
+    public LiveData<List<Recipe>> loadRecipes() {
+        MutableLiveData<List<Recipe>> recipesListLiveData = new MutableLiveData<>();
+
+        loadRecipesFromWebService(recipesListLiveData);
+
+        return recipesListLiveData;
+    }
+
+    private void loadRecipesFromDatabase() {
         List<Recipe> recipes = recipesDao.getRecipes();
         for (Recipe recipe: recipes) {
             recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipe.getId()));
             recipe.setSteps(stepsDao.getStepsForRecipe(recipe.getId()));
         }
-        return recipes;
     }
 
-    public void loadRecipesFromWebService() {
+    private void loadRecipesFromWebService(final MutableLiveData<List<Recipe>> recipesListLiveData) {
         Retrofit fit = new Retrofit.Builder()
                 .baseUrl(RecipesApi.BASE_URL)
                 .addConverterFactory(new RecipesListConverterFactory())
@@ -70,7 +79,7 @@ public class RecipesRepository {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // TODO handle result
+                    recipesListLiveData.setValue(response.body());
                 } else {
                     onRecipesCallError();
                 }
