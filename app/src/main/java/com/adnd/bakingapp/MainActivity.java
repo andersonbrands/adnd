@@ -3,12 +3,14 @@ package com.adnd.bakingapp;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 
+import com.adnd.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
 import com.adnd.bakingapp.adapters.RecipeAdapter;
 import com.adnd.bakingapp.databinding.ActivityMainBinding;
@@ -24,11 +26,25 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
     private ActivityMainBinding binding;
     private MainActivityViewModel model;
 
+    @Nullable
+    private SimpleIdlingResource idlingResource;
+
+    @VisibleForTesting
+    @Nullable
+    public SimpleIdlingResource getIdlingResource() {
+        if (idlingResource == null) {
+            idlingResource = new SimpleIdlingResource();
+        }
+        return idlingResource;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        getIdlingResource();
 
         model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -36,6 +52,15 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 setRecyclerView(recipes);
+            }
+        });
+
+        model.getRunningOnBackground().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean runningOnBackground) {
+                if (idlingResource != null && runningOnBackground != null) {
+                    idlingResource.setIdleState(!runningOnBackground);
+                }
             }
         });
     }

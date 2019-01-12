@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private MediatorLiveData<List<Recipe>> recipesListLiveData = new MediatorLiveData<>();
 
+    private MutableLiveData<Boolean> runningOnBackground = new MutableLiveData<>();
+
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         recipesRepository = new RecipesRepository(application);
@@ -30,7 +33,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         return recipesListLiveData;
     }
 
+    public LiveData<Boolean> getRunningOnBackground() {
+        return runningOnBackground;
+    }
+
     public void loadRecipesList() {
+        runningOnBackground.setValue(true);
         final LiveData<List<Recipe>> source = recipesRepository.loadRecipes();
         recipesListLiveData.addSource(source, new Observer<List<Recipe>>() {
             @Override
@@ -42,6 +50,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                 }
                 recipesListLiveData.setValue(recipes);
                 recipesListLiveData.removeSource(source);
+                runningOnBackground.setValue(false);
             }
         });
     }
