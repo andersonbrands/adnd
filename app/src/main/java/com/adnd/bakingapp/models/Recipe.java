@@ -133,6 +133,16 @@ public class Recipe {
             jsonObject.put("name", this.name);
             jsonObject.put("servings", this.servings);
             jsonObject.put("image", this.image);
+            JSONArray ingredientsArray = new JSONArray();
+            for (Ingredient ingredient : ingredients) {
+                ingredientsArray.put(ingredient.toJSONObject());
+            }
+            JSONArray stepsArray = new JSONArray();
+            for (Step step : steps) {
+                stepsArray.put(step.toJSONObject());
+            }
+            jsonObject.put("ingredients", ingredientsArray);
+            jsonObject.put("steps", stepsArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
