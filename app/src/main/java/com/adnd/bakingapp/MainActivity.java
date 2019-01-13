@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
         model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
+        binding.setModel(model);
+
         model.getRecipeListLiveData().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {

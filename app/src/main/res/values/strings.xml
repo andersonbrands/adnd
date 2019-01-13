@@ -2,4 +2,6 @@
     <string name="app_name">Baking App</string>
 
     <string name="recipe_servings">Servings: %d</string>
+    <string name="empty_list">Empty list!</string>
+    <string name="err_something_wrong">Oops, something went wrong!</string>
 </resources>

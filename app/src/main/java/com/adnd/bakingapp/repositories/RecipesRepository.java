@@ -91,7 +91,7 @@ public class RecipesRepository {
             }
 
             private void onRecipesCallError() {
-                // TODO handle call error
+                recipesListLiveData.setValue(null);
             }
         });
     }

@@ -6,9 +6,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.adnd.bakingapp.R;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.repositories.RecipesRepository;
 
@@ -22,9 +24,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> runningOnBackground = new MutableLiveData<>();
 
+    private final ObservableInt emptyListTextResId = new ObservableInt();
+
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         recipesRepository = new RecipesRepository(application);
+
+        emptyListTextResId.set(R.string.empty_list);
 
         loadRecipesList();
     }
@@ -37,6 +43,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         return runningOnBackground;
     }
 
+    public ObservableInt getEmptyListTextResId() {
+        return emptyListTextResId;
+    }
+
     public void loadRecipesList() {
         runningOnBackground.setValue(true);
         final LiveData<List<Recipe>> source = recipesRepository.loadRecipes();
@@ -44,9 +54,9 @@ public class MainActivityViewModel extends AndroidViewModel {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 if (recipes == null) {
-                    // TODO unable to load recipes
+                    emptyListTextResId.set(R.string.err_something_wrong);
                 } else if (recipes.size() == 0) {
-                    // TODO empty list
+                    emptyListTextResId.set(R.string.empty_list);
                 }
                 recipesListLiveData.setValue(recipes);
                 recipesListLiveData.removeSource(source);
