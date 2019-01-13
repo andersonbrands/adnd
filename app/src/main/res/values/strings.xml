@@ -4,4 +4,6 @@
     <string name="recipe_servings">Servings: %d</string>
     <string name="empty_list">Empty list!</string>
     <string name="err_something_wrong">Oops, something went wrong!</string>
+    <string name="ingredients_list_label">Ingredients list:</string>
+    <string name="ingredient_details_line">\t* %s %s of %s</string>
 </resources>
