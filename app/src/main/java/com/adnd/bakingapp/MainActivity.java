@@ -2,13 +2,13 @@ package com.adnd.bakingapp;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
 
 import com.adnd.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     @Override
     public void onListItemClick(Recipe clickedItem) {
-        Log.d(TAG, "Clicked recipe: " + clickedItem.getName());
+        Intent intent = new Intent(this, RecipeDetailsActivity.class);
+        intent.putExtra(RecipeDetailsActivity.RECIPE_JSON_EXTRA_KEY, clickedItem.toJSONString());
+        startActivity(intent);
     }
 }
