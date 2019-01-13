@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.adnd.bakingapp.models.Recipe" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".RecipeDetailsActivity">
+
+            <TextView
+                android:id="@+id/tv_recipe_ingredients_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="6sp"
+                android:text="@{recipe.ingredients}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_recipe_servings"
+                tools:text="\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted\n\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
+
+
+
