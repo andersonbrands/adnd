@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
     }
 
     @Override
-    public void onListItemClick(Recipe clickedItem) {
+    public void onListItemClick(Recipe clickedItem, int clickedPosition) {
         Intent intent = new Intent(this, RecipeDetailsActivity.class);
         intent.putExtra(RecipeDetailsActivity.RECIPE_JSON_EXTRA_KEY, clickedItem.toJSONString());
         startActivity(intent);

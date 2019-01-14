@@ -49,7 +49,7 @@ public class RecipeAdapter extends BaseAdapter<Recipe, RecipeAdapter.RecipeViewH
         @Override
         public void onClick(View v) {
             final int clickedPosition = getAdapterPosition();
-            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition));
+            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition), clickedPosition);
         }
     }
 

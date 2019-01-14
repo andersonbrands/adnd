@@ -49,7 +49,7 @@ public class RecipeStepAdapter extends BaseAdapter<Step, RecipeStepAdapter.Recip
         @Override
         public void onClick(View v) {
             final int clickedPosition = getAdapterPosition();
-            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition));
+            mListItemClickListener.onListItemClick(getObjects().get(clickedPosition), clickedPosition);
         }
     }
 

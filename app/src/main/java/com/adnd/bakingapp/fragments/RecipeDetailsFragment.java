@@ -52,7 +52,7 @@ public class RecipeDetailsFragment extends Fragment implements ListItemClickList
     }
 
     @Override
-    public void onListItemClick(Step clickedItem) {
+    public void onListItemClick(Step clickedItem, int clickedPosition) {
         Intent intent = new Intent(getActivity(), RecipeStepsDetailsActivity.class);
         intent.putExtra(RecipeStepsDetailsActivity.RECIPE_JSON_EXTRA_KEY, binding.getRecipe().toJSONString());
         // TODO send item position in recipe steps as well
