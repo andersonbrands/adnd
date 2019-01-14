@@ -2,6 +2,7 @@ package com.adnd.bakingapp.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.adnd.bakingapp.RecipeStepsDetailsActivity;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
 import com.adnd.bakingapp.adapters.RecipeStepAdapter;
 import com.adnd.bakingapp.databinding.FragmentRecipeDetailsBinding;
@@ -19,8 +21,10 @@ import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.Step;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 
+
 public class RecipeDetailsFragment extends Fragment implements ListItemClickListener<Step> {
 
+    private FragmentRecipeDetailsBinding binding;
     public RecipeDetailsFragment() {
 
     }
@@ -28,7 +32,7 @@ public class RecipeDetailsFragment extends Fragment implements ListItemClickList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final FragmentRecipeDetailsBinding binding = FragmentRecipeDetailsBinding.inflate(inflater);
+        binding = FragmentRecipeDetailsBinding.inflate(inflater);
         if (getActivity() != null) {
             RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
             model.getRecipeLiveData().observe(this, new Observer<Recipe>() {
@@ -49,6 +53,9 @@ public class RecipeDetailsFragment extends Fragment implements ListItemClickList
 
     @Override
     public void onListItemClick(Step clickedItem) {
-        Toast.makeText(getActivity(), "Clicked step: " + clickedItem.getShortDescription(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), RecipeStepsDetailsActivity.class);
+        intent.putExtra(RecipeStepsDetailsActivity.RECIPE_JSON_EXTRA_KEY, binding.getRecipe().toJSONString());
+        // TODO send item position in recipe steps as well
+        startActivity(intent);
     }
 }

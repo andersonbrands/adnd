@@ -3,12 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.adnd.bakingapp.models.Recipe" />
+    </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:text="@string/app_name"
+            android:text="@{recipe.name}"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

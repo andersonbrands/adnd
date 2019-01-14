@@ -6,7 +6,6 @@
         <variable
             name="recipe"
             type="com.adnd.bakingapp.models.Recipe" />
-
     </data>
 
     <fragment
