@@ -12,6 +12,7 @@ import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 public class RecipeStepsDetailsActivity extends AppCompatActivity {
 
     public final static String RECIPE_JSON_EXTRA_KEY = "recipe_json_extra_key";
+    public final static String RECIPE_STEP_POSITION_EXTRA_KEY = "recipe_step_position_json_extra_key";
 
     private RecipeDetailsActivityViewModel model;
 
@@ -31,8 +32,10 @@ public class RecipeStepsDetailsActivity extends AppCompatActivity {
             Recipe recipe = Recipe.fromJSONString(recipeJsonString);
 
             if (recipe != null) {
-                Toast.makeText(this, "Recipe received: " + recipe.getName(), Toast.LENGTH_SHORT).show();
                 model.setRecipe(recipe);
+                int recipeStepPosition =
+                        intentThatStartedThisActivity.getIntExtra(RECIPE_STEP_POSITION_EXTRA_KEY, 0);
+                model.setSelectedStepPosition(recipeStepPosition);
             } else {
                 finish();
             }

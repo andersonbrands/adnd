@@ -6,8 +6,13 @@
     <data>
 
         <variable
+            name="selectedStepPosition"
+            type="int" />
+
+        <variable
             name="recipe"
             type="com.adnd.bakingapp.models.Recipe" />
+
     </data>
 
     <FrameLayout
@@ -15,10 +20,18 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="@{recipe.name}"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@{recipe.name}"
+            tools:text="recipe.name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{String.valueOf(selectedStepPosition)}"
+            tools:text="999" />
+
 
     </FrameLayout>
 </layout>

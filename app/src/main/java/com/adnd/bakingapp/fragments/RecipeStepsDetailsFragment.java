@@ -37,6 +37,14 @@ public class RecipeStepsDetailsFragment extends Fragment {
                     }
                 }
             });
+            model.getSelectedStepPosition().observe(this, new Observer<Integer>() {
+                @Override
+                public void onChanged(@Nullable Integer integer) {
+                    if (integer != null) {
+                        binding.setSelectedStepPosition(integer);
+                    }
+                }
+            });
         }
         return binding.getRoot();
     }
