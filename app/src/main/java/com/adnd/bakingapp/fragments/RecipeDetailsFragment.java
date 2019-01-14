@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.adnd.bakingapp.adapters.ListItemClickListener;
+import com.adnd.bakingapp.adapters.RecipeStepAdapter;
 import com.adnd.bakingapp.databinding.FragmentRecipeDetailsBinding;
 import com.adnd.bakingapp.models.Recipe;
+import com.adnd.bakingapp.models.Step;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 
-public class RecipeDetailsFragment extends Fragment {
+public class RecipeDetailsFragment extends Fragment implements ListItemClickListener<Step> {
 
     public RecipeDetailsFragment() {
 
@@ -29,13 +34,21 @@ public class RecipeDetailsFragment extends Fragment {
             model.getRecipeLiveData().observe(this, new Observer<Recipe>() {
                 @Override
                 public void onChanged(@Nullable Recipe recipe) {
-                    if (recipe != null){
+                    if (recipe != null) {
                         binding.setRecipe(recipe);
+                        RecipeStepAdapter adapter = new RecipeStepAdapter(recipe.getSteps(), RecipeDetailsFragment.this);
+                        binding.rvRecipeSteps.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        binding.rvRecipeSteps.setAdapter(adapter);
                         binding.executePendingBindings();
                     }
                 }
             });
         }
         return binding.getRoot();
+    }
+
+    @Override
+    public void onListItemClick(Step clickedItem) {
+        Toast.makeText(getActivity(), "Clicked step: " + clickedItem.getShortDescription(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -18,7 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="8dp"
             tools:context=".RecipeDetailsActivity">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/ingredients_list_label"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_recipe_ingredients_details"
@@ -30,6 +38,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_recipe_servings"
                 tools:text="\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted\n\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nsv_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_recipe_steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/recipe_steps_list_item" />
+
+            </android.support.v4.widget.NestedScrollView>
 
         </LinearLayout>
     </ScrollView>
