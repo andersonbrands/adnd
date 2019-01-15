@@ -12,7 +12,7 @@ import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 public class RecipeStepsDetailsActivity extends AppCompatActivity {
 
     public final static String RECIPE_JSON_EXTRA_KEY = "recipe_json_extra_key";
-    public final static String RECIPE_STEP_POSITION_EXTRA_KEY = "recipe_step_position_json_extra_key";
+    public final static String RECIPE_STEP_POSITION_EXTRA_KEY = "recipe_step_position_extra_key";
 
     private RecipeDetailsActivityViewModel model;
 
