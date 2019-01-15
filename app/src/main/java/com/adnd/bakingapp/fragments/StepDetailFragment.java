@@ -43,6 +43,7 @@ public class StepDetailFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putString(STEP_JSON_STRING_EXTRA_KEY, stepJSONString);
+        instance.setArguments(args);
         return instance;
     }
 }
