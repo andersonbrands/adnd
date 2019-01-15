@@ -10,13 +10,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 
 import com.adnd.bakingapp.adapters.RecipeStepAdapter;
+import com.adnd.bakingapp.adapters.RecipeStepsPagerAdapter;
 import com.adnd.bakingapp.databinding.FragmentRecipeStepDetailsBinding;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 
 public class RecipeStepsDetailsFragment extends Fragment {
+
+    private RecipeStepsPagerAdapter adapter;
 
     public RecipeStepsDetailsFragment() {
 
@@ -33,15 +37,16 @@ public class RecipeStepsDetailsFragment extends Fragment {
                 public void onChanged(@Nullable Recipe recipe) {
                     if (recipe != null) {
                         binding.setRecipe(recipe);
-                        binding.executePendingBindings();
+                        adapter = new RecipeStepsPagerAdapter(getFragmentManager(), recipe.getSteps(), getResources());
+                        binding.vpRecipeSteps.setAdapter(adapter);
                     }
                 }
             });
             model.getSelectedStepPosition().observe(this, new Observer<Integer>() {
                 @Override
-                public void onChanged(@Nullable Integer integer) {
-                    if (integer != null) {
-                        binding.setSelectedStepPosition(integer);
+                public void onChanged(@Nullable Integer position) {
+                    if (adapter != null && position != null) {
+                        binding.vpRecipeSteps.setCurrentItem(position);
                     }
                 }
             });

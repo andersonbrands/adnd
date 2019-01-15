@@ -16,15 +16,22 @@
 
     </data>
 
-    <FrameLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_recipe_steps"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include android:id="@+id/inc_step_item"
-            layout="@layout/fragment_step_detail"
-            bind:step="@{recipe.steps.get(selectedStepPosition)}"/>
+        <android.support.v4.view.PagerTitleStrip
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="#fff" />
 
-    </FrameLayout>
+    </android.support.v4.view.ViewPager>
+
 </layout>
 
 
