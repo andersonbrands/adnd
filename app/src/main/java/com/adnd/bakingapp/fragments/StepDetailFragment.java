@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adnd.bakingapp.databinding.FragmentStepDetailBinding;
+import com.adnd.bakingapp.exoplayer.ExoPlayerController;
 import com.adnd.bakingapp.models.Step;
 
 
@@ -15,6 +16,8 @@ public class StepDetailFragment extends Fragment {
 
     public static final String STEP_JSON_STRING_EXTRA_KEY = "step_json_string_extra_key";
     private Step step;
+
+    ExoPlayerController playerController;
 
     public StepDetailFragment() {
 
@@ -35,7 +38,44 @@ public class StepDetailFragment extends Fragment {
 
         binding.setStep(step);
 
+        if (playerController == null) {
+            playerController = new ExoPlayerController();
+            playerController.create(getActivity());
+            playerController.setToPlayerView(binding.playerView);
+            playerController.setSourceAndPrepare(step.getVideoURL());
+        }
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (playerController != null) {
+            playerController.pause();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser && playerController != null) {
+            playerController.pause();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (playerController != null) {
+            playerController.release();
+            playerController = null;
+        }
     }
 
     public static StepDetailFragment newInstance(String stepJSONString) {
