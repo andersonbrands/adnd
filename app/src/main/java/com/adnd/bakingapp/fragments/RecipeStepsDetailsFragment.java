@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 public class RecipeStepsDetailsFragment extends Fragment {
 
     private RecipeStepsPagerAdapter adapter;
+
+    private PageChangeListener pageChangeListener = new PageChangeListener();
 
     public RecipeStepsDetailsFragment() {
 
@@ -39,6 +44,7 @@ public class RecipeStepsDetailsFragment extends Fragment {
                         binding.setRecipe(recipe);
                         adapter = new RecipeStepsPagerAdapter(getFragmentManager(), recipe.getSteps(), getResources());
                         binding.vpRecipeSteps.setAdapter(adapter);
+                        binding.vpRecipeSteps.addOnPageChangeListener(pageChangeListener);
                     }
                 }
             });
@@ -54,4 +60,38 @@ public class RecipeStepsDetailsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    public interface iPauseResume {
+
+        void onPauseFragment();
+
+        void onResumeFragment();
+
+    }
+
+    private class PageChangeListener implements ViewPager.OnPageChangeListener {
+
+        int currentPosition = 0;
+
+        @Override
+        public void onPageSelected(int position) {
+//            if (currentPosition != -1) {
+                iPauseResume fragmentToHide = (iPauseResume) adapter.getItem(currentPosition);
+                fragmentToHide.onPauseFragment();
+//            }
+
+            iPauseResume fragmentToShow = (iPauseResume) adapter.getItem(position);
+            fragmentToShow.onResumeFragment();
+
+            currentPosition = position;
+            Log.d("TEMP_TEG", "onPageSelected(int position): " + position);
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        public void onPageScrollStateChanged(int state) {
+        }
+
+    }
 }

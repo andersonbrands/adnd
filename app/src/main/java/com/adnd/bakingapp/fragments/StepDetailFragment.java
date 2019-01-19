@@ -1,5 +1,6 @@
 package com.adnd.bakingapp.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,15 @@ import android.view.ViewGroup;
 import com.adnd.bakingapp.databinding.FragmentStepDetailBinding;
 import com.adnd.bakingapp.exoplayer.ExoPlayerController;
 import com.adnd.bakingapp.models.Step;
+import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 
 
-public class StepDetailFragment extends Fragment {
+public class StepDetailFragment extends Fragment implements RecipeStepsDetailsFragment.iPauseResume {
 
     public static final String STEP_JSON_STRING_EXTRA_KEY = "step_json_string_extra_key";
     private Step step;
-
-    ExoPlayerController playerController;
+    private FragmentStepDetailBinding binding;
+    private RecipeDetailsActivityViewModel model;
 
     public StepDetailFragment() {
 
@@ -34,48 +36,13 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentStepDetailBinding binding = FragmentStepDetailBinding.inflate(inflater);
+        binding = FragmentStepDetailBinding.inflate(inflater);
+
+        model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
 
         binding.setStep(step);
 
-        if (playerController == null) {
-            playerController = new ExoPlayerController();
-            playerController.create(getActivity());
-            playerController.setToPlayerView(binding.playerView);
-            playerController.setSourceAndPrepare(step.getVideoURL());
-        }
-
         return binding.getRoot();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (playerController != null) {
-            playerController.pause();
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser && playerController != null) {
-            playerController.pause();
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (playerController != null) {
-            playerController.release();
-            playerController = null;
-        }
     }
 
     public static StepDetailFragment newInstance(String stepJSONString) {
@@ -85,5 +52,20 @@ public class StepDetailFragment extends Fragment {
         args.putString(STEP_JSON_STRING_EXTRA_KEY, stepJSONString);
         instance.setArguments(args);
         return instance;
+    }
+
+    @Override
+    public void onPauseFragment() {
+        if (binding != null) {
+            binding.playerView.getPlayer().stop();
+            binding.playerView.setPlayer(null);
+        }
+    }
+
+    @Override
+    public void onResumeFragment() {
+        if (binding != null && model != null) {
+            model.setSourceAndPrepare(binding.getStep().getVideoURL(), binding.playerView);
+        }
     }
 }
