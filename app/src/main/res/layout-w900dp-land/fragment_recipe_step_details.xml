@@ -111,7 +111,7 @@
                     android:layout_height="@dimen/player_view_height"
                     android:background="#CC000000"
                     android:padding="72dp"
-                    android:src="@drawable/ic_videocam_off_192dp"
+                    android:src="@drawable/ic_videocam_off_36dp"
                     android:visibility="@{TextUtils.isEmpty(recipe.steps[selectedStepPosition].videoURL) ? View.VISIBLE : View.GONE}" />
 
             </LinearLayout>
