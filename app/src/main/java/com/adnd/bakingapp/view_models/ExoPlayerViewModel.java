@@ -27,9 +27,7 @@ public class ExoPlayerViewModel extends AndroidViewModel {
     }
 
     public void setSourceAndPrepare(String videoURL) {
-        if (!TextUtils.isEmpty(videoURL)) {
-            exoPlayerManager.setSourceAndPrepare(videoURL);
-        }
+        exoPlayerManager.setSourceAndPrepare(videoURL);
     }
 
     @Override
