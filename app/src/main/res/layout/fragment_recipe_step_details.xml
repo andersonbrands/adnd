@@ -23,6 +23,9 @@
             type="com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel" />
 
         <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -99,7 +102,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="260dp"
                     android:layout_margin="8dp"
+                    android:visibility="@{TextUtils.isEmpty(recipe.steps[selectedStepPosition].videoURL) ? View.GONE : View.VISIBLE}"
                     app:player="@{player}" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:background="#CC000000"
+                    android:padding="72dp"
+                    android:src="@drawable/ic_videocam_off_192dp"
+                    android:visibility="@{TextUtils.isEmpty(recipe.steps[selectedStepPosition].videoURL) ? View.VISIBLE : View.GONE}" />
 
             </LinearLayout>
 
