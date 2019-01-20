@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.adnd.bakingapp.models.Recipe" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/two_pane_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/recipe_details_fragment"
+            android:name="com.adnd.bakingapp.fragments.RecipeDetailsFragment"
+            tools:layout="@layout/fragment_recipe_details"
+            android:layout_width="400dp"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/recipe_step_details_fragment"
+            android:name="com.adnd.bakingapp.fragments.RecipeStepsDetailsFragment"
+            tools:layout="@layout/fragment_recipe_step_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="recipe_details_fragment_tag" />
+
+    </LinearLayout>
+</layout>
