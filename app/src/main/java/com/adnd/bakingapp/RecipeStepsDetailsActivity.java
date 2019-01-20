@@ -2,9 +2,8 @@ package com.adnd.bakingapp;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
