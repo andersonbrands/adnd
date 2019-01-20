@@ -28,6 +28,13 @@ public class ExoPlayerManager implements Player.EventListener {
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
 
+    private String lastVideoUrl = "";
+
+
+    public SimpleExoPlayer getPlayer() {
+        return simpleExoPlayer;
+    }
+
     public ExoPlayerManager() {
 
     }
@@ -80,15 +87,18 @@ public class ExoPlayerManager implements Player.EventListener {
         }
     }
 
-    public void setSourceAndPrepare(String videoURL, PlayerView playerView) {
-        playerView.setPlayer(simpleExoPlayer);
-
+    public void setSourceAndPrepare(String videoURL) {
+        if (videoURL.equals(lastVideoUrl)) {
+            return;
+        }
         Uri uri = Uri.parse(videoURL);
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(uri);
 
         simpleExoPlayer.prepare(videoSource);
         simpleExoPlayer.setPlayWhenReady(false);
+
+        lastVideoUrl = videoURL;
     }
 
     public void release() {

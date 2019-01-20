@@ -14,6 +14,10 @@
             name="recipe"
             type="com.adnd.bakingapp.models.Recipe" />
 
+        <variable
+            name="player"
+            type="com.google.android.exoplayer2.Player" />
+
     </data>
 
     <ScrollView
@@ -49,6 +53,7 @@
 
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/player_view"
+                app:player="@{player}"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
                 android:layout_margin="8dp" />
