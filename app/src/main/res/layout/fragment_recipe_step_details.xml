@@ -20,46 +20,52 @@
 
     </data>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp"
-            tools:context=".fragments.StepDetailFragment">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="@{recipe.steps[selectedStepPosition].shortDescription}"
-                tools:text="step.shortDescription" />
+                android:orientation="vertical"
+                android:padding="8dp"
+                tools:context=".fragments.StepDetailFragment">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="26dp"
-                android:text="@{recipe.steps[selectedStepPosition].description}"
-                tools:text="step.description" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{recipe.steps[selectedStepPosition].shortDescription}"
+                    tools:text="step.shortDescription" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{recipe.steps[selectedStepPosition].videoURL}"
-                tools:text="step.videoURL" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="26dp"
+                    android:text="@{recipe.steps[selectedStepPosition].description}"
+                    tools:text="step.description" />
 
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/player_view"
-                app:player="@{player}"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_margin="8dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{recipe.steps[selectedStepPosition].videoURL}"
+                    tools:text="step.videoURL" />
 
-        </LinearLayout>
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_margin="8dp"
+                    app:player="@{player}" />
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
 
 </layout>

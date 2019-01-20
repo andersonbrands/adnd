@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
+import com.adnd.bakingapp.R;
 import com.adnd.bakingapp.databinding.FragmentRecipeStepDetailsBinding;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
@@ -26,6 +29,17 @@ public class RecipeStepsDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final FragmentRecipeStepDetailsBinding binding = FragmentRecipeStepDetailsBinding.inflate(inflater);
         if (getActivity() != null) {
+
+            // go fullscreen when on landscape mode
+            if (binding.getRoot().findViewById(R.id.landscape_root) != null) {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                activity.setTheme(android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                if (activity.getSupportActionBar() != null) {
+                    activity.getSupportActionBar().hide();
+                }
+            }
+
             final RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
             model.getPlayerLiveData().observe(this, new Observer<Player>() {
                 @Override
