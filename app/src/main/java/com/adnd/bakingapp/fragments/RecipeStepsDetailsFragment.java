@@ -2,11 +2,14 @@ package com.adnd.bakingapp.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +44,9 @@ public class RecipeStepsDetailsFragment extends Fragment {
             }
 
             final RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
+
+            binding.setModel(model);
+
             model.getPlayerLiveData().observe(this, new Observer<Player>() {
                 @Override
                 public void onChanged(@Nullable Player player) {
@@ -62,7 +68,9 @@ public class RecipeStepsDetailsFragment extends Fragment {
                 public void onChanged(@Nullable Integer position) {
                     if (position != null) {
                         binding.setSelectedStepPosition(position);
-                        model.setSourceAndPrepare(binding.getRecipe().getSteps().get(position).getVideoURL());
+
+                        String videoUrl = binding.getRecipe().getSteps().get(position).getVideoURL();
+                        model.setSourceAndPrepare(videoUrl);
                     }
                 }
             });

@@ -35,7 +35,10 @@ public class RecipeStepsDetailsActivity extends AppCompatActivity {
                 model.setRecipe(recipe);
                 int recipeStepPosition =
                         intentThatStartedThisActivity.getIntExtra(RECIPE_STEP_POSITION_EXTRA_KEY, 0);
-                model.setSelectedStepPosition(recipeStepPosition);
+                // do not set selected position on rotation
+                if (savedInstanceState == null) {
+                    model.setSelectedStepPosition(recipeStepPosition);
+                }
             } else {
                 finish();
             }

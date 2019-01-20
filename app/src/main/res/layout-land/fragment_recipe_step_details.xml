@@ -16,6 +16,10 @@
             name="player"
             type="com.google.android.exoplayer2.Player" />
 
+        <variable
+            name="model"
+            type="com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel" />
+
     </data>
 
     <FrameLayout

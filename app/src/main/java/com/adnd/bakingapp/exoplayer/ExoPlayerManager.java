@@ -28,7 +28,7 @@ public class ExoPlayerManager implements Player.EventListener {
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
 
-    private String lastVideoUrl = "";
+    private String lastVideoUrl = "invalid";
 
 
     public SimpleExoPlayer getPlayer() {

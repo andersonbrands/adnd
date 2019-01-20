@@ -18,15 +18,54 @@
             name="player"
             type="com.google.android.exoplayer2.Player" />
 
+        <variable
+            name="model"
+            type="com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/btn_previous_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> model.setSelectedStepPosition(selectedStepPosition - 1)}"
+            android:src="@drawable/ic_navigate_before_36dp"
+            android:visibility="@{selectedStepPosition == 0 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_step_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/step_number(selectedStepPosition + 1)}"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_next_step"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next_step"
+            app:layout_constraintStart_toEndOf="@+id/btn_previous_step"
+            app:layout_constraintTop_toTopOf="@+id/btn_next_step"
+            tools:text="@string/step_number" />
+
+        <ImageButton
+            android:id="@+id/btn_next_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> model.setSelectedStepPosition(selectedStepPosition + 1)}"
+            android:src="@drawable/ic_navigate_next_36dp"
+            android:visibility="@{selectedStepPosition == recipe.steps.size() - 1 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_next_step">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,7 +104,6 @@
             </LinearLayout>
 
         </ScrollView>
-
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>
