@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import com.adnd.bakingapp.R;
 import com.adnd.bakingapp.databinding.FragmentRecipeStepDetailsBinding;
 import com.adnd.bakingapp.models.Recipe;
+import com.adnd.bakingapp.view_models.ExoPlayerViewModel;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 import com.google.android.exoplayer2.Player;
 
@@ -44,10 +45,11 @@ public class RecipeStepsDetailsFragment extends Fragment {
             }
 
             final RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
+            final ExoPlayerViewModel exoPlayerViewModel = ViewModelProviders.of(getActivity()).get(ExoPlayerViewModel.class);
 
             binding.setModel(model);
 
-            model.getPlayerLiveData().observe(this, new Observer<Player>() {
+            exoPlayerViewModel.getPlayerLiveData().observe(this, new Observer<Player>() {
                 @Override
                 public void onChanged(@Nullable Player player) {
                     if (player != null) {
@@ -70,7 +72,7 @@ public class RecipeStepsDetailsFragment extends Fragment {
                         binding.setSelectedStepPosition(position);
 
                         String videoUrl = binding.getRecipe().getSteps().get(position).getVideoURL();
-                        model.setSourceAndPrepare(videoUrl);
+                        exoPlayerViewModel.setSourceAndPrepare(videoUrl);
                     }
                 }
             });
