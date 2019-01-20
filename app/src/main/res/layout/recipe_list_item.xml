@@ -14,18 +14,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_recipe_name"
-            tools:text="Sweet Pie"
-            android:text="@{recipe.name}"
+        <ImageView
+            android:id="@+id/iv_restaurant_menu_icon"
+            android:src="@drawable/ic_restaurant_menu_48dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_recipe_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@{recipe.name}"
+            app:layout_constraintStart_toEndOf="@+id/iv_restaurant_menu_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sweet Pie" />
 
         <TextView
             android:id="@+id/tv_recipe_servings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="@{@string/recipe_servings(recipe.servings)}"
+            app:layout_constraintStart_toEndOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"
             tools:text="Servings: 999" />
 
