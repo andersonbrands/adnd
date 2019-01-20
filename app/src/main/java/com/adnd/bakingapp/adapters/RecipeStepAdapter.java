@@ -35,6 +35,7 @@ public class RecipeStepAdapter extends BaseAdapter<Step, RecipeStepAdapter.Recip
     public void onBindViewHolder(@NonNull RecipeStepViewHolder recipeViewHolder, int position) {
         Step recipe = getObjects().get(position);
         recipeViewHolder.binding.setStep(recipe);
+        recipeViewHolder.binding.setPosition(position);
     }
 
     class RecipeStepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

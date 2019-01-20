@@ -7,4 +7,5 @@
     <string name="ingredients_list_label">Ingredients list:</string>
     <string name="ingredient_details_line">\t* %s %s of %s</string>
     <string name="step_number">Step %d</string>
+    <string name="step_short_description">%d. %s</string>
 </resources>
