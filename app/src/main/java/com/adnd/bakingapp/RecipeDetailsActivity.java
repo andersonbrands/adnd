@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.adnd.bakingapp.adapters.ListItemClickListener;
@@ -39,6 +40,10 @@ public class RecipeDetailsActivity extends AppCompatActivity  implements ListIte
             Recipe recipe = Recipe.fromJSONString(recipeJsonString);
 
             if (recipe != null) {
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle(recipe.getName());
+                }
                 model.setRecipe(recipe);
                 binding.setRecipe(recipe);
 

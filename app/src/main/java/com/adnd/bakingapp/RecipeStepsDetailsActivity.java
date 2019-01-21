@@ -3,6 +3,7 @@ package com.adnd.bakingapp;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.adnd.bakingapp.models.Recipe;
@@ -31,6 +32,10 @@ public class RecipeStepsDetailsActivity extends AppCompatActivity {
             Recipe recipe = Recipe.fromJSONString(recipeJsonString);
 
             if (recipe != null) {
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle(recipe.getName());
+                }
                 model.setRecipe(recipe);
                 int recipeStepPosition =
                         intentThatStartedThisActivity.getIntExtra(RECIPE_STEP_POSITION_EXTRA_KEY, 0);
