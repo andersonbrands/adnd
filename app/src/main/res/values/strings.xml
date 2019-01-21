@@ -6,6 +6,6 @@
     <string name="err_something_wrong">Oops, something went wrong!</string>
     <string name="ingredients_list_label">Ingredients list:</string>
     <string name="ingredient_details_line">\t* %s %s of %s</string>
-    <string name="step_number">Step %d</string>
+    <string name="step_number">Step %d of %d</string>
     <string name="step_short_description">%d. %s</string>
 </resources>

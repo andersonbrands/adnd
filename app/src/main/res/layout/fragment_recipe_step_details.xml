@@ -47,7 +47,9 @@
             android:id="@+id/tv_step_number_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/step_number(selectedStepPosition + 1)}"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@{@string/step_number(selectedStepPosition + 1, recipe.steps.size())}"
             app:layout_constraintBottom_toBottomOf="@+id/btn_next_step"
             app:layout_constraintEnd_toStartOf="@+id/btn_next_step"
             app:layout_constraintStart_toEndOf="@+id/btn_previous_step"
@@ -81,28 +83,24 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
                     android:text="@{recipe.steps[selectedStepPosition].shortDescription}"
                     tools:text="step.shortDescription" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="26dp"
+                    android:layout_marginBottom="22dp"
                     android:text="@{recipe.steps[selectedStepPosition].description}"
                     tools:text="step.description" />
-
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@{recipe.steps[selectedStepPosition].videoURL}"-->
-                <!--tools:text="step.videoURL" />-->
 
                 <com.google.android.exoplayer2.ui.PlayerView
                     android:id="@+id/player_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/player_view_height"
-                    android:background="#00FF00"
+                    android:background="#3333"
                     android:visibility="@{TextUtils.isEmpty(recipe.steps[selectedStepPosition].videoURL) ? View.GONE : View.VISIBLE}"
                     app:player="@{player}" />
 
