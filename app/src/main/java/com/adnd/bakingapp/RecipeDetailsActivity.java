@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.adnd.bakingapp.adapters.ListItemClickListener;
 import com.adnd.bakingapp.databinding.ActivityRecipeDetailsBinding;
@@ -13,7 +14,7 @@ import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.Step;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 
-public class RecipeDetailsActivity extends AppCompatActivity  implements ListItemClickListener<Step> {
+public class RecipeDetailsActivity extends AppCompatActivity implements ListItemClickListener<Step> {
 
     public final static String RECIPE_JSON_EXTRA_KEY = "recipe_json_extra_key";
 
@@ -43,13 +44,14 @@ public class RecipeDetailsActivity extends AppCompatActivity  implements ListIte
                 ActionBar actionBar = getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.setTitle(recipe.getName());
+                    actionBar.setDisplayHomeAsUpEnabled(true);
                 }
                 model.setRecipe(recipe);
                 binding.setRecipe(recipe);
 
                 if (binding.getRoot().findViewById(R.id.two_pane_layout) != null) {
                     twoPane = true;
-                    if(savedInstanceState == null) {
+                    if (savedInstanceState == null) {
                         model.setSelectedStepPosition(0);
                     }
                 }
@@ -71,5 +73,17 @@ public class RecipeDetailsActivity extends AppCompatActivity  implements ListIte
             intent.putExtra(RecipeStepsDetailsActivity.RECIPE_STEP_POSITION_EXTRA_KEY, position);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
