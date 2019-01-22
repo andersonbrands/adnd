@@ -2,10 +2,12 @@ package com.adnd.bakingapp;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
@@ -34,9 +36,19 @@ public class RecipeStepsDetailsActivity extends AppCompatActivity {
 
             if (recipe != null) {
                 ActionBar actionBar = getSupportActionBar();
+
                 if (actionBar != null) {
                     actionBar.setTitle(recipe.getName());
                     actionBar.setDisplayHomeAsUpEnabled(true);
+                }
+
+                // go fullscreen when on landscape mode
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    setTheme(android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    if (actionBar != null) {
+                        actionBar.hide();
+                    }
                 }
                 model.setRecipe(recipe);
                 int recipeStepPosition =
