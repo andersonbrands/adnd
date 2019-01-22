@@ -6,14 +6,10 @@ import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.adnd.bakingapp.IdlingResource.SimpleIdlingResource;
 
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -54,7 +50,7 @@ public class MainActivityTest {
         onView(recyclerViewMatcher)
                 .check(matches(isDisplayed()));
 
-        Matcher<View> childOneMatcher = childAtPosition(recyclerViewMatcher, 0);
+        Matcher<View> childOneMatcher = TestUtil.childAtPosition(recyclerViewMatcher, 0);
         onView(allOf(withId(R.id.tv_recipe_name), isDescendantOfA(childOneMatcher)))
                 .check(matches(withText(NUTELLA_PIE)));
     }
@@ -63,10 +59,7 @@ public class MainActivityTest {
     public void clickItem_SendsRecipeDataViaIntent() {
         Matcher<View> recyclerViewMatcher = withId(R.id.rv_recipes);
 
-        onView(recyclerViewMatcher)
-                .check(matches(isDisplayed()));
-
-        Matcher<View> childOneMatcher = childAtPosition(recyclerViewMatcher, 0);
+        Matcher<View> childOneMatcher = TestUtil.childAtPosition(recyclerViewMatcher, 0);
 
         onView(childOneMatcher).perform(click());
 
@@ -74,13 +67,10 @@ public class MainActivityTest {
     }
 
     @Test
-    public void clickItem_opensRecipeDetailsActivity() {
+    public void clickItem_OpensRecipeDetailsActivity() {
         Matcher<View> recyclerViewMatcher = withId(R.id.rv_recipes);
 
-        onView(recyclerViewMatcher)
-                .check(matches(isDisplayed()));
-
-        Matcher<View> childOneMatcher = childAtPosition(recyclerViewMatcher, 0);
+        Matcher<View> childOneMatcher = TestUtil.childAtPosition(recyclerViewMatcher, 0);
 
         onView(childOneMatcher).perform(click());
 
@@ -93,24 +83,6 @@ public class MainActivityTest {
         if (idlingResource != null) {
             IdlingRegistry.getInstance().unregister(idlingResource);
         }
-    }
-
-    private static Matcher<View> childAtPosition(final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
     }
 
 }
