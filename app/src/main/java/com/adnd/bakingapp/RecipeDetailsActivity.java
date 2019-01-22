@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -22,6 +23,11 @@ public class RecipeDetailsActivity extends AppCompatActivity implements ListItem
     RecipeDetailsActivityViewModel model;
 
     private boolean twoPane = false;
+
+    @VisibleForTesting
+    public boolean isTwoPane() {
+        return twoPane;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
