@@ -1,4 +1,4 @@
-package com.adnd.bakingapp;
+package com.adnd.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.adnd.bakingapp.MainActivity;
+import com.adnd.bakingapp.R;
 
 /**
  * Implementation of App Widget functionality.
