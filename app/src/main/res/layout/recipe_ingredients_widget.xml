@@ -19,7 +19,6 @@
             android:id="@+id/iv_open_main_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:tint="#FFF"
             android:src="@drawable/ic_restaurant_menu_48dp" />
 
@@ -50,7 +49,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:lineSpacingExtra="6sp"
-        android:text="@{recipe.ingredients}"
+        android:text="@string/ellipsis"
         tools:text="\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted\n\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted" />
 
 </LinearLayout>
