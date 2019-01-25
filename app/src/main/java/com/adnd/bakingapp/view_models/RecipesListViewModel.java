@@ -16,17 +16,14 @@ import com.adnd.bakingapp.repositories.RecipesRepository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
-
-    private RecipesRepository recipesRepository;
-
-    private MediatorLiveData<List<Recipe>> recipesListLiveData = new MediatorLiveData<>();
-
-    private MutableLiveData<Boolean> runningOnBackground = new MutableLiveData<>();
+public class RecipesListViewModel extends AndroidViewModel {
 
     private final ObservableInt emptyListTextResId = new ObservableInt();
+    private RecipesRepository recipesRepository;
+    private MediatorLiveData<List<Recipe>> recipesListLiveData = new MediatorLiveData<>();
+    private MutableLiveData<Boolean> runningOnBackground = new MutableLiveData<>();
 
-    public MainActivityViewModel(@NonNull Application application) {
+    public RecipesListViewModel(@NonNull Application application) {
         super(application);
         recipesRepository = new RecipesRepository(application);
 

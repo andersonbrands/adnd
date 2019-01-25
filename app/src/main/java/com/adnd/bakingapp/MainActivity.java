@@ -8,23 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 
 import com.adnd.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
-import com.adnd.bakingapp.adapters.RecipeAdapter;
-import com.adnd.bakingapp.databinding.ActivityMainBinding;
+import com.adnd.bakingapp.databinding.FragmentRecipesListBinding;
 import com.adnd.bakingapp.models.Recipe;
-import com.adnd.bakingapp.view_models.MainActivityViewModel;
-
-import java.util.List;
+import com.adnd.bakingapp.view_models.RecipesListViewModel;
 
 public class MainActivity extends AppCompatActivity implements ListItemClickListener<Recipe> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    private ActivityMainBinding binding;
-    private MainActivityViewModel model;
 
     @Nullable
     private SimpleIdlingResource idlingResource;
@@ -42,20 +35,11 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
         getIdlingResource();
 
-        model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
-        binding.setModel(model);
-
-        model.getRecipeListLiveData().observe(this, new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(@Nullable List<Recipe> recipes) {
-                setRecyclerView(recipes);
-            }
-        });
+        RecipesListViewModel model = ViewModelProviders.of(this).get(RecipesListViewModel.class);
 
         model.getRunningOnBackground().observe(this, new Observer<Boolean>() {
             @Override
@@ -65,13 +49,6 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
                 }
             }
         });
-    }
-
-    private void setRecyclerView(List<Recipe> recipes) {
-        binding.rvRecipes.setLayoutManager(new GridLayoutManager(this, 1));
-        RecipeAdapter recipeAdapter = new RecipeAdapter(recipes, this);
-        binding.rvRecipes.setAdapter(recipeAdapter);
-        binding.setAdapter(recipeAdapter);
     }
 
     @Override
