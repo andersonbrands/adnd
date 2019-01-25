@@ -8,12 +8,17 @@ import android.arch.persistence.room.Query;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.WidgetHasRecipe;
 
+import java.util.List;
+
 @Dao
 public interface WidgetHasRecipeDao {
 
     // TODO return live data
     @Query("SELECT * FROM widget_has_recipe INNER JOIN recipes ON recipes.id = :widgetId")
     Recipe getRecipeByWidgetId(int widgetId);
+
+    @Query("SELECT * FROM widget_has_recipe")
+    List<WidgetHasRecipe> getAllWidgetHasRecipes();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(WidgetHasRecipe widgetHasRecipe);
