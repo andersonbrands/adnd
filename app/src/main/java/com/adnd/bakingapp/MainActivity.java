@@ -3,7 +3,6 @@ package com.adnd.bakingapp;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -11,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.adnd.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
-import com.adnd.bakingapp.databinding.FragmentRecipesListBinding;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.view_models.RecipesListViewModel;
 

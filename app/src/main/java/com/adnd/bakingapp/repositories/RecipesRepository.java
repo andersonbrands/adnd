@@ -16,7 +16,6 @@ import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.Step;
 import com.adnd.bakingapp.models.WidgetHasRecipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

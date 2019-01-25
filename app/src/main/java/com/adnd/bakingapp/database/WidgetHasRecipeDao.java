@@ -5,7 +5,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.WidgetHasRecipe;
 
 import java.util.List;
