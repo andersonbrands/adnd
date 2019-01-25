@@ -14,11 +14,11 @@ import java.util.List;
 public interface WidgetHasRecipeDao {
 
     // TODO return live data
-    @Query("SELECT * FROM widget_has_recipe INNER JOIN recipes ON recipes.id = :widgetId")
-    Recipe getRecipeByWidgetId(int widgetId);
+    @Query("SELECT recipe_id FROM widget_has_recipe WHERE widget_has_recipe.widget_id = :widgetId")
+    int getRecipeIdByWidgetId(int widgetId);
 
-    @Query("SELECT * FROM widget_has_recipe")
-    List<WidgetHasRecipe> getAllWidgetHasRecipes();
+    @Query("SELECT widget_id FROM widget_has_recipe")
+    List<Integer> getAllWidgetIds();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(WidgetHasRecipe widgetHasRecipe);

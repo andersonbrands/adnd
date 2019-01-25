@@ -69,13 +69,24 @@ public class RecipesRepository {
         widgetHasRecipeDao.insert(widgetHasRecipe);
     }
 
-    public Recipe loadRecipeForWidget(int widgetId) {
-        return widgetHasRecipeDao.getRecipeByWidgetId(widgetId);
+    public int loadRecipeIdForWidget(int widgetId) {
+        return widgetHasRecipeDao.getRecipeIdByWidgetId(widgetId);
+    }
+
+    public List<Integer> loadAllWidgetIds() {
+        return widgetHasRecipeDao.getAllWidgetIds();
+    }
+
+    public Recipe loadRecipeById(int recipeId) {
+        Recipe recipe = recipesDao.getRecipeById(recipeId);
+        recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipeId));
+        recipe.setSteps(stepsDao.getStepsForRecipe(recipeId));
+        return recipe;
     }
 
     private void loadRecipesFromDatabase() {
         List<Recipe> recipes = recipesDao.getRecipes();
-        for (Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
             recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipe.getId()));
             recipe.setSteps(stepsDao.getStepsForRecipe(recipe.getId()));
         }
