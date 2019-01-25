@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,16 +19,51 @@ import java.util.List;
 
 public class RecipesListViewModel extends AndroidViewModel {
 
-    private final ObservableInt emptyListTextResId = new ObservableInt();
+    public enum Status {
+        Idle,
+        Loading,
+        Error,
+        SuccessEmpty,
+        Success
+    }
+
+    private final ObservableField<Status> status = new ObservableField<>();
+
+    public ObservableField<Status> getStatus() {
+        return status;
+    }
+
+    private void setStatus(Status status) {
+        switch (status) {
+            case Loading:
+                statusTextResId.set(R.string.loading_data);
+                break;
+            case Error:
+                statusTextResId.set(R.string.err_something_wrong);
+                break;
+            case SuccessEmpty:
+                statusTextResId.set(R.string.empty_list);
+                break;
+            case Idle:
+                statusTextResId.set(R.string.ellipsis);
+            case Success:
+                statusTextResId.set(R.string.ellipsis);
+                break;
+        }
+        this.status.set(status);
+    }
+
+    private final ObservableInt statusTextResId = new ObservableInt();
     private RecipesRepository recipesRepository;
     private MediatorLiveData<List<Recipe>> recipesListLiveData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> runningOnBackground = new MutableLiveData<>();
 
     public RecipesListViewModel(@NonNull Application application) {
         super(application);
-        recipesRepository = new RecipesRepository(application);
 
-        emptyListTextResId.set(R.string.empty_list);
+        setStatus(Status.Idle);
+
+        recipesRepository = new RecipesRepository(application);
 
         loadRecipesList();
     }
@@ -40,20 +76,23 @@ public class RecipesListViewModel extends AndroidViewModel {
         return runningOnBackground;
     }
 
-    public ObservableInt getEmptyListTextResId() {
-        return emptyListTextResId;
+    public ObservableInt getStatusTextResId() {
+        return statusTextResId;
     }
 
     public void loadRecipesList() {
         runningOnBackground.setValue(true);
+        setStatus(Status.Loading);
         final LiveData<List<Recipe>> source = recipesRepository.loadRecipes();
         recipesListLiveData.addSource(source, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 if (recipes == null) {
-                    emptyListTextResId.set(R.string.err_something_wrong);
+                    setStatus(Status.Error);
                 } else if (recipes.size() == 0) {
-                    emptyListTextResId.set(R.string.empty_list);
+                    setStatus(Status.SuccessEmpty);
+                } else {
+                    setStatus(Status.Success);
                 }
                 recipesListLiveData.setValue(recipes);
                 recipesListLiveData.removeSource(source);
@@ -61,6 +100,5 @@ public class RecipesListViewModel extends AndroidViewModel {
             }
         });
     }
-
 
 }

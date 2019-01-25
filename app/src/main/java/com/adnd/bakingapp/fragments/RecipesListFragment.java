@@ -65,6 +65,5 @@ public class RecipesListFragment extends Fragment {
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         RecipeAdapter recipeAdapter = new RecipeAdapter(recipes, recipeListItemClickListener);
         binding.rvRecipes.setAdapter(recipeAdapter);
-        binding.setAdapter(recipeAdapter);
     }
 }

@@ -11,4 +11,7 @@
 
     <string name="select_recipe">Select a recipe</string>
     <string name="ellipsis">&#x2026;</string>
+    <string name="loading_data">Loading data</string>
+    <string name="try_again">Try again</string>
+    <string name="unable_to_load_data">Unable to load data</string>
 </resources>

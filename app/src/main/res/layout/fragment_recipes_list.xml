@@ -6,12 +6,10 @@
     <data>
 
         <variable
-            name="adapter"
-            type="com.adnd.bakingapp.adapters.RecipeAdapter" />
-
-        <variable
             name="model"
             type="com.adnd.bakingapp.view_models.RecipesListViewModel" />
+
+        <import type="com.adnd.bakingapp.view_models.RecipesListViewModel.Status" />
 
         <import type="android.view.View" />
     </data>
@@ -27,17 +25,40 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/recipe_list_item" />
 
-        <TextView
-            android:id="@+id/tv_empty_list"
+        <ProgressBar
+            android:id="@+id/pb_loading_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.emptyListTextResId}"
-            android:visibility="@{adapter.listIsEmpty ? View.VISIBLE : View.GONE}"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:visibility="@{ model.status == Status.Loading ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toTopOf="@+id/tv_status_feedback"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="@{ () -> model.loadRecipesList() }"
+            android:text="@string/try_again"
+            android:visibility="@{ model.status == Status.Error || model.status == Status.SuccessEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status_feedback" />
+
+        <TextView
+            android:id="@+id/tv_status_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.statusTextResId}"
+            android:visibility="@{model.status != Status.Success ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/empty_list" />
+            tools:text="Status feedback" />
 
     </android.support.constraint.ConstraintLayout>
 
