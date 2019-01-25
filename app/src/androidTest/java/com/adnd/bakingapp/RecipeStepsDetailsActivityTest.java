@@ -20,6 +20,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+
 
 @RunWith(AndroidJUnit4.class)
 public class RecipeStepsDetailsActivityTest {
@@ -59,7 +61,8 @@ public class RecipeStepsDetailsActivityTest {
             String firstRecipeShortDescription =
                     TestUtil.NUTELLA_PIE_RECIPE.getSteps().get(START_POSITION).getShortDescription();
 
-            onView(withText(firstRecipeShortDescription))
+            onView(allOf(withText(firstRecipeShortDescription),
+                    withId(R.id.tv_recipe_step_detail_short_description)))
                     .check(matches(isDisplayed()));
         }
     }
@@ -73,7 +76,8 @@ public class RecipeStepsDetailsActivityTest {
             onView(withId(R.id.btn_next_step))
                     .perform(click());
 
-            onView(withText(secondRecipeShortDescription))
+            onView(allOf(withText(secondRecipeShortDescription),
+                    withId(R.id.tv_recipe_step_detail_short_description)))
                     .check(matches(isDisplayed()));
         }
     }
