@@ -16,6 +16,9 @@ public interface RecipesDao {
     @Query("SELECT * FROM recipes")
     List<Recipe> getRecipes();
 
+    @Query("SELECT * FROM recipes WHERE recipes.id = :id")
+    Recipe getRecipeById(int id);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Recipe recipe);
 

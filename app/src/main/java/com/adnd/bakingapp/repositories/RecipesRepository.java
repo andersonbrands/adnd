@@ -10,9 +10,11 @@ import com.adnd.bakingapp.database.AppDatabase;
 import com.adnd.bakingapp.database.IngredientsDao;
 import com.adnd.bakingapp.database.RecipesDao;
 import com.adnd.bakingapp.database.StepsDao;
+import com.adnd.bakingapp.database.WidgetHasRecipeDao;
 import com.adnd.bakingapp.models.Ingredient;
 import com.adnd.bakingapp.models.Recipe;
 import com.adnd.bakingapp.models.Step;
+import com.adnd.bakingapp.models.WidgetHasRecipe;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class RecipesRepository {
     private RecipesDao recipesDao;
     private IngredientsDao ingredientsDao;
     private StepsDao stepsDao;
+    private WidgetHasRecipeDao widgetHasRecipeDao;
 
     public RecipesRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
@@ -35,16 +38,17 @@ public class RecipesRepository {
         recipesDao = db.recipesDao();
         ingredientsDao = db.ingredientsDao();
         stepsDao = db.stepsDao();
+        widgetHasRecipeDao = db.widgetHasRecipeDao();
     }
 
     public void saveRecipeToDatabase(Recipe recipe) {
         recipesDao.insert(recipe);
         for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredient.setId(recipe.getId());
+            ingredient.setRecipe_id(recipe.getId());
             ingredientsDao.insert(ingredient);
         }
         for (Step step : recipe.getSteps()) {
-            step.setId(recipe.getId());
+            step.setRecipe_id(recipe.getId());
             stepsDao.insert(step);
         }
     }
@@ -55,6 +59,18 @@ public class RecipesRepository {
         loadRecipesFromWebService(recipesListLiveData);
 
         return recipesListLiveData;
+    }
+
+    public void saveWidgetHasRecipeToDatabase(Recipe recipe, int widgetId) {
+        saveRecipeToDatabase(recipe);
+        WidgetHasRecipe widgetHasRecipe = new WidgetHasRecipe();
+        widgetHasRecipe.setWidget_id(widgetId);
+        widgetHasRecipe.setRecipe_id(recipe.getId());
+        widgetHasRecipeDao.insert(widgetHasRecipe);
+    }
+
+    public Recipe loadRecipeForWidget(int widgetId) {
+        return widgetHasRecipeDao.getRecipeByWidgetId(widgetId);
     }
 
     private void loadRecipesFromDatabase() {
