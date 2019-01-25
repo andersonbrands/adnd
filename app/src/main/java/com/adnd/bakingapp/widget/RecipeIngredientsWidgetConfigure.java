@@ -4,12 +4,11 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.adnd.bakingapp.R;
-import com.adnd.bakingapp.RecipeDetailsActivity;
 import com.adnd.bakingapp.adapters.ListItemClickListener;
 import com.adnd.bakingapp.models.Recipe;
+import com.adnd.bakingapp.repositories.RecipesRepository;
 
 public class RecipeIngredientsWidgetConfigure extends AppCompatActivity implements ListItemClickListener<Recipe> {
 
@@ -32,16 +31,13 @@ public class RecipeIngredientsWidgetConfigure extends AppCompatActivity implemen
 
     }
 
-    private void configureWidget() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-
-        RecipeIngredientsWidget.updateAppWidget(this, appWidgetManager, appWidgetId);
-    }
-
     @Override
     public void onListItemClick(Recipe clickedItem, int clickedPosition) {
+        RecipesRepository repository = new RecipesRepository(getApplication());
 
-        configureWidget();
+        repository.saveWidgetHasRecipeToDatabase(clickedItem, appWidgetId);
+
+        RecipeIngredientsWidgetService.startActionUpdateWidgets(this);
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
