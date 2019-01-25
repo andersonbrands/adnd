@@ -20,6 +20,11 @@ public class BindingAdapters {
         }
 
         Resources res = textView.getResources();
+
+        textView.setText(getIngredientsListText(res, ingredients));
+    }
+
+    public static String getIngredientsListText(Resources res, List<Ingredient> ingredients) {
         List<String> stringList = new ArrayList<>();
 
         for (Ingredient ingredient : ingredients) {
@@ -31,7 +36,8 @@ public class BindingAdapters {
                             ingredient.getIngredient());
             stringList.add(ingredientDetailsLine);
         }
-        textView.setText(TextUtils.join("\n", stringList));
+
+        return TextUtils.join("\n", stringList);
     }
 
 }
