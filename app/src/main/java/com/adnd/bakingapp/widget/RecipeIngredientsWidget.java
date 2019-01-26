@@ -40,6 +40,11 @@ public class RecipeIngredientsWidget extends AppWidgetProvider {
     }
 
     @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        RecipeIngredientsWidgetService.startActionDeleteWidgets(context, appWidgetIds);
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         if (appWidgetIds.length != 0) {

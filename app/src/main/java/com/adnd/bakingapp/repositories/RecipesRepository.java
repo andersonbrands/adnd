@@ -81,6 +81,10 @@ public class RecipesRepository {
         return widgetHasRecipeDao.getAllWidgetHasRecipes();
     }
 
+    public void deleteWidgetHasRecipeById(int widgetId) {
+        widgetHasRecipeDao.deleteById(widgetId);
+    }
+
     public Recipe loadRecipeById(int recipeId) {
         Recipe recipe = recipesDao.getRecipeById(recipeId);
         recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipeId));
