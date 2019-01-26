@@ -38,6 +38,8 @@ public class RecipeIngredientsWidgetService extends IntentService {
     private void handleActionUpdateWidgets() {
         RecipesRepository repository = new RecipesRepository(getApplication());
 
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+
         List<Integer> appWidgetsIds = repository.loadAllWidgetIds();
 
         for (Integer appWidgetId : appWidgetsIds) {
@@ -45,8 +47,6 @@ public class RecipeIngredientsWidgetService extends IntentService {
 
             Recipe recipe = repository.loadRecipeById(recipeId);
             if (recipe != null) {
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-
                 RecipeIngredientsWidget.updateAppWidget(getApplicationContext(), appWidgetManager, appWidgetId, recipe);
             }
         }
