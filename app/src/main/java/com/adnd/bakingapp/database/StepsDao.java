@@ -12,7 +12,6 @@ import java.util.List;
 @Dao
 public interface StepsDao {
 
-    // TODO return livedata
     @Query("SELECT * FROM steps WHERE recipe_id = :recipe_id")
     List<Step> getStepsForRecipe(int recipe_id);
 

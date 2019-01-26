@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.adnd.bakingapp.models.Recipe;
+import com.adnd.bakingapp.models.WidgetHasRecipe;
 import com.adnd.bakingapp.repositories.RecipesRepository;
 
 import java.util.List;
@@ -36,18 +37,19 @@ public class RecipeIngredientsWidgetService extends IntentService {
     }
 
     private void handleActionUpdateWidgets() {
-        RecipesRepository repository = new RecipesRepository(getApplication());
-
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
-        List<Integer> appWidgetsIds = repository.loadAllWidgetIds();
+        RecipesRepository repository = new RecipesRepository(getApplication());
 
-        for (Integer appWidgetId : appWidgetsIds) {
-            int recipeId = repository.loadRecipeIdForWidget(appWidgetId);
+        List<WidgetHasRecipe> widgetHasRecipeList = repository.loadAllWidgetHasRecipe();
 
-            Recipe recipe = repository.loadRecipeById(recipeId);
+        for (WidgetHasRecipe widgetHasRecipe : widgetHasRecipeList) {
+            Recipe recipe = repository.loadRecipeById(widgetHasRecipe.getRecipe_id());
             if (recipe != null) {
-                RecipeIngredientsWidget.updateAppWidget(getApplicationContext(), appWidgetManager, appWidgetId, recipe);
+                RecipeIngredientsWidget.updateAppWidget(getApplicationContext(),
+                        appWidgetManager,
+                        widgetHasRecipe.getWidget_id(),
+                        recipe);
             }
         }
     }

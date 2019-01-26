@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.adnd.bakingapp.AppExecutors;
 import com.adnd.bakingapp.api.RecipesApi;
 import com.adnd.bakingapp.api.RecipesListConverterFactory;
 import com.adnd.bakingapp.database.AppDatabase;
@@ -41,18 +42,6 @@ public class RecipesRepository {
         widgetHasRecipeDao = db.widgetHasRecipeDao();
     }
 
-    public void saveRecipeToDatabase(Recipe recipe) {
-        recipesDao.insert(recipe);
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredient.setRecipe_id(recipe.getId());
-            ingredientsDao.insert(ingredient);
-        }
-        for (Step step : recipe.getSteps()) {
-            step.setRecipe_id(recipe.getId());
-            stepsDao.insert(step);
-        }
-    }
-
     public LiveData<List<Recipe>> loadRecipes() {
         MutableLiveData<List<Recipe>> recipesListLiveData = new MutableLiveData<>();
 
@@ -61,20 +50,35 @@ public class RecipesRepository {
         return recipesListLiveData;
     }
 
-    public void saveWidgetHasRecipeToDatabase(Recipe recipe, int widgetId) {
-        saveRecipeToDatabase(recipe);
-        WidgetHasRecipe widgetHasRecipe = new WidgetHasRecipe();
+    public void saveWidgetHasRecipeToDatabase(final Recipe recipe, int widgetId) {
+        final WidgetHasRecipe widgetHasRecipe = new WidgetHasRecipe();
         widgetHasRecipe.setWidget_id(widgetId);
         widgetHasRecipe.setRecipe_id(recipe.getId());
-        widgetHasRecipeDao.insert(widgetHasRecipe);
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                recipesDao.insert(recipe);
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    ingredient.setRecipe_id(recipe.getId());
+                    ingredientsDao.insert(ingredient);
+                }
+                for (Step step : recipe.getSteps()) {
+                    step.setRecipe_id(recipe.getId());
+                    stepsDao.insert(step);
+                }
+
+                widgetHasRecipeDao.insert(widgetHasRecipe);
+            }
+        });
     }
 
-    public int loadRecipeIdForWidget(int widgetId) {
-        return widgetHasRecipeDao.getRecipeIdByWidgetId(widgetId);
+    public LiveData<WidgetHasRecipe> loadWidgetHasRecipeById(int widgetId) {
+        return widgetHasRecipeDao.getWidgetHasRecipeById(widgetId);
     }
 
-    public List<Integer> loadAllWidgetIds() {
-        return widgetHasRecipeDao.getAllWidgetIds();
+    public List<WidgetHasRecipe> loadAllWidgetHasRecipe() {
+        return widgetHasRecipeDao.getAllWidgetHasRecipes();
     }
 
     public Recipe loadRecipeById(int recipeId) {
@@ -82,14 +86,6 @@ public class RecipesRepository {
         recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipeId));
         recipe.setSteps(stepsDao.getStepsForRecipe(recipeId));
         return recipe;
-    }
-
-    private void loadRecipesFromDatabase() {
-        List<Recipe> recipes = recipesDao.getRecipes();
-        for (Recipe recipe : recipes) {
-            recipe.setIngredients(ingredientsDao.getIngredientsForRecipe(recipe.getId()));
-            recipe.setSteps(stepsDao.getStepsForRecipe(recipe.getId()));
-        }
     }
 
     private void loadRecipesFromWebService(final MutableLiveData<List<Recipe>> recipesListLiveData) {

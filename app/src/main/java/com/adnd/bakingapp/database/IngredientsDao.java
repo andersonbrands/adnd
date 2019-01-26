@@ -12,7 +12,6 @@ import java.util.List;
 @Dao
 public interface IngredientsDao {
 
-    // TODO return livedata
     @Query("SELECT * FROM ingredients WHERE recipe_id = :recipe_id")
     List<Ingredient> getIngredientsForRecipe(int recipe_id);
 
