@@ -40,8 +40,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeDetailsActivity" />
-        <activity android:name=".RecipeStepsDetailsActivity" />
+        <activity
+            android:name=".RecipeDetailsActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.adnd.bakingapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".RecipeStepsDetailsActivity"
+            android:parentActivityName=".RecipeDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.adnd.bakingapp.RecipeDetailsActivity" />
+        </activity>
     </application>
 
 </manifest>
