@@ -1,37 +1,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_ingredients_widget_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FEEE"
     android:orientation="vertical"
-    android:id="@+id/recipe_ingredients_widget_root"
     android:padding="@dimen/widget_margin">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        android:padding="8dp"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/iv_open_main_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="#FFF"
-            android:src="@drawable/ic_restaurant_menu_48dp" />
+            android:src="@drawable/ic_restaurant_menu_48dp"
+            android:tint="#FFF" />
 
         <TextView
             android:id="@+id/tv_recipe_name"
-            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:text="@string/app_name"
             android:textColor="#FFF"
-            android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
