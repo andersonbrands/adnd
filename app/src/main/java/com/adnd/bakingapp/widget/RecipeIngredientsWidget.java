@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.adnd.bakingapp.MainActivity;
 import com.adnd.bakingapp.R;
+import com.adnd.bakingapp.RecipeDetailsActivity;
 import com.adnd.bakingapp.adapters.BindingAdapters;
 import com.adnd.bakingapp.models.Recipe;
 
@@ -19,7 +19,8 @@ public class RecipeIngredientsWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, Recipe recipe) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, RecipeDetailsActivity.class);
+        intent.putExtra(RecipeDetailsActivity.RECIPE_JSON_EXTRA_KEY, recipe.toJSONString());
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Construct the RemoteViews object
@@ -41,7 +42,9 @@ public class RecipeIngredientsWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        RecipeIngredientsWidgetService.startActionUpdateWidgets(context);
+        if (appWidgetIds.length != 0) {
+            RecipeIngredientsWidgetService.startActionUpdateWidgets(context);
+        }
     }
 
     @Override
