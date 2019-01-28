@@ -58,14 +58,16 @@ public class RecipesRepository {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                recipesDao.insert(recipe);
-                for (Ingredient ingredient : recipe.getIngredients()) {
-                    ingredient.setRecipe_id(recipe.getId());
-                    ingredientsDao.insert(ingredient);
-                }
-                for (Step step : recipe.getSteps()) {
-                    step.setRecipe_id(recipe.getId());
-                    stepsDao.insert(step);
+                if (recipesDao.getRecipeById(recipe.getId()) == null) {
+                    recipesDao.insert(recipe);
+                    for (Ingredient ingredient : recipe.getIngredients()) {
+                        ingredient.setRecipe_id(recipe.getId());
+                        ingredientsDao.insert(ingredient);
+                    }
+                    for (Step step : recipe.getSteps()) {
+                        step.setRecipe_id(recipe.getId());
+                        stepsDao.insert(step);
+                    }
                 }
 
                 widgetHasRecipeDao.insert(widgetHasRecipe);
