@@ -4,21 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="recipe"
             type="com.adnd.bakingapp.models.Recipe" />
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/iv_restaurant_menu_icon"
-            android:src="@drawable/ic_restaurant_menu_48dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:errorRes="@{@drawable/ic_restaurant_menu_48dp}"
+            app:imgURL="@{recipe.image}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderRes="@{@drawable/ic_restaurant_menu_48dp}"
+            tools:src="@drawable/ic_restaurant_menu_48dp" />
 
         <TextView
             android:id="@+id/tv_recipe_name"
@@ -26,9 +32,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
             android:text="@{recipe.name}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sweet Pie" />
@@ -39,7 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@{@string/recipe_servings(recipe.servings)}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"
             tools:text="Servings: 999" />
