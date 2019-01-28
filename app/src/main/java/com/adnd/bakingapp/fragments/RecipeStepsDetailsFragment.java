@@ -18,6 +18,8 @@ import com.google.android.exoplayer2.Player;
 
 public class RecipeStepsDetailsFragment extends Fragment {
 
+    private ExoPlayerViewModel exoPlayerViewModel;
+
     public RecipeStepsDetailsFragment() {
 
     }
@@ -28,7 +30,7 @@ public class RecipeStepsDetailsFragment extends Fragment {
         final FragmentRecipeStepDetailsBinding binding = FragmentRecipeStepDetailsBinding.inflate(inflater);
         if (getActivity() != null) {
             final RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
-            final ExoPlayerViewModel exoPlayerViewModel = ViewModelProviders.of(getActivity()).get(ExoPlayerViewModel.class);
+            exoPlayerViewModel = ViewModelProviders.of(getActivity()).get(ExoPlayerViewModel.class);
 
             binding.setModel(model);
 
@@ -63,4 +65,11 @@ public class RecipeStepsDetailsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (getActivity() != null && !getActivity().isChangingConfigurations()) {
+            exoPlayerViewModel.stopPlayer();
+        }
+    }
 }

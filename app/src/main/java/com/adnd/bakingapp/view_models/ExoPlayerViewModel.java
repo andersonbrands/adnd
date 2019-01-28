@@ -29,6 +29,10 @@ public class ExoPlayerViewModel extends AndroidViewModel {
         exoPlayerManager.setSourceAndPrepare(videoURL);
     }
 
+    public void stopPlayer() {
+        exoPlayerManager.stopPlayer();
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

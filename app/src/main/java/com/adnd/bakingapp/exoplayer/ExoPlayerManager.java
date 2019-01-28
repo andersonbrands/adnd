@@ -91,6 +91,10 @@ public class ExoPlayerManager extends BroadcastReceiver implements Player.EventL
         }
     }
 
+    public void stopPlayer() {
+        simpleExoPlayer.setPlayWhenReady(false);
+    }
+
     public void setSourceAndPrepare(String videoURL) {
         if (videoURL.equals(lastVideoUrl)) {
             return;
