@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recipe_ingredients_widget_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -41,15 +41,10 @@
         android:text="@string/ingredients_list_label"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_recipe_ingredients_details"
+    <ListView
+        android:id="@+id/lv_ingredients_list"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:lineSpacingExtra="6sp"
-        android:text="@string/ellipsis"
-        tools:text="\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted\n\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -17,6 +17,8 @@ import com.adnd.bakingapp.models.Recipe;
  */
 public class RecipeIngredientsWidget extends AppWidgetProvider {
 
+    public static final String INGREDIENTS_LIST_TEXT = "IngredientsListText";
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, Recipe recipe) {
         Intent intent = new Intent(context, RecipeDetailsActivity.class);
@@ -26,12 +28,13 @@ public class RecipeIngredientsWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_ingredients_widget);
 
-        views.setTextViewText(R.id.tv_recipe_name, recipe.getName());
-
         String ingredientsListText =
                 BindingAdapters.getIngredientsListText(context.getResources(), recipe.getIngredients());
+        Intent remoteViewsServiceIntent = new Intent(context, RecipeIngredientsRemoteViewsService.class);
+        remoteViewsServiceIntent.putExtra(INGREDIENTS_LIST_TEXT, ingredientsListText);
+        views.setRemoteAdapter(R.id.lv_ingredients_list, remoteViewsServiceIntent);
 
-        views.setTextViewText(R.id.tv_recipe_ingredients_details, ingredientsListText);
+        views.setTextViewText(R.id.tv_recipe_name, recipe.getName());
 
         views.setOnClickPendingIntent(R.id.recipe_ingredients_widget_root, pendingIntent);
 

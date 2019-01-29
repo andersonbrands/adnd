@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
+            android:name=".widget.RecipeIngredientsRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+        <service
             android:name=".widget.RecipeIngredientsWidgetService"
             android:exported="false" />
 
