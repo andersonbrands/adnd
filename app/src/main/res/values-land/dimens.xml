@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="img_no_video_padding">96dp</dimen>
+
+</resources>

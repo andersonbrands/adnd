@@ -9,4 +9,21 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
 
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_normal_2">16sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+
+    <dimen name="space_one_dp">1dp</dimen>
+    <dimen name="space_small">4dp</dimen>
+    <dimen name="space_medium">8dp</dimen>
+
+    <dimen name="master_details_left_panel_width">400dp</dimen>
+    <dimen name="exoplayer_seekbar_height">26dp</dimen>
+    <dimen name="ingredients_list_line_spacing_extra">6sp</dimen>
+    <dimen name="space_large">12dp</dimen>
+    <dimen name="space_extra_large">18dp</dimen>
+    <dimen name="img_no_video_padding">72dp</dimen>
+    <dimen name="recipe_list_item_icon_size">48dp</dimen>
+
+
 </resources>

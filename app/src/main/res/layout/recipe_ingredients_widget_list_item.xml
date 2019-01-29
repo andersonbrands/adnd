@@ -4,9 +4,9 @@
     android:id="@+id/tv_recipe_ingredients_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:lineSpacingExtra="6sp"
+    android:layout_marginStart="@dimen/space_medium"
+    android:layout_marginLeft="@dimen/space_medium"
+    android:layout_marginRight="@dimen/space_medium"
+    android:lineSpacingExtra="@dimen/ingredients_list_line_spacing_extra"
     android:text="@string/ellipsis"
     tools:text="\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted\n\t* 2.0 CUP of Graham Cracker crumbs\n\t* 6.0 TBLSP of unsalted butter, melted" />

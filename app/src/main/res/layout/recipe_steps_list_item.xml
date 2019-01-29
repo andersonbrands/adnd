@@ -14,6 +14,7 @@
             type="int" />
 
         <import type="android.text.TextUtils" />
+
         <import type="android.view.View" />
 
     </data>
@@ -21,29 +22,29 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/space_medium">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:imgURL="@{step.thumbnailURL}"
-            app:placeholderRes="@{@drawable/ic_check_36dp}"
+            android:layout_width="@dimen/recipe_list_item_icon_size"
+            android:layout_height="@dimen/recipe_list_item_icon_size"
             app:errorRes="@{@drawable/ic_check_36dp}"
+            app:imgURL="@{step.thumbnailURL}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:placeholderRes="@{@drawable/ic_check_36dp}"
             tools:src="@drawable/ic_check_36dp" />
 
         <TextView
             android:id="@+id/tv_recipe_step_short_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/space_medium"
+            android:layout_marginLeft="@dimen/space_medium"
+            android:layout_marginEnd="@dimen/space_medium"
+            android:layout_marginRight="@dimen/space_medium"
             android:text="@{@string/step_short_description(position + 1, step.shortDescription)}"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_normal_2"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"

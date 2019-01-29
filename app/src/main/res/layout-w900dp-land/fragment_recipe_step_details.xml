@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -47,9 +46,9 @@
             android:id="@+id/tv_step_number_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
             android:text="@{@string/step_number(selectedStepPosition + 1, recipe.steps.size())}"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/btn_next_step"
             app:layout_constraintEnd_toStartOf="@+id/btn_next_step"
             app:layout_constraintStart_toEndOf="@+id/btn_previous_step"
@@ -78,21 +77,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/space_medium">
 
                 <TextView
+                    android:id="@+id/tv_recipe_step_detail_short_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/space_large"
                     android:text="@{recipe.steps[selectedStepPosition].shortDescription}"
+                    android:textSize="@dimen/text_size_normal_2"
+                    android:textStyle="bold"
                     tools:text="step.shortDescription" />
 
                 <TextView
+                    android:id="@+id/tv_recipe_step_detail_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="22dp"
+                    android:layout_marginBottom="@dimen/space_extra_large"
                     android:text="@{recipe.steps[selectedStepPosition].description}"
                     tools:text="step.description" />
 
@@ -109,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/player_view_height"
                     android:background="#CC000000"
-                    android:padding="72dp"
+                    android:padding="@dimen/img_no_video_padding"
                     android:src="@drawable/ic_videocam_off_36dp"
                     android:visibility="@{TextUtils.isEmpty(recipe.steps[selectedStepPosition].videoURL) ? View.VISIBLE : View.GONE}" />
 

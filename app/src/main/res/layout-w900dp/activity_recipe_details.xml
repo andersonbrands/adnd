@@ -20,11 +20,11 @@
             android:id="@+id/recipe_details_fragment"
             android:name="com.adnd.bakingapp.fragments.RecipeDetailsFragment"
             tools:layout="@layout/fragment_recipe_details"
-            android:layout_width="400dp"
+            android:layout_width="@dimen/master_details_left_panel_width"
             android:layout_height="match_parent" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="@dimen/space_one_dp"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray" />
 

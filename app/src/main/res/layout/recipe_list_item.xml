@@ -13,12 +13,12 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/space_medium">
 
         <ImageView
             android:id="@+id/iv_restaurant_menu_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/recipe_list_item_icon_size"
+            android:layout_height="@dimen/recipe_list_item_icon_size"
             app:errorRes="@{@drawable/ic_restaurant_menu_48dp}"
             app:imgURL="@{recipe.image}"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +30,9 @@
             android:id="@+id/tv_recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/space_medium"
+            android:layout_marginLeft="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_medium"
             android:text="@{recipe.name}"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -45,9 +45,9 @@
             android:id="@+id/tv_recipe_servings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/space_medium"
+            android:layout_marginLeft="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_medium"
             android:text="@{@string/recipe_servings(recipe.servings)}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_restaurant_menu_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_restaurant_menu_icon"
