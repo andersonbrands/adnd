@@ -57,8 +57,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements ListItem
                 }
                 model.setRecipe(recipe);
                 binding.setRecipe(recipe);
-
-                if (binding.getRoot().findViewById(R.id.two_pane_layout) != null) {
+                
+                if (getResources().getBoolean(R.bool.is_tablet)) {
                     twoPane = true;
                     if (savedInstanceState == null) {
                         model.setSelectedStepPosition(0);
