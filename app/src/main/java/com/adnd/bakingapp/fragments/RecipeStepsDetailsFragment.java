@@ -12,13 +12,18 @@ import android.view.ViewGroup;
 
 import com.adnd.bakingapp.databinding.FragmentRecipeStepDetailsBinding;
 import com.adnd.bakingapp.models.Recipe;
+import com.adnd.bakingapp.view_models.ComingFromConfigChangeViewModel;
 import com.adnd.bakingapp.view_models.ExoPlayerViewModel;
 import com.adnd.bakingapp.view_models.RecipeDetailsActivityViewModel;
 import com.google.android.exoplayer2.Player;
 
 public class RecipeStepsDetailsFragment extends Fragment {
 
+    private boolean comingFromConfigChange = false;
     private ExoPlayerViewModel exoPlayerViewModel;
+    private ComingFromConfigChangeViewModel comingFromConfigChangeViewModel;
+
+    private FragmentRecipeStepDetailsBinding binding;
 
     public RecipeStepsDetailsFragment() {
 
@@ -27,12 +32,31 @@ public class RecipeStepsDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final FragmentRecipeStepDetailsBinding binding = FragmentRecipeStepDetailsBinding.inflate(inflater);
+        binding = FragmentRecipeStepDetailsBinding.inflate(inflater);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         if (getActivity() != null) {
-            final RecipeDetailsActivityViewModel model = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
+            RecipeDetailsActivityViewModel recipeDetailsActivityViewModel = ViewModelProviders.of(getActivity()).get(RecipeDetailsActivityViewModel.class);
             exoPlayerViewModel = ViewModelProviders.of(getActivity()).get(ExoPlayerViewModel.class);
 
-            binding.setModel(model);
+            comingFromConfigChangeViewModel
+                    = ViewModelProviders.of(getActivity()).get(ComingFromConfigChangeViewModel.class);
+
+            comingFromConfigChangeViewModel.getComingFromConfigChange().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(@Nullable Boolean value) {
+                    if (value != null) {
+                        comingFromConfigChange = value;
+                    }
+                }
+            });
+
+            binding.setModel(recipeDetailsActivityViewModel);
 
             exoPlayerViewModel.getPlayerLiveData().observe(this, new Observer<Player>() {
                 @Override
@@ -42,7 +66,7 @@ public class RecipeStepsDetailsFragment extends Fragment {
                     }
                 }
             });
-            model.getRecipeLiveData().observe(this, new Observer<Recipe>() {
+            recipeDetailsActivityViewModel.getRecipeLiveData().observe(this, new Observer<Recipe>() {
                 @Override
                 public void onChanged(@Nullable Recipe recipe) {
                     if (recipe != null) {
@@ -50,26 +74,33 @@ public class RecipeStepsDetailsFragment extends Fragment {
                     }
                 }
             });
-            model.getSelectedStepPosition().observe(this, new Observer<Integer>() {
+            recipeDetailsActivityViewModel.getSelectedStepPosition().observe(this, new Observer<Integer>() {
                 @Override
                 public void onChanged(@Nullable Integer position) {
                     if (position != null) {
                         binding.setSelectedStepPosition(position);
-
-                        String videoUrl = binding.getRecipe().getSteps().get(position).getVideoURL();
-                        exoPlayerViewModel.setSourceAndPrepare(videoUrl);
+                        if (!comingFromConfigChange) {
+                            String videoUrl = binding.getRecipe().getSteps().get(position).getVideoURL();
+                            exoPlayerViewModel.startPlayer(videoUrl);
+                        }
                     }
                 }
             });
         }
-        return binding.getRoot();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (getActivity() != null && !getActivity().isChangingConfigurations()) {
-            exoPlayerViewModel.stopPlayer();
+
+        if (getActivity() != null) {
+            boolean isChangingConfigurations = getActivity().isChangingConfigurations();
+            comingFromConfigChangeViewModel.setComingFromConfigChange(isChangingConfigurations);
+
+            if (!isChangingConfigurations) {
+                exoPlayerViewModel.releasePlayer();
+            }
         }
     }
 }

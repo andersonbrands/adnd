@@ -14,10 +14,12 @@ public class ExoPlayerViewModel extends AndroidViewModel {
 
     private ExoPlayerManager exoPlayerManager;
 
+    private static final String INVALID_VIDEL_URL = "invalid";
+    private String lastVideoUrl = INVALID_VIDEL_URL;
+
     public ExoPlayerViewModel(@NonNull Application application) {
         super(application);
         exoPlayerManager = new ExoPlayerManager();
-        exoPlayerManager.initialize(application);
         playerLiveData.setValue(exoPlayerManager.getPlayer());
     }
 
@@ -25,17 +27,30 @@ public class ExoPlayerViewModel extends AndroidViewModel {
         return playerLiveData;
     }
 
-    public void setSourceAndPrepare(String videoURL) {
-        exoPlayerManager.setSourceAndPrepare(videoURL);
+    private void initializePlayer() {
+        exoPlayerManager.initialize(getApplication());
+        playerLiveData.setValue(exoPlayerManager.getPlayer());
     }
 
-    public void stopPlayer() {
-        exoPlayerManager.stopPlayer();
+    public void startPlayer(String videoURL) {
+        if (lastVideoUrl.equals(videoURL)) {
+            initializePlayer();
+            exoPlayerManager.setSourceAndPrepare(videoURL);
+            exoPlayerManager.restorePlayerState();
+        } else {
+            if (lastVideoUrl.equals(INVALID_VIDEL_URL)) {
+                initializePlayer();
+            }
+            exoPlayerManager.setSourceAndPrepare(videoURL);
+            exoPlayerManager.resetPlayerState();
+            exoPlayerManager.restorePlayerState();
+        }
+
+        lastVideoUrl = videoURL;
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
+    public void releasePlayer() {
         exoPlayerManager.release(getApplication());
     }
+
 }

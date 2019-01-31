@@ -28,8 +28,8 @@ public class ExoPlayerManager extends BroadcastReceiver implements Player.EventL
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
 
-    private String lastVideoUrl = "invalid";
-
+    private int currentWindow = 0;
+    private long playbackPosition = 0;
 
     public SimpleExoPlayer getPlayer() {
         return simpleExoPlayer;
@@ -37,6 +37,11 @@ public class ExoPlayerManager extends BroadcastReceiver implements Player.EventL
 
     public ExoPlayerManager() {
 
+    }
+
+    public void resetPlayerState() {
+        currentWindow = simpleExoPlayer.getCurrentWindowIndex();
+        playbackPosition = 0;
     }
 
     public void initialize(Context context) {
@@ -91,34 +96,35 @@ public class ExoPlayerManager extends BroadcastReceiver implements Player.EventL
         }
     }
 
-    public void stopPlayer() {
+    public void restorePlayerState() {
         simpleExoPlayer.setPlayWhenReady(false);
+        simpleExoPlayer.seekTo(currentWindow, playbackPosition);
+    }
+
+    private void savePlayerState() {
+        playbackPosition = simpleExoPlayer.getCurrentPosition();
+        currentWindow = simpleExoPlayer.getCurrentWindowIndex();
     }
 
     public void setSourceAndPrepare(String videoURL) {
-        if (videoURL.equals(lastVideoUrl)) {
-            return;
-        }
         Uri uri = Uri.parse(videoURL);
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(uri);
 
         simpleExoPlayer.prepare(videoSource);
-        simpleExoPlayer.setPlayWhenReady(false);
-
-        lastVideoUrl = videoURL;
     }
 
     public void release(Context context) {
         if (simpleExoPlayer != null) {
+            savePlayerState();
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
             simpleExoPlayer = null;
-        }
-        mediaSession.setCallback(null);
-        mediaSession.setActive(false);
+            mediaSession.setCallback(null);
+            mediaSession.setActive(false);
 
-        context.unregisterReceiver(this);
+            context.unregisterReceiver(this);
+        }
     }
 
     @Override
