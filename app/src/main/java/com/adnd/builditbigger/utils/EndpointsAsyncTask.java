@@ -11,7 +11,18 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+
+    public interface OnCallFinished {
+        void onCallFinished(String result);
+    }
+
+    private OnCallFinished onCallFinishedListener;
+
     private static MyApi myApiService = null;
+
+    public EndpointsAsyncTask(OnCallFinished onCallFinishedListener) {
+        this.onCallFinishedListener = onCallFinishedListener;
+    }
 
     @Override
     protected String doInBackground(Void... params) {
@@ -36,12 +47,15 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
-        // TODO handle result
+        if (onCallFinishedListener != null) {
+            onCallFinishedListener.onCallFinished(result);
+        }
     }
 }
