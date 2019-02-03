@@ -2,4 +2,5 @@
     <string name="app_name">Build it Bigger</string>
     <string name="press_the_button_for_a_delicious_joke">Press the button for a delicious joke!</string>
     <string name="tell_joke">Tell Joke</string>
+    <string name="unable_to_get_joke">Oops, unable to get joke, please try again!</string>
 </resources>

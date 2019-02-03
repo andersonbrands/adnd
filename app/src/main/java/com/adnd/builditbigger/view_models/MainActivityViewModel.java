@@ -35,9 +35,7 @@ public class MainActivityViewModel extends ViewModel implements EndpointsAsyncTa
 
     @Override
     public void onCallFinished(String result) {
-        if (result != null) {
-            jokeLiveData.setValue(result);
-        }
+        jokeLiveData.setValue(result);
         status.set(STATUS_IDLE);
     }
 }

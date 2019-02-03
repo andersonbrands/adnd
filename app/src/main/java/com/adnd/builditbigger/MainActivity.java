@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.adnd.builditbigger.view_models.MainActivityViewModel;
 import com.adnd.jokedisplay.JokeActivity;
@@ -22,17 +23,20 @@ public class MainActivity extends AppCompatActivity {
         model.getJokeLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String value) {
-                if (value != null) {
-                    displayJoke(value);
-                }
+                displayJoke(value);
             }
         });
 
     }
 
     private void displayJoke(String joke) {
-        Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra(JokeActivity.JOKE_EXTRA_KEY, joke);
-        startActivity(intent);
+        if (joke != null) {
+            Intent intent = new Intent(this, JokeActivity.class);
+            intent.putExtra(JokeActivity.JOKE_EXTRA_KEY, joke);
+            startActivity(intent);
+        } else {
+            String error_msg = getString(R.string.unable_to_get_joke);
+            Toast.makeText(this, error_msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }
