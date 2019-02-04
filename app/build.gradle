@@ -27,6 +27,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "pricing"
+    productFlavors {
+        free {
+            dimension "pricing"
+            applicationIdSuffix ".free"
+        }
+        paid {
+            dimension "pricing"
+            applicationIdSuffix ".paid"
+        }
+    }
+
     dataBinding {
         enabled = true
     }
