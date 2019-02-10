@@ -27,8 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_margin="@dimen/small_space"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/logo" />
 
@@ -56,6 +55,8 @@
                     android:id="@+id/rv_articles"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="@dimen/small_space"
+                    android:clipToPadding="false"
                     android:scrollbarStyle="outsideOverlay"
                     tools:listitem="@layout/article_list_item" />
 

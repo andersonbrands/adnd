@@ -16,10 +16,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_margin="@dimen/tiny_space"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground">
@@ -48,10 +45,10 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="4"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/large_space"
+                android:paddingTop="@dimen/large_space"
+                android:paddingRight="@dimen/large_space"
+                android:paddingBottom="@dimen/tiny_space"
                 android:text="@{article.title}"
                 tools:text="Article Title" />
 
@@ -62,9 +59,9 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="16dp"
+                android:paddingLeft="@dimen/large_space"
+                android:paddingRight="@dimen/large_space"
+                android:paddingBottom="@dimen/large_space"
                 android:text="@{@string/article_date_author(Utils.getFormattedPublishedDate(article.published_date), article.author)}"
                 tools:text="@string/article_date_author" />
 
