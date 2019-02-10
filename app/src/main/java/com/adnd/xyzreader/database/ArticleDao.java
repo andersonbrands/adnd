@@ -20,9 +20,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles WHERE id=:id")
     LiveData<Article> getArticleById(int id);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Article article);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Article> article);
 }
