@@ -3,6 +3,7 @@ package com.adnd.xyzreader.repositories;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import com.adnd.xyzreader.AppExecutors;
 import com.adnd.xyzreader.api.ArticlesApi;
@@ -32,10 +33,12 @@ public class ArticleRepository {
     }
 
     public LiveData<List<Article>> loadAllArticles() {
-        return articleDao.getAllArticles();
+        MutableLiveData<List<Article>> articleListLiveData = new MutableLiveData<>();
+        loadArticlesFromWebService(articleListLiveData);
+        return articleListLiveData;
     }
 
-    public void loadArticlesFromWebService(final MutableLiveData<List<Article>> articlesListLiveData) {
+    private void loadArticlesFromWebService(@NonNull final MutableLiveData<List<Article>> articlesListLiveData) {
         Retrofit fit = new Retrofit.Builder()
                 .baseUrl(ArticlesApi.BASE_URL)
                 .addConverterFactory(new ArticlesListConverterFactory())
