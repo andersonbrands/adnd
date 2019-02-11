@@ -2,6 +2,7 @@ package com.adnd.xyzreader;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -64,5 +65,7 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
     @Override
     public void onListItemClick(Article clickedItem, int position) {
         Toast.makeText(this, "Clicked item: " + clickedItem.getTitle(), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, ArticleDetailsActivity.class));
+        // TODO send item id via intent extra
     }
 }
