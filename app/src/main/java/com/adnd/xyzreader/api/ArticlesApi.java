@@ -9,9 +9,9 @@ import retrofit2.http.GET;
 
 public interface ArticlesApi {
 
-    String BASE_URL = "https://go.udacity.com/";
+    String BASE_URL = "https://nspf.github.io/";
 
-    @GET("xyz-reader-json")
+    @GET("XYZReader/data.json")
     Call<List<Article>> getArticles();
 
 }
