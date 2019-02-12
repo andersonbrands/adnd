@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     @Override
     public void onListItemClick(Article clickedItem, int position) {
-        Toast.makeText(this, "Clicked item: " + clickedItem.getTitle(), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, ArticleDetailsActivity.class));
-        // TODO send item id via intent extra
+        Intent intent = new Intent(this, ArticleDetailsActivity.class);
+        intent.putExtra(ArticleDetailsActivity.ARTICLE_ID_EXTRA_KEY, clickedItem.getId());
+        startActivity(intent);
     }
 }

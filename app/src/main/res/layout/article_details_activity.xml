@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/article_details_fragment"
-    android:name=".fragments.ArticleDetailsFragment"
+    android:name="com.adnd.xyzreader.fragments.ArticleDetailsFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ArticleDetailsActivity" />
+    android:layout_height="match_parent" />

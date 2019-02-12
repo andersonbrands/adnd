@@ -1,5 +1,6 @@
 package com.adnd.xyzreader.fragments;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.adnd.xyzreader.R;
+import com.adnd.xyzreader.databinding.ArticleDetailsFragmentBinding;
+import com.adnd.xyzreader.models.Article;
 import com.adnd.xyzreader.view_models.ArticleDetailsViewModel;
 
 public class ArticleDetailsFragment extends Fragment {
 
-    private ArticleDetailsViewModel mViewModel;
+    private ArticleDetailsFragmentBinding binding;
 
     public static ArticleDetailsFragment newInstance() {
         return new ArticleDetailsFragment();
@@ -24,14 +26,25 @@ public class ArticleDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.article_details_fragment, container, false);
+        binding = ArticleDetailsFragmentBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ArticleDetailsViewModel.class);
-        // TODO: Use the ViewModel
+        if (getActivity() != null) {
+            ArticleDetailsViewModel model = ViewModelProviders.of(getActivity()).get(ArticleDetailsViewModel.class);
+
+            model.getArticleLiveData().observe(this, new Observer<Article>() {
+                @Override
+                public void onChanged(@Nullable Article article) {
+                    if (article != null) {
+                        binding.setArticle(article);
+                    }
+                }
+            });
+        }
     }
 
 }
