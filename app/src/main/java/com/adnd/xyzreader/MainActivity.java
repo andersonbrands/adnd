@@ -7,10 +7,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.widget.Toast;
 
 import com.adnd.xyzreader.adapters.ArticleAdapter;
 import com.adnd.xyzreader.adapters.ListItemClickListener;
@@ -33,10 +31,6 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
         model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         setSupportActionBar(binding.toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
 
         model.getArticleListLiveData().observe(this, new Observer<List<Article>>() {
             @Override
