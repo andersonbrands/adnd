@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.adnd.xyzreader.custom_views.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
 public class BindingAdapters {
@@ -21,4 +22,8 @@ public class BindingAdapters {
                 .into(imageView);
     }
 
+    @BindingAdapter("aspectRatio")
+    public static void setAspectRatio(AspectRatioImageView aspectRatioImageView, float aspectRatio) {
+        aspectRatioImageView.setAspectRatio(aspectRatio);
+    }
 }

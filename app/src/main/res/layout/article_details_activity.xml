@@ -32,11 +32,12 @@
                 app:layout_scrollFlags="scroll"
                 app:toolbarId="@+id/toolbar">
 
-                <ImageView
+                <com.adnd.xyzreader.custom_views.AspectRatioImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:aspectRatio="@{4.0f/3.0f}"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_image_48dp"
                     app:errorRes="@{@drawable/ic_image_48dp}"
                     app:imgURL="@{article.photo}"
