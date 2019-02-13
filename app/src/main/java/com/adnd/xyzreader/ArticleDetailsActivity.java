@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.adnd.xyzreader.databinding.ArticleDetailsActivityBinding;
 import com.adnd.xyzreader.models.Article;
@@ -49,6 +50,17 @@ public class ArticleDetailsActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            binding.fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(ArticleDetailsActivity.this)
+                            .setType("text/plain")
+                            .setText("Some sample text")
+                            .getIntent(), getString(R.string.action_share)));
+                }
+            });
+
         } else {
             finish();
         }

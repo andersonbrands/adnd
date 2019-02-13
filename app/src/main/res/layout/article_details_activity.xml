@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_image_48dp"
+                    app:srcCompat="@drawable/ic_image_48dp"
                     app:aspectRatio="@{4.0f/3.0f}"
                     app:errorRes="@{@drawable/ic_image_48dp}"
                     app:imgURL="@{article.photo}"
@@ -62,6 +62,15 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:layout="@layout/article_details_fragment" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom|end"
+            app:srcCompat="@drawable/ic_share_48dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 
