@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 public class AspectRatioImageView extends android.support.v7.widget.AppCompatImageView {
 
-    private float aspectratio = 1.5f;
+    private float aspectRatio = 1.5f;
 
     public AspectRatioImageView(Context context) {
         super(context);
@@ -21,7 +21,7 @@ public class AspectRatioImageView extends android.support.v7.widget.AppCompatIma
     }
 
     public void setAspectRatio(float aspectRatio) {
-        this.aspectratio = aspectRatio;
+        this.aspectRatio = aspectRatio;
         requestLayout();
     }
 
@@ -29,6 +29,6 @@ public class AspectRatioImageView extends android.support.v7.widget.AppCompatIma
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int measureWidth = getMeasuredWidth();
-        setMeasuredDimension(measureWidth, (int) (measureWidth / aspectratio));
+        setMeasuredDimension(measureWidth, (int) (measureWidth / aspectRatio));
     }
 }
