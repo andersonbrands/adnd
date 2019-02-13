@@ -35,9 +35,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:aspectRatio="@{4.0f/3.0f}"
-                app:errorRes="@{@drawable/ic_image_48dp}"
                 app:imgURL="@{article.thumb}"
-                app:placeholderRes="@{@drawable/ic_image_48dp}"
                 tools:background="@color/colorAccent" />
 
             <LinearLayout
