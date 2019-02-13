@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.adnd.xyzreader.adapters.ArticleAdapter;
@@ -49,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
     }
 
     private void setRecyclerView(List<Article> articles) {
-        int columnCount = getResources().getInteger(R.integer.main_list_column_count);
-        binding.rvArticles.setLayoutManager(new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL));
+        binding.rvArticles.setLayoutManager(new LinearLayoutManager(this));
         ArticleAdapter adapter = new ArticleAdapter(articles, this);
         binding.rvArticles.setAdapter(adapter);
         binding.swipeRefreshLayout.setRefreshing(false);
