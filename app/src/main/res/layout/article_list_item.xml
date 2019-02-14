@@ -68,9 +68,9 @@
                     android:layout_marginRight="@dimen/small_space"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="@{@string/article_date_author(Utils.getFormattedPublishedDate(article.published_date), article.author)}"
+                    android:text="@{@string/article_date_author_line_break(Utils.getFormattedPublishedDate(article.published_date), article.author)}"
                     app:layout_constraintBottom_toBottomOf="@+id/thumbnail"
-                    tools:text="@string/article_date_author" />
+                    tools:text="@string/article_date_author_line_break" />
 
             </LinearLayout>
 
