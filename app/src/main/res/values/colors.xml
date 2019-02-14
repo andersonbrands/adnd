@@ -3,4 +3,25 @@
     <color name="colorPrimary">@color/orange_700</color>
     <color name="colorPrimaryDark">@color/orange_900</color>
     <color name="colorAccent">@color/deep_purple_500</color>
+
+
+    <!-- dark text -->
+
+    <!-- 87% opacity 222-->
+    <color name="black_text_primary">#de000000</color>
+    <!-- 54% opacity 138-->
+    <color name="black_text_secondary">#8a000000</color>
+    <!-- 38% opacity 97-->
+    <color name="black_text_disabled">#61000000</color>
+    <color name="black_text_hint">@color/black_text_disabled</color>
+
+
+    <!-- light text -->
+    <color name="white_text_primary">#ffffff</color>
+    <!-- 70% opacity 179-->
+    <color name="white_text_secondary">#b3ffffff</color>
+    <!-- 30% opacity 76-->
+    <color name="white_text_disabled">#4dffffff</color>
+    <color name="white_text_hint">@color/white_text_disabled</color>
+
 </resources>

@@ -35,21 +35,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{article.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@color/black_text_primary"
                     tools:text="Article Title" />
 
                 <TextView
                     android:id="@+id/article_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_space"
                     android:maxLines="2"
                     android:text="@{@string/article_date_author(Utils.getFormattedPublishedDate(article.published_date), article.author)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black_text_secondary"
                     tools:text="@string/article_date_author" />
 
                 <TextView
                     android:id="@+id/tv_article_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_space"
                     android:text="@{Utils.fromHTML(article.body)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/black_text_secondary"
                     tools:text="@string/lorem_ipsum_huge" />
             </LinearLayout>
 
