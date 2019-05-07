@@ -1,5 +1,6 @@
 package com.adnd.iomoney.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface AccountsDao {
 
     @Query("SELECT * FROM accounts")
-    List<Account> getAccounts();
+    LiveData<List<Account>> getAccounts();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Account account);
