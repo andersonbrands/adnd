@@ -16,10 +16,10 @@ public interface AccountsDao {
     @Query("SELECT * FROM accounts")
     LiveData<List<Account>> getAccounts();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(Account account);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(List<Account> accounts);
 
 }

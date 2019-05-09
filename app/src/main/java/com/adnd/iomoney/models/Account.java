@@ -1,9 +1,10 @@
 package com.adnd.iomoney.models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "accounts")
+@Entity(tableName = "accounts", indices = {@Index(value = "name", unique = true)})
 public class Account {
 
     @PrimaryKey(autoGenerate = true)

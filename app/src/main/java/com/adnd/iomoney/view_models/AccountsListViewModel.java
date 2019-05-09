@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 
 import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.repositories.AccountsRepository;
+import com.adnd.iomoney.utils.OperationResult;
 
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class AccountsListViewModel extends AndroidViewModel {
                 accountsLiveData.removeSource(source);
             }
         });
+    }
+
+    public LiveData<OperationResult> createAccount(String accountName) {
+        Account account = new Account();
+        account.setName(accountName);
+        return accountsRepository.addAccount(account);
     }
 
 }
