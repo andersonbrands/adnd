@@ -1,5 +1,6 @@
 package com.adnd.iomoney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     @Override
     public void onListItemClick(Account clickedItem, int position) {
-        // TODO handle click
-
+        // TODO pass data via intent
+        startActivity(new Intent(this, AccountTransactionsActivity.class));
     }
 }
