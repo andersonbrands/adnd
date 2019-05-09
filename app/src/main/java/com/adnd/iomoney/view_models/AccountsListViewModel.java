@@ -38,7 +38,6 @@ public class AccountsListViewModel extends AndroidViewModel {
             @Override
             public void onChanged(@Nullable List<Account> accounts) {
                 accountsLiveData.setValue(accounts);
-                accountsLiveData.removeSource(source);
             }
         });
     }
