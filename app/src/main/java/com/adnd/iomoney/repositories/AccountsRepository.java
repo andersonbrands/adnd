@@ -28,6 +28,10 @@ public class AccountsRepository {
         return accountsDao.getAccounts();
     }
 
+    public LiveData<Account> loadAccount(int accountId) {
+        return accountsDao.getAccount(accountId);
+    }
+
 
     public LiveData<OperationResult> addAccount(final Account account) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();

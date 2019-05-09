@@ -1,31 +1,65 @@
 package com.adnd.iomoney;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.adnd.iomoney.databinding.ActivityAccountTransactionsBinding;
+import com.adnd.iomoney.models.Account;
+import com.adnd.iomoney.view_models.AccountTransactionsListViewModel;
+
 public class AccountTransactionsActivity extends AppCompatActivity {
+
+    public static final String ACCOUNT_ID_EXTRA_KEY = "account_id_extra_key";
+    private ActivityAccountTransactionsBinding binding;
+    private AccountTransactionsListViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_transactions);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_account_transactions);
 
-        toolbar.setTitle(R.string.app_name);
+        Intent intentThatStartedThisActivity = getIntent();
 
-        FloatingActionButton fab = findViewById(R.id.fab_add_transaction);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (intentThatStartedThisActivity.hasExtra(ACCOUNT_ID_EXTRA_KEY)) {
+            final int account_id =
+                    intentThatStartedThisActivity.getIntExtra(ACCOUNT_ID_EXTRA_KEY, -1);
+            setSupportActionBar(binding.toolbar);
+
+            model = ViewModelProviders.of(this).get(AccountTransactionsListViewModel.class);
+
+            model.getAccountLiveData().observe(this, new Observer<Account>() {
+                @Override
+                public void onChanged(@Nullable Account account) {
+                    if (account != null) {
+                        binding.setAccountName(account.getName());
+                    }
+                }
+            });
+
+            model.loadAccount(account_id);
+
+            binding.fabAddTransaction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+        } else {
+            Snackbar.make(binding.toolbar, "No account id provided!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
     }
 }

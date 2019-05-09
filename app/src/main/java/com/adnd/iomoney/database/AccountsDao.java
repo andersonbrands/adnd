@@ -16,6 +16,8 @@ public interface AccountsDao {
     @Query("SELECT * FROM accounts")
     LiveData<List<Account>> getAccounts();
 
+    @Query("SELECT * FROM accounts WHERE accounts.id = :id")
+    LiveData<Account> getAccount(int id);
     @Insert
     void insert(Account account);
 
