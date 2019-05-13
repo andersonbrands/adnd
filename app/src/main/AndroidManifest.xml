@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddEditTransactionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AccountTransactionsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

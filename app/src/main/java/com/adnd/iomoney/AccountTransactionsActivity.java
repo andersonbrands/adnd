@@ -51,8 +51,9 @@ public class AccountTransactionsActivity extends AppCompatActivity {
             binding.fabAddTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    startActivity(new Intent(AccountTransactionsActivity.this, AddEditTransactionActivity.class));
+//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
                 }
             });
 

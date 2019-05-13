@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AccountTransactionsActivity">
+    tools:context=".AddEditTransactionActivity">
 
     <data>
 
         <variable
-            name="account_name"
+            name="title"
             type="String" />
     </data>
 
@@ -26,19 +26,20 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@{account_name}" />
+                app:title="@{title}"
+                tools:title="@string/add_new_transaction" />
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_account_transactions" />
+        <include layout="@layout/content_add_edit_transaction" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_transaction"
+            android:id="@+id/fab_save_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add_white_24dp" />
+            app:srcCompat="@drawable/ic_check_white_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
