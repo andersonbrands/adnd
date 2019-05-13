@@ -10,6 +10,7 @@ import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 
 @Database(entities = {Account.class, Transaction.class}, version = 1, exportSchema = false)
+@TypeConverters({DateTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance = null;
     private static final Object LOCK = new Object();
