@@ -12,11 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.adnd.iomoney.adapters.ListItemClickListener;
+import com.adnd.iomoney.database.AppDatabase;
+import com.adnd.iomoney.database.AppDatabase_Impl;
+import com.adnd.iomoney.database.TransactionsDao;
 import com.adnd.iomoney.databinding.ActivityAccountTransactionsBinding;
 import com.adnd.iomoney.models.Account;
+import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AccountTransactionsListViewModel;
 
-public class AccountTransactionsActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AccountTransactionsActivity extends AppCompatActivity implements ListItemClickListener<Transaction> {
 
     public static final String ACCOUNT_ID_EXTRA_KEY = "account_id_extra_key";
     private ActivityAccountTransactionsBinding binding;
@@ -63,4 +71,12 @@ public class AccountTransactionsActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onListItemClick(Transaction clickedItem, int position) {
+        Snackbar.make(binding.toolbar, "Clicked item: " + clickedItem.getDescription(), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+
 }

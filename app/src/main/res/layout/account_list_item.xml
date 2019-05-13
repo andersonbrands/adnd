@@ -10,10 +10,12 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:padding="@dimen/space_large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{account.name}"
