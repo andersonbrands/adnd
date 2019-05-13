@@ -3,11 +3,13 @@ package com.adnd.iomoney.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.adnd.iomoney.models.Account;
+import com.adnd.iomoney.models.Transaction;
 
-@Database(entities = {Account.class}, version = 1, exportSchema = false)
+@Database(entities = {Account.class, Transaction.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance = null;
     private static final Object LOCK = new Object();
@@ -26,5 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract AccountsDao accountsDao();
+
+    public abstract TransactionsDao transactionsDao();
 
 }

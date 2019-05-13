@@ -5,6 +5,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "transactions",
         foreignKeys = @ForeignKey(
                 entity = Account.class,
@@ -32,6 +34,8 @@ public class Transaction {
     private long lat;
 
     private long lon;
+
+    private Date date;
 
     public int getAccount_id() {
         return account_id;
@@ -103,5 +107,13 @@ public class Transaction {
 
     public void setLon(long lon) {
         this.lon = lon;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
