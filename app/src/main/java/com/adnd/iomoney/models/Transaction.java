@@ -4,6 +4,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.adnd.iomoney.BR;
 
 import java.util.Date;
 
@@ -15,7 +19,7 @@ import java.util.Date;
         ),
         indices = {@Index("account_id")}
 )
-public class Transaction {
+public class Transaction extends BaseObservable {
 
     private int account_id;
 
@@ -61,6 +65,7 @@ public class Transaction {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public float getValue() {
         return value;
@@ -110,11 +115,17 @@ public class Transaction {
         this.lon = lon;
     }
 
+    @Bindable
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        if (this.date == null || this.date.getTime() != date.getTime()) {
+            this.date = date;
+
+            notifyPropertyChanged(BR.date);
+        }
+        System.out.println("Bla");
     }
 }

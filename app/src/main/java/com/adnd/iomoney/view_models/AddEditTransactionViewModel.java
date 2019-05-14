@@ -1,18 +1,23 @@
 package com.adnd.iomoney.view_models;
 
 import android.app.Application;
+import android.app.DatePickerDialog;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.DatePicker;
 
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.repositories.TransactionsRepository;
 import com.adnd.iomoney.utils.OperationResult;
 
-public class AddEditTransactionViewModel extends AndroidViewModel {
+import java.util.Calendar;
+import java.util.Date;
+
+public class AddEditTransactionViewModel extends AndroidViewModel implements DatePickerDialog.OnDateSetListener {
 
     private MediatorLiveData<Transaction> transactionLiveData = new MediatorLiveData<>();
     private TransactionsRepository transactionsRepository;
@@ -35,6 +40,7 @@ public class AddEditTransactionViewModel extends AndroidViewModel {
                     transaction.setDescription("Dinner");
                     transaction.setValue(23.56f);
                     transaction.setTags("Dinner, expensive, healthy");
+                    transaction.setDate(new Date());
                     transaction.setAccount_id(account_id);
                 }
                 transactionLiveData.setValue(transaction);
@@ -51,4 +57,13 @@ public class AddEditTransactionViewModel extends AndroidViewModel {
         return transactionLiveData;
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        final Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        transactionLiveData.getValue().setDate(c.getTime());
+    }
 }

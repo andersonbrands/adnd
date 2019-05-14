@@ -1,18 +1,24 @@
 package com.adnd.iomoney.fragments;
 
+import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.adnd.iomoney.adapters.BindingAdapters;
 import com.adnd.iomoney.databinding.FragmentAddEditTransactionBinding;
+import com.adnd.iomoney.dialogs.DatePickerFragment;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AddEditTransactionViewModel;
+
+import java.util.Date;
 
 public class AddEditTransactionFragment extends Fragment {
 
@@ -38,6 +44,17 @@ public class AddEditTransactionFragment extends Fragment {
                     binding.setTransaction(transaction);
                 }
             });
+
+            binding.etDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Date date = BindingAdapters.getDateFromText(binding.etDate.getText().toString());
+                    DialogFragment datePickerFragment = DatePickerFragment.newInstance(date.getTime());
+                    datePickerFragment.show(getActivity().getSupportFragmentManager()
+                            , "date_picker_fragment");
+                }
+            });
+
         }
 
         return binding.getRoot();

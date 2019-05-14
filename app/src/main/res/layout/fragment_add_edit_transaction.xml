@@ -31,7 +31,7 @@
                 android:hint="@string/description_label"
                 android:inputType="text|textCapSentences"
                 android:maxLines="1"
-                android:text="@={transaction.description}" />
+                android:text="@{transaction.description}" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -50,7 +50,7 @@
                 android:hint="@string/value_label"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
-                android:text="@={transaction.value}" />
+                android:text="@{transaction.value}" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -69,7 +69,7 @@
                 android:hint="@string/date_label"
                 android:inputType="date"
                 android:maxLines="1"
-                android:text="@{String.valueOf(transaction.date)}" />
+                android:text="@={transaction.date}" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -95,8 +95,9 @@
                 android:hint="@string/tags_label"
                 android:inputType="text|textCapSentences"
                 android:maxLines="1"
-                android:text="@={transaction.tags}" />
+                android:text="@{transaction.tags}" />
 
         </android.support.design.widget.TextInputLayout>
+
     </android.support.constraint.ConstraintLayout>
 </layout>
