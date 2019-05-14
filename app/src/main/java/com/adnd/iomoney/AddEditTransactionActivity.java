@@ -14,6 +14,7 @@ import com.adnd.iomoney.view_models.AddEditTransactionViewModel;
 public class AddEditTransactionActivity extends AppCompatActivity {
 
     public static final String TRANSACTION_ID_EXTRA_KEY = "transaction_id_extra_key";
+    public static final String ACCOUNT_ID_EXTRA_KEY = "account_id_extra_key";
     private ActivityAddEditTransactionBinding binding;
     private AddEditTransactionViewModel model;
 
@@ -30,6 +31,11 @@ public class AddEditTransactionActivity extends AppCompatActivity {
             transaction_id =
                     intentThatStartedActivity.getIntExtra(TRANSACTION_ID_EXTRA_KEY, transaction_id);
         }
+        int account_id = -1;
+        if (intentThatStartedActivity.hasExtra(ACCOUNT_ID_EXTRA_KEY)) {
+            account_id =
+                    intentThatStartedActivity.getIntExtra(ACCOUNT_ID_EXTRA_KEY, account_id);
+        }
 
         setSupportActionBar(binding.toolbar);
 
@@ -37,12 +43,13 @@ public class AddEditTransactionActivity extends AppCompatActivity {
 
         model = ViewModelProviders.of(this).get(AddEditTransactionViewModel.class);
 
-        model.loadTransaction(transaction_id);
+        model.setup(transaction_id, account_id);
 
         binding.fabSaveTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Snackbar.make(v, "Saving transaction...", Snackbar.LENGTH_LONG).show();
+                model.saveTransaction();
             }
         });
     }

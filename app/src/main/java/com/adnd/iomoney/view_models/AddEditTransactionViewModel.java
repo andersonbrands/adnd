@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.repositories.TransactionsRepository;
+import com.adnd.iomoney.utils.OperationResult;
 
 public class AddEditTransactionViewModel extends AndroidViewModel {
 
@@ -22,7 +23,7 @@ public class AddEditTransactionViewModel extends AndroidViewModel {
         transactionsRepository = new TransactionsRepository(application);
     }
 
-    public void loadTransaction(int transaction_id) {
+    public void setup(int transaction_id, final int account_id) {
         final LiveData<Transaction> source = transactionsRepository.loadTransactionById(transaction_id);
 
         transactionLiveData.addSource(source, new Observer<Transaction>() {
@@ -34,11 +35,16 @@ public class AddEditTransactionViewModel extends AndroidViewModel {
                     transaction.setDescription("Dinner");
                     transaction.setValue(23.56f);
                     transaction.setTags("Dinner, expensive, healthy");
+                    transaction.setAccount_id(account_id);
                 }
                 transactionLiveData.setValue(transaction);
                 transactionLiveData.removeSource(source);
             }
         });
+    }
+
+    public LiveData<OperationResult> saveTransaction() {
+        return transactionsRepository.addTransaction(transactionLiveData.getValue());
     }
 
     public MediatorLiveData<Transaction> getTransactionLiveData() {

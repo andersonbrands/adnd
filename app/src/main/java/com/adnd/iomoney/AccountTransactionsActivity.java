@@ -59,9 +59,9 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
             binding.fabAddTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(AccountTransactionsActivity.this, AddEditTransactionActivity.class));
-//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
+                    Intent intent = new Intent(AccountTransactionsActivity.this, AddEditTransactionActivity.class);
+                    intent.putExtra(AddEditTransactionActivity.ACCOUNT_ID_EXTRA_KEY, account_id);
+                    startActivity(intent);
                 }
             });
 
