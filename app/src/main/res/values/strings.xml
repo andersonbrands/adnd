@@ -11,4 +11,8 @@
     <string name="cancel">Cancel</string>
 
     <string name="add_new_transaction">Add new transaction</string>
+    <string name="description_label">Description</string>
+    <string name="value_label">Value</string>
+    <string name="date_label">Date</string>
+    <string name="tags_label">Tags</string>
 </resources>
