@@ -51,7 +51,6 @@ public class AddEditTransactionActivity extends AppCompatActivity {
         binding.fabSaveTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Snackbar.make(v, "Saving transaction...", Snackbar.LENGTH_LONG).show();
                 model.saveTransaction().observe(AddEditTransactionActivity.this, new Observer<OperationResult>() {
                     @Override
                     public void onChanged(@Nullable OperationResult operationResult) {
@@ -65,5 +64,6 @@ public class AddEditTransactionActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 }
