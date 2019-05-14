@@ -30,6 +30,10 @@ public class TransactionsRepository {
         return transactionsDao.getTransactionsByAccountId(account_id);
     }
 
+    public LiveData<Transaction> loadTransactionById(int transaction_id) {
+        return transactionsDao.getTransactionById(transaction_id);
+    }
+
     public LiveData<OperationResult> addTransaction(final Transaction transaction) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
 
