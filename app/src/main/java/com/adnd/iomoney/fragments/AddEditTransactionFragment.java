@@ -1,5 +1,6 @@
 package com.adnd.iomoney.fragments;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adnd.iomoney.databinding.FragmentAddEditTransactionBinding;
+import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AddEditTransactionViewModel;
 
 public class AddEditTransactionFragment extends Fragment {
@@ -29,6 +31,13 @@ public class AddEditTransactionFragment extends Fragment {
 
         if (getActivity() != null) {
             model = ViewModelProviders.of(getActivity()).get(AddEditTransactionViewModel.class);
+
+            model.getTransactionLiveData().observe(getActivity(), new Observer<Transaction>() {
+                @Override
+                public void onChanged(@Nullable Transaction transaction) {
+                    binding.setTransaction(transaction);
+                }
+            });
         }
 
         return binding.getRoot();

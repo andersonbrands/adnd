@@ -25,10 +25,10 @@ public class AddEditTransactionActivity extends AppCompatActivity {
 
         Intent intentThatStartedActivity = getIntent();
 
+        int transaction_id = -1;
         if (intentThatStartedActivity.hasExtra(TRANSACTION_ID_EXTRA_KEY)) {
-            final int transaction_id =
-                    intentThatStartedActivity.getIntExtra(TRANSACTION_ID_EXTRA_KEY, -1);
-            Snackbar.make(binding.toolbar, "Transaction id: " + transaction_id, Snackbar.LENGTH_LONG).show();
+            transaction_id =
+                    intentThatStartedActivity.getIntExtra(TRANSACTION_ID_EXTRA_KEY, transaction_id);
         }
 
         setSupportActionBar(binding.toolbar);
@@ -37,7 +37,7 @@ public class AddEditTransactionActivity extends AppCompatActivity {
 
         model = ViewModelProviders.of(this).get(AddEditTransactionViewModel.class);
 
-        // TODO use view model
+        model.loadTransaction(transaction_id);
 
         binding.fabSaveTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
