@@ -12,7 +12,8 @@ import java.util.Date;
                 entity = Account.class,
                 parentColumns = "id",
                 childColumns = "account_id"
-        )
+        ),
+        indices = {@Index("account_id")}
 )
 public class Transaction {
 
