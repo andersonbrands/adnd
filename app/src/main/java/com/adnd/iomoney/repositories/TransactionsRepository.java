@@ -45,7 +45,7 @@ public class TransactionsRepository {
                     transactionsDao.insert(transaction);
                     result = new OperationResult();
                 } catch (Exception e) {
-                    result = new OperationResult(R.string.msg_account_same_name);
+                    result = new OperationResult(R.string.msg_could_not_add_transaction);
                 }
                 operationResultLiveData.postValue(result);
             }
