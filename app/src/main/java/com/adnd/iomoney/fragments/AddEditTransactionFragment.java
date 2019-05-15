@@ -1,6 +1,5 @@
 package com.adnd.iomoney.fragments;
 
-import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -14,11 +13,14 @@ import android.view.ViewGroup;
 
 import com.adnd.iomoney.adapters.BindingAdapters;
 import com.adnd.iomoney.databinding.FragmentAddEditTransactionBinding;
+import com.adnd.iomoney.dialogs.AccountPickerDialog;
 import com.adnd.iomoney.dialogs.DatePickerFragment;
+import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AddEditTransactionViewModel;
 
 import java.util.Date;
+import java.util.List;
 
 public class AddEditTransactionFragment extends Fragment {
 
@@ -52,6 +54,14 @@ public class AddEditTransactionFragment extends Fragment {
                     DialogFragment datePickerFragment = DatePickerFragment.newInstance(date.getTime());
                     datePickerFragment.show(getActivity().getSupportFragmentManager()
                             , "date_picker_fragment");
+                }
+            });
+
+            binding.etAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AccountPickerDialog accountPickerDialog = AccountPickerDialog.newInstance();
+                    accountPickerDialog.show(getActivity().getSupportFragmentManager(), "account_picker_dialog");
                 }
             });
 
