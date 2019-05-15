@@ -2,6 +2,7 @@
     <string name="app_name">IO Money</string>
 
     <string name="add_new_account">Add new account</string>
+    <string name="select_account">Select an Account</string>
     <string name="rename_account">Rename account</string>
     <string name="must_not_be_empty">Must not be empty</string>
 
