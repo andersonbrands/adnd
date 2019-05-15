@@ -70,6 +70,13 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
         });
     }
 
+    public void setAccountIdForTransaction(int account_id) {
+        Transaction transaction = transactionLiveData.getValue();
+        if (transaction != null) {
+            transaction.setAccount_id(account_id);
+        }
+    }
+
     public MediatorLiveData<List<Account>> getAccountsLiveData() {
         return accountsLiveData;
     }
@@ -87,4 +94,5 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
 
         transactionLiveData.getValue().setDate(c.getTime());
     }
+
 }
