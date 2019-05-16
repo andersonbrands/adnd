@@ -126,6 +126,5 @@ public class Transaction extends BaseObservable {
 
             notifyPropertyChanged(BR.date);
         }
-        System.out.println("Bla");
     }
 }
