@@ -6,23 +6,15 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.adnd.iomoney.adapters.ListItemClickListener;
-import com.adnd.iomoney.database.AppDatabase;
-import com.adnd.iomoney.database.AppDatabase_Impl;
-import com.adnd.iomoney.database.TransactionsDao;
 import com.adnd.iomoney.databinding.ActivityAccountTransactionsBinding;
 import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AccountTransactionsListViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AccountTransactionsActivity extends AppCompatActivity implements ListItemClickListener<Transaction> {
 
@@ -74,9 +66,8 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
 
     @Override
     public void onListItemClick(Transaction clickedItem, int position) {
-        Snackbar.make(binding.toolbar, "Clicked item: " + clickedItem.getDescription(), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        // TODO pass transaction id data via intent
+        startActivity(new Intent(this, TransactionDetailsActivity.class));
     }
-
 
 }
