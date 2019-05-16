@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
 
     @Override
     public void onListItemClick(Account clickedItem, int position) {
-        // TODO pass data via intent
         Intent intent = new Intent(this, AccountTransactionsActivity.class);
         intent.putExtra(AccountTransactionsActivity.ACCOUNT_ID_EXTRA_KEY, clickedItem.getId());
         startActivity(intent);
