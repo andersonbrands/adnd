@@ -66,8 +66,9 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
 
     @Override
     public void onListItemClick(Transaction clickedItem, int position) {
-        // TODO pass transaction id data via intent
-        startActivity(new Intent(this, TransactionDetailsActivity.class));
+        Intent intent = new Intent(this, TransactionDetailsActivity.class);
+        intent.putExtra(TransactionDetailsActivity.TRANSACTION_ID_KEY, clickedItem.getId());
+        startActivity(intent);
     }
 
 }
