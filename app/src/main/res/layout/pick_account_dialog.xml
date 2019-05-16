@@ -7,7 +7,6 @@
     </data>
 
     <RelativeLayout
-        android:background="#33aa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/space_huge">
@@ -22,7 +21,6 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_select_account"
-            android:background="#58bb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bt_cancel"
