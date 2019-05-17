@@ -18,4 +18,7 @@
     <string name="date_label">Date</string>
     <string name="tags_label">Tags</string>
     <string name="account_label">Account</string>
+
+    <string name="action_rename_label">Rename</string>
+    <string name="action_delete_label">Delete</string>
 </resources>

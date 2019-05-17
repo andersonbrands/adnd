@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.adnd.iomoney.adapters.ListItemClickListener;
@@ -69,6 +71,26 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
         Intent intent = new Intent(this, TransactionDetailsActivity.class);
         intent.putExtra(TransactionDetailsActivity.TRANSACTION_ID_KEY, clickedItem.getId());
         startActivity(intent);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.rename_delete_account_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_rename_account:
+                // TODO rename account
+                break;
+            case R.id.action_delete_account:
+                // TODO prompt delete account
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
