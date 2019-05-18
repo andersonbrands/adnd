@@ -9,6 +9,7 @@ import android.databinding.Bindable;
 
 import com.adnd.iomoney.BR;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity(tableName = "transactions",
@@ -66,6 +67,10 @@ public class Transaction extends BaseObservable {
         this.description = description;
     }
 
+    public String getShortDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd\nMMM");
+        return sdf.format(date);
+    }
 
     public float getValue() {
         return value;

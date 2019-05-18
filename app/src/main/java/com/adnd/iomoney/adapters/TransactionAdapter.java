@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.adnd.iomoney.R;
 import com.adnd.iomoney.databinding.TransactionListItemBinding;
-import com.adnd.iomoney.databinding.TransactionListItemBinding;
-import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 
 import java.util.List;
@@ -36,7 +34,7 @@ public class TransactionAdapter extends BaseAdapter<Transaction, TransactionAdap
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder accountViewHolder, int position) {
         Transaction transaction = getObjects().get(position);
-        accountViewHolder.binding.setDescription(transaction.getDescription());
+        accountViewHolder.binding.setTransaction(transaction);
     }
 
     class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
