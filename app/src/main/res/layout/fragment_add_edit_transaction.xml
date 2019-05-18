@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_large"
                 android:hint="@string/value_label"
-                android:inputType="numberDecimal"
+                android:inputType="numberDecimal|numberSigned"
                 android:maxLines="1"
                 android:text="@={transaction.value}" />
 

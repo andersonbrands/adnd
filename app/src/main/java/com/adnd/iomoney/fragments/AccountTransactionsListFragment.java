@@ -52,6 +52,11 @@ public class AccountTransactionsListFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<Transaction> transactions) {
                     setRecyclerView(transactions);
+                    float accountBalance = 0.0f;
+                    for (Transaction t : transactions) {
+                        accountBalance += t.getValue();
+                    }
+                    binding.setAccountbalance(accountBalance);
                 }
             });
 
