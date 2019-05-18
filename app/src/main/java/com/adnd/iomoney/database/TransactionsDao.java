@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface TransactionsDao {
 
-    @Query("SELECT * FROM transactions WHERE transactions.account_id = :account_id")
+    @Query("SELECT * FROM transactions WHERE transactions.account_id = :account_id ORDER BY transactions.date DESC")
     LiveData<List<Transaction>> getTransactionsByAccountId(int account_id);
 
     @Query("SELECT * FROM transactions WHERE transactions.id = :transaction_id")
