@@ -16,7 +16,7 @@ import com.adnd.iomoney.adapters.AccountAdapter;
 import com.adnd.iomoney.adapters.ListItemClickListener;
 import com.adnd.iomoney.databinding.FragmentAccountsListBinding;
 import com.adnd.iomoney.models.Account;
-import com.adnd.iomoney.view_models.AccountsListViewModel;
+import com.adnd.iomoney.view_models.AccountViewModel;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class AccountsListFragment extends Fragment {
         binding = FragmentAccountsListBinding.inflate(inflater);
 
         if (getActivity() != null) {
-            AccountsListViewModel model = ViewModelProviders.of(getActivity()).get(AccountsListViewModel.class);
+            AccountViewModel model = ViewModelProviders.of(getActivity()).get(AccountViewModel.class);
 
             binding.setModel(model);
 

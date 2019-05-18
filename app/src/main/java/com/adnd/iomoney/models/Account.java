@@ -10,7 +10,7 @@ public class Account {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String name;
+    private String name = "";
 
     public int getId() {
         return id;

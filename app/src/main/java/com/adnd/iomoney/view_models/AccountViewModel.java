@@ -15,12 +15,14 @@ import com.adnd.iomoney.utils.OperationResult;
 
 import java.util.List;
 
-public class AccountsListViewModel extends AndroidViewModel {
+
+public class AccountViewModel extends AndroidViewModel {
 
     private AccountsRepository accountsRepository;
     private MediatorLiveData<List<Account>> accountsLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Account> accountLiveData = new MediatorLiveData<>();
 
-    public AccountsListViewModel(@NonNull Application application) {
+    public AccountViewModel(@NonNull Application application) {
         super(application);
 
         accountsRepository = new AccountsRepository(application);
@@ -30,6 +32,22 @@ public class AccountsListViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Account>> getAccountsLiveData() {
         return accountsLiveData;
+    }
+
+    public MediatorLiveData<Account> getAccountLiveData(int account_id) {
+        loadAccount(account_id);
+        return accountLiveData;
+    }
+
+    private void loadAccount(int account_id) {
+        final LiveData<Account> source = accountsRepository.loadAccount(account_id);
+        accountLiveData.addSource(source, new Observer<Account>() {
+            @Override
+            public void onChanged(@Nullable Account account) {
+                accountLiveData.setValue(account);
+                accountLiveData.removeSource(source);
+            }
+        });
     }
 
     private void loadAccounts() {
@@ -42,10 +60,8 @@ public class AccountsListViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<OperationResult> createAccount(String accountName) {
-        Account account = new Account();
-        account.setName(accountName);
-        return accountsRepository.addAccount(account);
+    public LiveData<OperationResult> saveAccount(Account account) {
+        return accountsRepository.saveAccount(account);
     }
 
 }

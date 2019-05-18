@@ -1,5 +1,6 @@
 package com.adnd.iomoney.dialogs;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -15,8 +16,9 @@ import android.view.WindowManager;
 
 import com.adnd.iomoney.R;
 import com.adnd.iomoney.databinding.CreateRenameAccountDialogBinding;
+import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.utils.OperationResult;
-import com.adnd.iomoney.view_models.AccountsListViewModel;
+import com.adnd.iomoney.view_models.AccountViewModel;
 
 
 public class CreateRenameAccountDialog extends DialogFragment {
@@ -25,7 +27,8 @@ public class CreateRenameAccountDialog extends DialogFragment {
 
     private CreateRenameAccountDialogBinding binding;
     private int accountId = -1;
-    private AccountsListViewModel model;
+    private Account account;
+    private AccountViewModel model;
 
     public CreateRenameAccountDialog() {
     }
@@ -42,11 +45,12 @@ public class CreateRenameAccountDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        if (args != null) {
-            accountId = args.getInt(KEY_ACCOUNT_ID, -1);
+        if (args == null) {
+            return;
         }
+        accountId = args.getInt(KEY_ACCOUNT_ID, accountId);
         if (getActivity() != null) {
-            model = ViewModelProviders.of(getActivity()).get(AccountsListViewModel.class);
+            model = ViewModelProviders.of(getActivity()).get(AccountViewModel.class);
         }
     }
 
@@ -57,6 +61,24 @@ public class CreateRenameAccountDialog extends DialogFragment {
 
         int titleResId = accountId == -1 ? R.string.add_new_account : R.string.rename_account;
         binding.setTitle(getString(titleResId));
+
+        if (accountId != -1) {
+            final MutableLiveData<Account> accountLiveData = model.getAccountLiveData(accountId);
+            accountLiveData.observe(this, new Observer<Account>() {
+                @Override
+                public void onChanged(@Nullable Account account) {
+                    if (account == null) {
+                        account = new Account();
+                    }
+                    CreateRenameAccountDialog.this.account = account;
+                    binding.etAccountName.setText(account.getName());
+
+                    accountLiveData.removeObserver(this);
+                }
+            });
+        } else {
+            account = new Account();
+        }
 
         binding.btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +102,8 @@ public class CreateRenameAccountDialog extends DialogFragment {
         if (TextUtils.isEmpty(accountName)) {
             binding.etAccountName.setError(getString(R.string.must_not_be_empty));
         } else {
-            model.createAccount(accountName).observe(this, new Observer<OperationResult>() {
+            account.setName(accountName);
+            model.saveAccount(account).observe(this, new Observer<OperationResult>() {
                 @Override
                 public void onChanged(@Nullable OperationResult result) {
                     if (result.isSuccess()) {

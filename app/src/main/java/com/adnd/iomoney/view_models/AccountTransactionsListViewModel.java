@@ -47,7 +47,6 @@ public class AccountTransactionsListViewModel extends AndroidViewModel {
             @Override
             public void onChanged(@Nullable Account account) {
                 accountLiveData.setValue(account);
-                accountLiveData.removeSource(source);
             }
         });
 

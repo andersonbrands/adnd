@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.database.sqlite.SQLiteConstraintException;
+import android.support.annotation.NonNull;
 
 import com.adnd.iomoney.AppExecutors;
 import com.adnd.iomoney.R;
@@ -33,22 +34,32 @@ public class AccountsRepository {
     }
 
 
-    public LiveData<OperationResult> addAccount(final Account account) {
+    public LiveData<OperationResult> saveAccount(@NonNull final Account account) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                OperationResult result;
-                try {
-                    accountsDao.insert(account);
-                    result = new OperationResult();
-                } catch (SQLiteConstraintException e) {
-                    result = new OperationResult(R.string.msg_account_same_name);
-                }
+                OperationResult result = doSaveAccount(account);
                 operationResultLiveData.postValue(result);
             }
         });
         return operationResultLiveData;
+    }
+
+    private OperationResult doSaveAccount(Account account) {
+        OperationResult result;
+        try {
+            if (accountsDao.getAccountBlock(account.getId()) == null) {
+                accountsDao.insert(account);
+            } else {
+                accountsDao.update(account);
+            }
+            result = new OperationResult();
+        } catch (SQLiteConstraintException e) {
+            result = new OperationResult(R.string.msg_account_same_name);
+        }
+
+        return result;
     }
 
 }

@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import com.adnd.iomoney.adapters.ListItemClickListener;
 import com.adnd.iomoney.databinding.ActivityAccountTransactionsBinding;
+import com.adnd.iomoney.dialogs.CreateRenameAccountDialog;
 import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AccountTransactionsListViewModel;
@@ -84,13 +86,24 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_rename_account:
-                // TODO rename account
+                promptRenameAccount();
                 break;
             case R.id.action_delete_account:
                 // TODO prompt delete account
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void promptRenameAccount() {
+        Account account = model.getAccountLiveData().getValue();
+        int accountId = -1;
+        if (account != null) {
+            accountId = account.getId();
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        CreateRenameAccountDialog dialog = CreateRenameAccountDialog.newInstance(accountId);
+        dialog.show(fm, "rename_account_fragment_dialog");
     }
 
 }
