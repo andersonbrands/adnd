@@ -1,8 +1,11 @@
 package com.adnd.iomoney.adapters;
 
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.widget.TextView;
+
+import com.adnd.iomoney.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,15 +20,16 @@ public class BindingAdapters {
         if (Float.isNaN(value)) {
             textView.setText("");
         } else {
-            // TODO format???
-            textView.setText(String.valueOf(value));
+            Resources res = textView.getResources();
+            textView.setText(res.getString(R.string.currency_format, value));
         }
     }
 
     @InverseBindingAdapter(attribute = "android:text")
     public static float getFloat(TextView textView) {
         try {
-            return Float.parseFloat(textView.getText().toString());
+            String valueText =textView.getText().toString();
+            return Float.parseFloat(valueText.replace("$ ", ""));
         } catch (NumberFormatException e) {
             return 0.0f;
         }

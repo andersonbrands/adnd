@@ -19,6 +19,8 @@
     <string name="tags_label">Tags</string>
     <string name="account_label">Account</string>
 
+    <string name="currency_format">$ %1$.2f</string>
+
     <string name="action_rename_label">Rename</string>
     <string name="action_delete_label">Delete</string>
 

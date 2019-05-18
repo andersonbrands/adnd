@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity implements ListItemClickList
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        toolbar.setTitle(R.string.app_name);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab_add_account);
         fab.setOnClickListener(new View.OnClickListener() {
