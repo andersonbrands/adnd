@@ -21,4 +21,7 @@
 
     <string name="action_rename_label">Rename</string>
     <string name="action_delete_label">Delete</string>
+
+    <string name="total_balance_label">Total balance: </string>
+    <string name="account_balance_label">Account balance: </string>
 </resources>
