@@ -22,13 +22,57 @@
             android:padding="@dimen/space_large">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Large"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_date"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{description}"
+                android:text="31\nDec"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_medium"
+                android:layout_marginLeft="@dimen/space_medium"
+                android:layout_marginEnd="@dimen/space_medium"
+                android:layout_marginRight="@dimen/space_medium"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_value"
+                app:layout_constraintStart_toEndOf="@id/tv_date"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{description}"
+                    tools:text="Lunch" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Dinner, healthy, expensive"
+                    tools:text="Dinner, healthy, expensive" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_value"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 999.99"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Lunch" />
+                tools:text="$ 999.99" />
 
         </android.support.constraint.ConstraintLayout>
 
