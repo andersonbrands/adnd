@@ -48,13 +48,12 @@ public class AccountTransactionsListFragment extends Fragment {
         if (getActivity() != null) {
             AccountTransactionsListViewModel model = ViewModelProviders.of(getActivity()).get(AccountTransactionsListViewModel.class);
 
-            model.getTransactionsListLiveData().observe(this, new Observer<List<Transaction>>() {
+            model.getTransactionsListLiveData().observe(getActivity(), new Observer<List<Transaction>>() {
                 @Override
                 public void onChanged(@Nullable List<Transaction> transactions) {
                     setRecyclerView(transactions);
                 }
             });
-
 
         }
 

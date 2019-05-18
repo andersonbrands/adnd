@@ -25,6 +25,7 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
     public static final String ACCOUNT_ID_EXTRA_KEY = "account_id_extra_key";
     private ActivityAccountTransactionsBinding binding;
     private AccountTransactionsListViewModel model;
+    private int account_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,13 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity.hasExtra(ACCOUNT_ID_EXTRA_KEY)) {
-            final int account_id =
+            account_id =
                     intentThatStartedThisActivity.getIntExtra(ACCOUNT_ID_EXTRA_KEY, -1);
             setSupportActionBar(binding.toolbar);
 
             model = ViewModelProviders.of(this).get(AccountTransactionsListViewModel.class);
 
-            model.getAccountLiveData().observe(this, new Observer<Account>() {
+            model.getAccountLiveData(account_id).observe(this, new Observer<Account>() {
                 @Override
                 public void onChanged(@Nullable Account account) {
                     if (account != null) {
@@ -50,7 +51,7 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
                 }
             });
 
-            model.loadAccount(account_id);
+            model.loadAccountAndTransactions(account_id);
 
             binding.fabAddTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,7 +97,7 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
     }
 
     private void promptRenameAccount() {
-        Account account = model.getAccountLiveData().getValue();
+        Account account = model.getAccountLiveData(account_id).getValue();
         int accountId = -1;
         if (account != null) {
             accountId = account.getId();
@@ -104,6 +105,10 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
         FragmentManager fm = getSupportFragmentManager();
         CreateRenameAccountDialog dialog = CreateRenameAccountDialog.newInstance(accountId);
         dialog.show(fm, "rename_account_fragment_dialog");
+    }
+
+    private void promptDeleteAccount() {
+
     }
 
 }
