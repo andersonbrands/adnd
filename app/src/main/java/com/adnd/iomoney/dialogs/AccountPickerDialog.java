@@ -63,7 +63,7 @@ public class AccountPickerDialog extends DialogFragment implements ListItemClick
 
     @Override
     public void onListItemClick(Account clickedItem, int position) {
-        model.setAccountIdForTransaction(clickedItem.getId());
+        model.setSelectedAccount(clickedItem);
         getDialog().dismiss();
     }
 }

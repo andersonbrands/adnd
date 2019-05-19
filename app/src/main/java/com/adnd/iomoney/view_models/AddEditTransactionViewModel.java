@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,12 +27,17 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
     private MediatorLiveData<List<Account>> accountsLiveData = new MediatorLiveData<>();
     private AccountsRepository accountsRepository;
     private TransactionsRepository transactionsRepository;
+    private MutableLiveData<Account> selectedAccountLiveData = new MutableLiveData<>();
 
     public AddEditTransactionViewModel(@NonNull Application application) {
         super(application);
 
         transactionsRepository = new TransactionsRepository(application);
         accountsRepository = new AccountsRepository(application);
+    }
+
+    public MutableLiveData<Account> getSelectedAccountLiveData() {
+        return selectedAccountLiveData;
     }
 
     public void setup(int transaction_id, final int account_id) {
@@ -53,35 +59,46 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
                 transactionLiveData.removeSource(source);
             }
         });
-        loadAccounts();
+        loadAccounts(account_id);
     }
 
     public LiveData<OperationResult> saveTransaction() {
         return transactionsRepository.addTransaction(transactionLiveData.getValue());
     }
 
-    public void loadAccounts() {
+    public void loadAccounts(final int selectedAccountId) {
         final LiveData<List<Account>> source = accountsRepository.loadAccounts();
         accountsLiveData.addSource(source, new Observer<List<Account>>() {
             @Override
             public void onChanged(@Nullable List<Account> accounts) {
                 accountsLiveData.setValue(accounts);
+                for (Account account : accounts) {
+                    if (account.getId() == selectedAccountId) {
+                        setSelectedAccount(account);
+                        break;
+                    }
+                }
             }
         });
     }
 
-    public void setAccountIdForTransaction(int account_id) {
+    public void setSelectedAccount(Account account) {
+        selectedAccountLiveData.setValue(account);
+        setAccountIdForTransaction(account.getId());
+    }
+
+    private void setAccountIdForTransaction(int account_id) {
         Transaction transaction = transactionLiveData.getValue();
         if (transaction != null) {
             transaction.setAccount_id(account_id);
         }
     }
 
-    public MediatorLiveData<List<Account>> getAccountsLiveData() {
+    public LiveData<List<Account>> getAccountsLiveData() {
         return accountsLiveData;
     }
 
-    public MediatorLiveData<Transaction> getTransactionLiveData() {
+    public LiveData<Transaction> getTransactionLiveData() {
         return transactionLiveData;
     }
 

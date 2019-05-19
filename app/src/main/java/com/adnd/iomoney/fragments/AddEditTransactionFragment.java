@@ -1,5 +1,6 @@
 package com.adnd.iomoney.fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -44,6 +45,22 @@ public class AddEditTransactionFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable Transaction transaction) {
                     binding.setTransaction(transaction);
+                }
+            });
+
+            model.getSelectedAccountLiveData().observe(getActivity(), new Observer<Account>() {
+                @Override
+                public void onChanged(@Nullable Account account) {
+                    binding.setSelectedAccount(account);
+                }
+            });
+
+            final LiveData<List<Account>> accountsLiveData =  model.getAccountsLiveData();
+            accountsLiveData.observe(getActivity(), new Observer<List<Account>>() {
+                @Override
+                public void onChanged(@Nullable List<Account> accounts) {
+                    // Dummy call in order to trigger initial account selection
+                    accountsLiveData.removeObserver(this);
                 }
             });
 

@@ -6,6 +6,7 @@ import android.databinding.InverseBindingAdapter;
 import android.widget.TextView;
 
 import com.adnd.iomoney.R;
+import com.adnd.iomoney.models.Account;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,13 @@ public class BindingAdapters {
             return Float.parseFloat(valueText.replace("$ ", ""));
         } catch (NumberFormatException e) {
             return 0.0f;
+        }
+    }
+
+    @BindingAdapter("android:text")
+    public static void setAccount(TextView textView, Account account) {
+        if (account != null) {
+            textView.setText(account.getName());
         }
     }
 
