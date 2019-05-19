@@ -13,7 +13,6 @@ public class Account {
 
     private String name = "";
 
-    @Ignore
     private float balance;
 
     public int getId() {
