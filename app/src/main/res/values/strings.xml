@@ -32,4 +32,6 @@
 
     <string name="total_balance_label">Total balance: </string>
     <string name="account_balance_label">Account balance: </string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
