@@ -12,11 +12,14 @@ import com.adnd.iomoney.BR;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "transactions",
         foreignKeys = @ForeignKey(
                 entity = Account.class,
                 parentColumns = "id",
-                childColumns = "account_id"
+                childColumns = "account_id",
+                onDelete = CASCADE
         ),
         indices = {@Index("account_id")}
 )

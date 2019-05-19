@@ -2,12 +2,14 @@ package com.adnd.iomoney;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -90,7 +92,7 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
                 promptRenameAccount();
                 break;
             case R.id.action_delete_account:
-                // TODO prompt delete account
+                promptDeleteAccount();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -108,7 +110,25 @@ public class AccountTransactionsActivity extends AppCompatActivity implements Li
     }
 
     private void promptDeleteAccount() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setMessage(R.string.msg_delete_account)
+                .setTitle(R.string.title_delete_account)
+                .setPositiveButton(R.string.action_delete_label, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        model.deleteAccount(account_id);
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
 }

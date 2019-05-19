@@ -71,4 +71,7 @@ public class AccountViewModel extends AndroidViewModel {
         return accountsRepository.saveAccount(account);
     }
 
+    public void deleteAccount(int account_id) {
+        accountsRepository.deleteAccount(account_id);
+    }
 }

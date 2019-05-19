@@ -2,6 +2,7 @@ package com.adnd.iomoney.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -38,4 +39,9 @@ public interface AccountsDao {
     @Update
     void update(List<Account> accounts);
 
+    @Delete
+    void delete(Account account);
+
+    @Query("DELETE FROM accounts WHERE accounts.id = :id")
+    void deleteAccountById(int id);
 }

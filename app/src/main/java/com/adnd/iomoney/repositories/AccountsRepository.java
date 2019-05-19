@@ -18,7 +18,6 @@ import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.utils.OperationResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountsRepository {
@@ -41,7 +40,7 @@ public class AccountsRepository {
             public void run() {
                 List<Account> accounts = accountsDao.getAccountsBlock();
 
-                for (Account account: accounts) {
+                for (Account account : accounts) {
                     List<Transaction> transactions = transactionsDao.getTransactionsByAccountIdBlock(account.getId());
                     account.setBalance(getBalanceFromTransactions(transactions));
                 }
@@ -60,15 +59,18 @@ public class AccountsRepository {
         accountMediatorLiveData.addSource(accountSource, new Observer<Account>() {
             @Override
             public void onChanged(@Nullable final Account account) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<Transaction> transactions =
-                                transactionsDao.getTransactionsByAccountIdBlock(accountId);
-                        account.setBalance(getBalanceFromTransactions(transactions));
-                        accountMediatorLiveData.postValue(account);
-                    }
-                });
+                if (account != null) {
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<Transaction> transactions =
+                                    transactionsDao.getTransactionsByAccountIdBlock(accountId);
+                            account.setBalance(getBalanceFromTransactions(transactions));
+                            accountMediatorLiveData.postValue(account);
+                        }
+                    });
+                }
             }
         });
 
@@ -119,6 +121,15 @@ public class AccountsRepository {
         }
 
         return result;
+    }
+
+    public void deleteAccount(final int account_id) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                accountsDao.deleteAccountById(account_id);
+            }
+        });
     }
 
 }
