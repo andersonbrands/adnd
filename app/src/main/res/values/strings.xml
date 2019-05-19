@@ -10,6 +10,7 @@
     <string name="msg_delete_account">This will remove all its transactions!</string>
     <string name="msg_account_same_name">There is already an account with this name</string>
     <string name="msg_could_not_add_transaction">Could not add transaction!</string>
+    <string name="msg_could_not_edit_transaction">Could not edit transaction!</string>
     <string name="account_name">Account name</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -23,6 +24,7 @@
 
     <string name="currency_format">$ %1$.2f</string>
 
+    <string name="action_edit_label">Edit</string>
     <string name="action_rename_label">Rename</string>
     <string name="action_delete_label">Delete</string>
 

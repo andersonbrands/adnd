@@ -7,6 +7,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.adnd.iomoney.databinding.ActivityTransactionDetailsBinding;
 import com.adnd.iomoney.models.Transaction;
@@ -47,4 +49,25 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_delete_transaction_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit_transaction:
+                Intent intent = new Intent(this, AddEditTransactionActivity.class);
+                intent.putExtra(AddEditTransactionActivity.TRANSACTION_ID_EXTRA_KEY, binding.getTransaction().getId());
+                intent.putExtra(AddEditTransactionActivity.ACCOUNT_ID_EXTRA_KEY, binding.getTransaction().getAccount_id());
+                startActivity(intent);
+                break;
+            case R.id.action_delete_transaction:
+                // TODO delete transaction
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

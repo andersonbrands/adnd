@@ -66,6 +66,10 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
         return transactionsRepository.addTransaction(transactionLiveData.getValue());
     }
 
+    public LiveData<OperationResult> editTransaction() {
+        return transactionsRepository.editTransaction(transactionLiveData.getValue());
+    }
+
     public void loadAccounts(final int selectedAccountId) {
         final LiveData<List<Account>> source = accountsRepository.loadAccounts();
         accountsLiveData.addSource(source, new Observer<List<Account>>() {

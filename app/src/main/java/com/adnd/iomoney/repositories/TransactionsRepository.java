@@ -37,6 +37,26 @@ public class TransactionsRepository {
         return transactionsDao.getTransactionById(transaction_id);
     }
 
+    public LiveData<OperationResult> editTransaction(final Transaction transaction) {
+        final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                OperationResult result;
+                try {
+                    transactionsDao.update(transaction);
+                    result = new OperationResult();
+                } catch (Exception e) {
+                    result = new OperationResult(R.string.msg_could_not_edit_transaction);
+                }
+                operationResultLiveData.postValue(result);
+            }
+        });
+
+        return operationResultLiveData;
+    }
+
     public LiveData<OperationResult> addTransaction(final Transaction transaction) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
@@ -28,4 +29,6 @@ public interface TransactionsDao {
     @Insert
     void insert(List<Transaction> transactions);
 
+    @Update
+    void update(Transaction transaction);
 }
