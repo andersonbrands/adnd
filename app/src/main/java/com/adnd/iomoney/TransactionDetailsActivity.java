@@ -2,10 +2,12 @@ package com.adnd.iomoney;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,9 +67,31 @@ public class TransactionDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.action_delete_transaction:
-                // TODO delete transaction
+                promptDeleteTransaction();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void promptDeleteTransaction() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.msg_delete_transaction)
+                .setTitle(R.string.title_delete_transaction)
+                .setPositiveButton(R.string.action_delete_label, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        model.deleteTransaction(binding.getTransaction());
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 }

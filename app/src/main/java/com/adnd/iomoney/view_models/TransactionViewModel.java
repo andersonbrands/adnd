@@ -38,4 +38,8 @@ public class TransactionViewModel extends AndroidViewModel {
         });
     }
 
+    public void deleteTransaction(Transaction transaction) {
+        transactionsRepository.deleteTransaction(transaction);
+    }
+
 }

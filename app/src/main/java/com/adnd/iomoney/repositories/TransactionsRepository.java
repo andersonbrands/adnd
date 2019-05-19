@@ -57,6 +57,15 @@ public class TransactionsRepository {
         return operationResultLiveData;
     }
 
+    public void deleteTransaction(final Transaction transaction) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                transactionsDao.delete(transaction);
+            }
+        });
+    }
+
     public LiveData<OperationResult> addTransaction(final Transaction transaction) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
 

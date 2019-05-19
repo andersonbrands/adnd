@@ -7,7 +7,9 @@
     <string name="must_not_be_empty">Must not be empty</string>
 
     <string name="title_delete_account">Delete account?</string>
+    <string name="title_delete_transaction">Delete transaction?</string>
     <string name="msg_delete_account">This will remove all its transactions!</string>
+    <string name="msg_delete_transaction">Confirm action!</string>
     <string name="msg_account_same_name">There is already an account with this name</string>
     <string name="msg_could_not_add_transaction">Could not add transaction!</string>
     <string name="msg_could_not_edit_transaction">Could not edit transaction!</string>
