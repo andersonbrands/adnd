@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -28,9 +29,14 @@ public class TransactionDetailsActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction_details);
 
-        model = ViewModelProviders.of(this).get(TransactionViewModel.class);
-
         setSupportActionBar(binding.toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        model = ViewModelProviders.of(this).get(TransactionViewModel.class);
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -60,6 +66,9 @@ public class TransactionDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
             case R.id.action_edit_transaction:
                 Intent intent = new Intent(this, AddEditTransactionActivity.class);
                 intent.putExtra(AddEditTransactionActivity.TRANSACTION_ID_EXTRA_KEY, binding.getTransaction().getId());
@@ -69,6 +78,8 @@ public class TransactionDetailsActivity extends AppCompatActivity {
             case R.id.action_delete_transaction:
                 promptDeleteTransaction();
                 break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
