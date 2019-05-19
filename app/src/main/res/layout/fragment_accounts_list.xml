@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="com.adnd.iomoney.view_models.AccountViewModel" />
+            name="totalBalance"
+            type="float" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="@dimen/space_medium"
-                android:text="$ 9999.99" />
+                tools:text="$ 9999.99"
+                android:text="@{totalBalance}" />
 
         </android.support.v7.widget.CardView>
 

@@ -24,6 +24,7 @@ public class AccountsListFragment extends Fragment {
 
     private ListItemClickListener<Account> accountListItemClickListener;
     private FragmentAccountsListBinding binding;
+    private AccountViewModel model;
 
     public AccountsListFragment() {
     }
@@ -45,9 +46,7 @@ public class AccountsListFragment extends Fragment {
         binding = FragmentAccountsListBinding.inflate(inflater);
 
         if (getActivity() != null) {
-            AccountViewModel model = ViewModelProviders.of(getActivity()).get(AccountViewModel.class);
-
-            binding.setModel(model);
+            model = ViewModelProviders.of(getActivity()).get(AccountViewModel.class);
 
             model.getAccountsLiveData().observe(this, new Observer<List<Account>>() {
                 @Override
@@ -60,9 +59,23 @@ public class AccountsListFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (model != null) {
+            model.reloadAccounts();
+        }
+    }
+
     private void setRecyclerView(@Nullable List<Account> accounts) {
         binding.rvAccounts.setLayoutManager(new LinearLayoutManager(getActivity()));
         AccountAdapter accountAdapter = new AccountAdapter(accounts, accountListItemClickListener);
         binding.rvAccounts.setAdapter(accountAdapter);
+
+        float totalBalance = 0.0f;
+        for (Account account : accounts) {
+            totalBalance += account.getBalance();
+        }
+        binding.setTotalBalance(totalBalance);
     }
 }

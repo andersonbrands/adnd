@@ -19,6 +19,9 @@ public interface TransactionsDao {
     @Query("SELECT * FROM transactions WHERE transactions.id = :transaction_id")
     LiveData<Transaction> getTransactionById(int transaction_id);
 
+    @Query("SELECT * FROM transactions WHERE transactions.account_id = :account_id ORDER BY transactions.date DESC")
+    List<Transaction> getTransactionsByAccountIdBlock(int account_id);
+
     @Insert
     void insert(Transaction transaction);
 

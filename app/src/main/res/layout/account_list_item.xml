@@ -36,7 +36,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$ 999.99"
+                android:text="@{account.balance}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="$ 999.99" />

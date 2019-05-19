@@ -22,6 +22,8 @@ public class AccountViewModel extends AndroidViewModel {
     private MediatorLiveData<List<Account>> accountsLiveData = new MediatorLiveData<>();
     private MediatorLiveData<Account> accountLiveData = new MediatorLiveData<>();
 
+    private LiveData<List<Account>> accountsSource;
+
     AccountViewModel(@NonNull Application application) {
         super(application);
 
@@ -51,13 +53,18 @@ public class AccountViewModel extends AndroidViewModel {
     }
 
     private void loadAccounts() {
-        final LiveData<List<Account>> source = accountsRepository.loadAccounts();
-        accountsLiveData.addSource(source, new Observer<List<Account>>() {
+        accountsSource = accountsRepository.loadAccounts();
+        accountsLiveData.addSource(accountsSource, new Observer<List<Account>>() {
             @Override
             public void onChanged(@Nullable List<Account> accounts) {
                 accountsLiveData.setValue(accounts);
             }
         });
+    }
+
+    public void reloadAccounts() {
+        accountsLiveData.removeSource(accountsSource);
+        loadAccounts();
     }
 
     public LiveData<OperationResult> saveAccount(Account account) {
