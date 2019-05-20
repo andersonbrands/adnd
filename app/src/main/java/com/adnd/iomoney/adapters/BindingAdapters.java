@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
 import android.support.design.widget.TextInputEditText;
+import android.view.View;
 import android.widget.TextView;
 
 import com.adnd.iomoney.R;
@@ -44,6 +45,11 @@ public class BindingAdapters {
         if (listener != null) {
             textInputEditText.addTextChangedListener(new CurrencyTextWatcher(textInputEditText, listener));
         }
+    }
+
+    @BindingAdapter("android:visibility")
+    public static void setVisibility(View view, Double value) {
+        view.setVisibility(value == null ? View.GONE : View.VISIBLE);
     }
 
     @BindingAdapter("android:text")

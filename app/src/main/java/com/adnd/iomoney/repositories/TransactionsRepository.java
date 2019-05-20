@@ -3,7 +3,7 @@ package com.adnd.iomoney.repositories;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.database.sqlite.SQLiteConstraintException;
+import android.text.TextUtils;
 
 import com.adnd.iomoney.AppExecutors;
 import com.adnd.iomoney.R;
@@ -14,7 +14,6 @@ import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.utils.OperationResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionsRepository {
@@ -37,24 +36,19 @@ public class TransactionsRepository {
         return transactionsDao.getTransactionById(transaction_id);
     }
 
+    private OperationResult validateTransaction(Transaction transaction) {
+        if (TextUtils.isEmpty(transaction.getDescription())) {
+            return new OperationResult(R.string.msg_description_cannot_be_empty);
+        }
+        if (transaction.isHasLocation() && transaction.hasNoCoordinates()) {
+            return new OperationResult(R.string.msg_pick_location_from_map);
+        }
+
+        return new OperationResult();
+    }
+
     public LiveData<OperationResult> editTransaction(final Transaction transaction) {
-        final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
-
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                OperationResult result;
-                try {
-                    transactionsDao.update(transaction);
-                    result = new OperationResult();
-                } catch (Exception e) {
-                    result = new OperationResult(R.string.msg_could_not_edit_transaction);
-                }
-                operationResultLiveData.postValue(result);
-            }
-        });
-
-        return operationResultLiveData;
+        return addEditTransaction(transaction, true);
     }
 
     public void deleteTransaction(final Transaction transaction) {
@@ -66,24 +60,40 @@ public class TransactionsRepository {
         });
     }
 
-    public LiveData<OperationResult> addTransaction(final Transaction transaction) {
+    private LiveData<OperationResult> addEditTransaction(final Transaction transaction, final boolean edit) {
         final MutableLiveData<OperationResult> operationResultLiveData = new MutableLiveData<>();
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                OperationResult result;
-                try {
-                    transactionsDao.insert(transaction);
-                    result = new OperationResult();
-                } catch (Exception e) {
-                    result = new OperationResult(R.string.msg_could_not_add_transaction);
+        OperationResult r = validateTransaction(transaction);
+
+        if (r.isSuccess()) {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    OperationResult result;
+                    int msg = edit ? R.string.msg_could_not_edit_transaction : R.string.msg_could_not_add_transaction;
+                    try {
+                        if (edit)
+                            transactionsDao.update(transaction.clean());
+                        else
+                            transactionsDao.insert(transaction.clean());
+
+                        result = new OperationResult();
+                    } catch (Exception e) {
+                        result = new OperationResult(msg);
+                    }
+                    updateAccountBalance(transaction.getAccount_id());
+                    operationResultLiveData.postValue(result);
                 }
-                updateAccountBalance(transaction.getAccount_id());
-                operationResultLiveData.postValue(result);
-            }
-        });
+            });
+        } else {
+            operationResultLiveData.setValue(r);
+        }
+
         return operationResultLiveData;
+    }
+
+    public LiveData<OperationResult> addTransaction(final Transaction transaction) {
+        return addEditTransaction(transaction, false);
     }
 
     private void updateAccountBalance(final int account_id) {

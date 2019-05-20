@@ -4,8 +4,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="transaction"
             type="com.adnd.iomoney.models.Transaction" />
@@ -157,7 +155,7 @@
                 android:id="@+id/til6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{transaction.hasNoCoordinates() ? View.GONE : View.VISIBLE}"
+                android:visibility="@{transaction.lat}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cb_has_location">
 

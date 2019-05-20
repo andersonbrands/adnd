@@ -21,6 +21,8 @@
     <string name="msg_delete_account">This will remove all its transactions!</string>
     <string name="msg_delete_transaction">Confirm action!</string>
     <string name="msg_account_same_name">There is already an account with this name</string>
+    <string name="msg_description_cannot_be_empty">Description cannot be empty!</string>
+    <string name="msg_pick_location_from_map">Pick location from map!</string>
     <string name="msg_could_not_add_transaction">Could not add transaction!</string>
     <string name="msg_could_not_edit_transaction">Could not edit transaction!</string>
     <string name="account_name">Account name</string>

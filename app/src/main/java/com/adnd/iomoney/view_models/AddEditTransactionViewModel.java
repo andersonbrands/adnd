@@ -46,12 +46,8 @@ public class AddEditTransactionViewModel extends AndroidViewModel implements Dat
         transactionLiveData.addSource(source, new Observer<Transaction>() {
             @Override
             public void onChanged(@Nullable Transaction transaction) {
-                // TODO if transaction is null create a default one
                 if (transaction == null) {
                     transaction = new Transaction();
-                    transaction.setDescription("Dinner");
-                    transaction.setValue(23.56f);
-                    transaction.setTags("Dinner, expensive, healthy");
                     transaction.setDate(new Date());
                     transaction.setAccount_id(account_id);
                 }

@@ -46,6 +46,15 @@ public class Transaction extends BaseObservable {
 
     private Date date;
 
+    public Transaction clean() {
+        if (!hasLocation) {
+            lat = null;
+            lon = null;
+            locationLabel = "";
+        }
+        return this;
+    }
+
     public int getAccount_id() {
         return account_id;
     }
@@ -123,12 +132,17 @@ public class Transaction extends BaseObservable {
         return lat == null || lon == null;
     }
 
+    @Bindable
     public Double getLat() {
         return lat;
     }
 
     public void setLat(Double lat) {
-        this.lat = lat;
+        if (this.lat == null || this.lat.equals(lat)) {
+            this.lat = lat;
+
+            notifyPropertyChanged(BR.lat);
+        }
     }
 
     public Double getLon() {
