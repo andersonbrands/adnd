@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="transaction"
             type="com.adnd.iomoney.models.Transaction" />
@@ -13,129 +15,172 @@
             type="com.adnd.iomoney.models.Account" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/addedittransaction"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/space_medium"
-        tools:context=".fragments.AddEditTransactionFragment">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til1"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/addedittransaction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_large"
-                android:hint="@string/description_label"
-                android:inputType="text|textCapSentences"
-                android:maxLines="1"
-                android:text="@={transaction.description}" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/value_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til1">
-
-            <Button
-                android:id="@+id/bt_toggle_signal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:minWidth="0dp"
-                android:onClick="@{() -> transaction.setValue(-transaction.value)}"
-                android:text="@string/toggle_signal_bt_text" />
+            android:padding="@dimen/space_medium"
+            tools:context=".fragments.AddEditTransactionFragment">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_value"
+                    android:id="@+id/et_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/space_large"
-                    android:hint="@string/value_label"
-                    android:inputType="numberDecimal|numberSigned"
+                    android:hint="@string/description_label"
+                    android:inputType="text|textCapSentences"
                     android:maxLines="1"
-                    app:raw_currency="@={transaction.value}" />
+                    android:text="@={transaction.description}" />
 
             </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value_container">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_date"
+            <LinearLayout
+                android:id="@+id/value_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_large"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/date_label"
-                android:inputType="date"
-                android:maxLines="1"
-                android:text="@={transaction.date}" />
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til1">
 
-        </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:id="@+id/bt_toggle_signal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:minWidth="0dp"
+                    android:onClick="@{() -> transaction.setValue(-transaction.value)}"
+                    android:text="@string/toggle_signal_bt_text" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til3">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_account"
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/space_large"
+                        android:hint="@string/value_label"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:maxLines="1"
+                        app:raw_currency="@={transaction.value}" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_large"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/account_label"
-                android:inputType="text"
-                android:maxLines="1"
-                android:text="@{selectedAccount}" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/value_container">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_large"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/date_label"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:text="@={transaction.date}" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til4">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_tags"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_large"
-                android:hint="@string/tags_label"
-                android:inputType="text|textCapSentences"
-                android:maxLines="1"
-                android:text="@={transaction.tags}" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til3">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_large"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/account_label"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@{selectedAccount}" />
 
-    </android.support.constraint.ConstraintLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til4">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_large"
+                    android:hint="@string/tags_label"
+                    android:inputType="text|textCapSentences"
+                    android:maxLines="1"
+                    android:text="@={transaction.tags}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cb_has_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_medium"
+                android:checked="@={transaction.hasLocation}"
+                android:text="@string/add_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til5" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{transaction.hasNoCoordinates() ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cb_has_location">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_location_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{transaction.hasLocation}"
+                    android:hint="@string/location_label"
+                    android:maxLines="1"
+                    android:text="@={transaction.locationLabel}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/bt_pick_from_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{transaction.hasLocation}"
+                android:text="@string/pick_from_map"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til6" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </layout>

@@ -17,6 +17,7 @@
 
     <string name="title_delete_account">Delete account?</string>
     <string name="title_delete_transaction">Delete transaction?</string>
+    <string name="msg_provide_location_label">Provide location label!</string>
     <string name="msg_delete_account">This will remove all its transactions!</string>
     <string name="msg_delete_transaction">Confirm action!</string>
     <string name="msg_account_same_name">There is already an account with this name</string>
@@ -26,11 +27,15 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <string name="add_location">Add location</string>
+    <string name="pick_from_map">Pick from Map</string>
+
     <string name="add_new_transaction">Add new transaction</string>
     <string name="description_label">Description</string>
     <string name="value_label">Value</string>
     <string name="date_label">Date</string>
     <string name="tags_label">Tags</string>
+    <string name="location_label">Location label</string>
     <string name="account_label">Account</string>
 
     <string name="currency_format">$ %1$.2f</string>

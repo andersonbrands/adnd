@@ -30,19 +30,19 @@ public class Transaction extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String description;
+    private String description = "";
 
     private float value;
 
     private String tags;
 
-    private boolean hasLocation;
+    private boolean hasLocation = false;
 
-    private String locationLabel;
+    private String locationLabel = "";
 
-    private long lat;
+    private Double lat;
 
-    private long lon;
+    private Double lon;
 
     private Date date;
 
@@ -95,35 +95,47 @@ public class Transaction extends BaseObservable {
         this.tags = tags;
     }
 
+    @Bindable
     public boolean isHasLocation() {
         return hasLocation;
     }
 
     public void setHasLocation(boolean hasLocation) {
-        this.hasLocation = hasLocation;
+        if (this.hasLocation != hasLocation) {
+            this.hasLocation = hasLocation;
+            notifyPropertyChanged(BR.hasLocation);
+        }
     }
 
+    @Bindable
     public String getLocationLabel() {
         return locationLabel;
     }
 
     public void setLocationLabel(String locationLabel) {
-        this.locationLabel = locationLabel;
+        if (!this.locationLabel.equals(locationLabel)) {
+            this.locationLabel = locationLabel;
+            notifyPropertyChanged(BR.locationLabel);
+        }
     }
 
-    public long getLat() {
+    public boolean hasNoCoordinates() {
+        return lat == null || lon == null;
+    }
+
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(long lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public long getLon() {
+    public Double getLon() {
         return lon;
     }
 
-    public void setLon(long lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 

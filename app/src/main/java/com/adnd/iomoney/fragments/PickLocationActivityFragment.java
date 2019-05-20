@@ -1,23 +1,30 @@
 package com.adnd.iomoney.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.adnd.iomoney.PickLocationActivity;
 import com.adnd.iomoney.R;
 import com.adnd.iomoney.databinding.FragmentPickLocationBinding;
+import com.adnd.iomoney.view_models.PickLocationViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,8 +64,23 @@ public class PickLocationActivityFragment extends Fragment implements
 
     private void selectLocation() {
         if (googleMap != null) {
+
+            String locationLabel = binding.etLocationLabel.getText().toString();
+
+            if (TextUtils.isEmpty(locationLabel)) {
+                binding.etLocationLabel.setError(getString(R.string.msg_provide_location_label));
+                return;
+            }
+
             LatLng latLng = googleMap.getCameraPosition().target;
-            // TODO pass coordinates to calling activity
+
+            Intent intent = new Intent();
+            intent.putExtra(PickLocationActivity.EXTRA_LOCATION_LABEL, locationLabel);
+            intent.putExtra(PickLocationActivity.EXTRA_LATITUDE, latLng.latitude);
+            intent.putExtra(PickLocationActivity.EXTRA_LONGITUDE, latLng.longitude);
+
+            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().finish();
         }
     }
 
@@ -105,9 +127,30 @@ public class PickLocationActivityFragment extends Fragment implements
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
         onMapReady();
+        PickLocationViewModel model = ViewModelProviders.of(getActivity()).get(PickLocationViewModel.class);
+
+        model.getLocationLabelLiveData().observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                binding.etLocationLabel.setText(s);
+            }
+        });
+
+        model.getLatLngLiveData().observe(getActivity(), new Observer<LatLng>() {
+            @Override
+            public void onChanged(@Nullable LatLng latLng) {
+                onLatLngReceived(latLng);
+            }
+        });
+    }
+
+    private void onLatLngReceived(LatLng latLng) {
+        if (googleMap != null) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
+        }
     }
 
     private void onMapReady() {
