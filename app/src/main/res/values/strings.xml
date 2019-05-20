@@ -10,6 +10,11 @@
 
     <string name="empty_accounts_list_widget">No accounts here!</string>
 
+    <string name="select_location">Select location</string>
+    <string name="choose_location">Choose location</string>
+
+    <string name="location_permission_denied">This app requires location permission to work properly. Please try again and grant access to use the location.</string>
+
     <string name="title_delete_account">Delete account?</string>
     <string name="title_delete_transaction">Delete transaction?</string>
     <string name="msg_delete_account">This will remove all its transactions!</string>
