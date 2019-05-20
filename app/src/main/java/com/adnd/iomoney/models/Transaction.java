@@ -75,12 +75,16 @@ public class Transaction extends BaseObservable {
         return sdf.format(date);
     }
 
+    @Bindable
     public float getValue() {
         return value;
     }
 
     public void setValue(float value) {
-        this.value = value;
+        if (this.value != value) {
+            this.value = value;
+            notifyPropertyChanged(BR.value);
+        }
     }
 
     public String getTags() {
