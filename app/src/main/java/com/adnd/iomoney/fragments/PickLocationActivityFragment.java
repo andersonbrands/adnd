@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class PickLocationActivityFragment extends Fragment implements
@@ -45,7 +45,21 @@ public class PickLocationActivityFragment extends Fragment implements
         binding.mapView.getMapAsync(this);
         binding.mapView.onCreate(savedInstanceState);
 
+        binding.btSelectLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLocation();
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    private void selectLocation() {
+        if (googleMap != null) {
+            LatLng latLng = googleMap.getCameraPosition().target;
+            // TODO pass coordinates to calling activity
+        }
     }
 
     @Override
@@ -90,15 +104,13 @@ public class PickLocationActivityFragment extends Fragment implements
         super.onLowMemory();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        enableMyLocation();
-
+        onMapReady();
     }
 
-    private void enableMyLocation() {
+    private void onMapReady() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
@@ -116,6 +128,7 @@ public class PickLocationActivityFragment extends Fragment implements
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
                 }
             }
+
         }
     }
 
@@ -126,7 +139,7 @@ public class PickLocationActivityFragment extends Fragment implements
         }
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            enableMyLocation();
+            onMapReady();
         } else {
             new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.location_permission_denied)
