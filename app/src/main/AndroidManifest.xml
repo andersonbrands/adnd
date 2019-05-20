@@ -19,6 +19,14 @@
                 android:resource="@xml/accounts_widget_info" />
         </receiver>
 
+        <service
+            android:name=".widget.AccountsRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.AccountsWidgetService"
+            android:exported="false" />
+
         <activity
             android:name=".TransactionDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />

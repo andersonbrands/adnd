@@ -34,6 +34,10 @@ public class AccountsRepository {
         return accountsDao.getAccounts();
     }
 
+    public List<Account> loadAccountsBlock() {
+        return accountsDao.getAccountsBlock();
+    }
+
     public LiveData<Account> loadAccount(final int accountId) {
         return accountsDao.getAccount(accountId);
     }
