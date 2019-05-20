@@ -6,5 +6,6 @@
     android:name="com.adnd.iomoney.fragments.AccountsListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:showIn="@layout/activity_main"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:layout="@layout/fragment_accounts_list" />

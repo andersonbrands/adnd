@@ -18,6 +18,7 @@ import com.adnd.iomoney.databinding.FragmentAccountTransactionsListBinding;
 import com.adnd.iomoney.models.Account;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.view_models.AccountTransactionsListViewModel;
+import com.google.android.gms.ads.AdRequest;
 
 import java.util.List;
 
@@ -59,6 +60,14 @@ public class AccountTransactionsListFragment extends Fragment {
                     binding.setAccountbalance(accountBalance);
                 }
             });
+
+            // Create an ad request. Check logcat output for the hashed device ID to
+            // get test ads on a physical device. e.g.
+            // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            binding.adView.loadAd(adRequest);
 
         }
 

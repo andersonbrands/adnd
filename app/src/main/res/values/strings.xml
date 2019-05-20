@@ -51,4 +51,8 @@
     <string name="account_balance_label">Account balance: </string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <!-- test ads -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="sample_app_id">ca-app-pub-3940256099942544~3347511713</string>
 </resources>
