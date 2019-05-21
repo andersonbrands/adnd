@@ -22,7 +22,7 @@ public class AccountViewModel extends AndroidViewModel {
     private MediatorLiveData<List<Account>> accountsLiveData = new MediatorLiveData<>();
     private MediatorLiveData<Account> accountLiveData = new MediatorLiveData<>();
 
-    AccountViewModel(@NonNull Application application) {
+    public AccountViewModel(@NonNull Application application) {
         super(application);
 
         accountsRepository = new AccountsRepository(application);
