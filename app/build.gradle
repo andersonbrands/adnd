@@ -4,7 +4,20 @@ def sensitivePropertiesFile = rootProject.file("sensitive.properties")
 def sensitiveProperties = new Properties()
 sensitiveProperties.load(new FileInputStream(sensitivePropertiesFile))
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+
 android {
+    signingConfigs {
+        mySigningConfig {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.adnd.iomoney"
@@ -22,11 +35,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mySigningConfig
         }
     }
     dataBinding {
         enabled = true
     }
+
 }
 
 dependencies {
