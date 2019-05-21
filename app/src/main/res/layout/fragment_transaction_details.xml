@@ -1,55 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="transaction"
             type="com.adnd.iomoney.models.Transaction" />
+
+        <variable
+            name="acountName"
+            type="String" />
+
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.TransactionDetailsFragment"
-        tools:showIn="@layout/activity_transaction_details">
+        tools:context=".fragments.TransactionDetailsFragment">
+
+        <TextView
+            android:id="@+id/tv_value_label"
+            style="@style/TransactionDetailLabel"
+            android:text="@string/value_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_value"
+            style="@style/TransactionDetailValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{transaction.value}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/value_barrier"
+            app:layout_constraintStart_toEndOf="@id/labels_barrier"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="99.99" />
+            tools:text="$ 99.99" />
+
+        <TextView
+            android:id="@+id/tv_date_label"
+            style="@style/TransactionDetailLabel"
+            android:text="@string/date_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_value_label" />
 
         <TextView
             android:id="@+id/tv_date"
+            style="@style/TransactionDetailValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{transaction.date}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_value"
+            app:layout_constraintBottom_toTopOf="@+id/date_barrier"
+            app:layout_constraintStart_toEndOf="@id/labels_barrier"
+            app:layout_constraintTop_toBottomOf="@id/value_barrier"
             tools:text="31/12/2019" />
 
         <TextView
+            android:id="@+id/tv_account_label"
+            style="@style/TransactionDetailLabel"
+            android:text="@string/account_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_label" />
+
+        <TextView
             android:id="@+id/tv_account"
+            style="@style/TransactionDetailValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(transaction.account_id)}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            android:text="@{acountName}"
+            app:layout_constraintBottom_toTopOf="@+id/account_barrier"
+            app:layout_constraintStart_toEndOf="@id/labels_barrier"
+            app:layout_constraintTop_toBottomOf="@id/date_barrier"
             tools:text="Main account" />
 
         <TextView
+            android:id="@+id/tv_tags_label"
+            style="@style/TransactionDetailLabel"
+            android:text="@string/tags_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_account_label" />
+
+        <TextView
             android:id="@+id/tv_tags"
+            style="@style/TransactionDetailValue"
+            android:text="@{transaction.tags}"
+            app:layout_constraintBottom_toTopOf="@+id/tags_barrier"
+            app:layout_constraintStart_toEndOf="@id/labels_barrier"
+            app:layout_constraintTop_toBottomOf="@id/account_barrier"
+            tools:text="Dinner, expensive, healthy" />
+
+        <TextView
+            android:id="@+id/tv_location_label"
+            style="@style/TransactionDetailLabel"
+            android:enabled="@{transaction.hasLocation}"
+            android:text="@string/location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_tags_label" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            style="@style/TransactionDetailValue"
+            android:enabled="@{transaction.hasLocation}"
+            android:hint="@string/no_location"
+            android:text="@{transaction.locationLabel}"
+            app:layout_constraintBottom_toTopOf="@+id/location_barrier"
+            app:layout_constraintStart_toEndOf="@id/labels_barrier"
+            app:layout_constraintTop_toBottomOf="@id/tags_barrier" />
+
+        <Button
+            android:id="@+id/bt_show_in_map"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{transaction.hasLocation}"
+            android:text="@string/show_in_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/labels_barrier"
+            app:layout_constraintTop_toBottomOf="@+id/location_barrier" />
+
+
+        <android.support.constraint.Barrier
+            android:id="@+id/labels_barrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="tv_value_label, tv_date_label, tv_account_label, tv_tags_label,tv_location_label"
+            tools:layout_editor_absoluteX="92dp" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/value_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{transaction.tags}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_account"
-            tools:text="Dinner, expensive, healthy" />
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_value_label, tv_value" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/date_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_date,tv_date_label" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/account_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_account_label,tv_account" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/tags_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_tags_label,tv_tags" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/location_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_location_label,tv_location,bt_show_in_map"
+            tools:layout_editor_absoluteY="731dp" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

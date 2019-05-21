@@ -31,6 +31,8 @@
 
     <string name="add_location">Add location</string>
     <string name="pick_from_map">Pick from Map</string>
+    <string name="show_in_map">Show in Map</string>
+    <string name="no_location">No location</string>
 
     <string name="add_new_transaction">Add new transaction</string>
     <string name="description_label">Description</string>
@@ -38,6 +40,7 @@
     <string name="date_label">Date</string>
     <string name="tags_label">Tags</string>
     <string name="location_label">Location label</string>
+    <string name="location">Location</string>
     <string name="account_label">Account</string>
 
     <string name="currency_format">$ %1$.2f</string>

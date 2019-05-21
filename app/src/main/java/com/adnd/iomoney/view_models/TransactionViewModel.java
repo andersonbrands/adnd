@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import com.adnd.iomoney.models.Transaction;
 import com.adnd.iomoney.repositories.TransactionsRepository;
 
-public class TransactionViewModel extends AndroidViewModel {
+public class TransactionViewModel extends AccountViewModel {
 
     private MediatorLiveData<Transaction> transactionLiveData = new MediatorLiveData<>();
     private TransactionsRepository transactionsRepository;
@@ -33,7 +33,6 @@ public class TransactionViewModel extends AndroidViewModel {
             @Override
             public void onChanged(@Nullable Transaction transaction) {
                 transactionLiveData.setValue(transaction);
-                transactionLiveData.removeSource(source);
             }
         });
     }
